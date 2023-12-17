@@ -217,6 +217,7 @@ export const fields = {
 			if (template.ticket.fields.filter(f => f.name === field).length === 0) {
 				await interaction.reply({
 					content: ln(interaction).error.field.notfound.replace("{{field}}", field),
+					ephemeral: true
 				});
 				return;
 			}
@@ -224,10 +225,12 @@ export const fields = {
 			if (rep === "deleted") {
 				await interaction.reply({
 					content: ln(interaction).edit.field.deleted,
+					ephemeral: true
 				});
 			} else {
 				await interaction.reply({
 					content: ln(interaction).edit.field.removed.replace("{{field}}", field),
+					ephemeral: true
 				});
 			}
 			break;
@@ -239,6 +242,7 @@ export const fields = {
 			if (template.ticket.fields.filter(f => f.name === field).length !== 0) {
 				await interaction.reply({
 					content: ln(interaction).error.field.exist.replace("{{field}}", field),
+					ephemeral: true
 				});
 				return;
 			}
@@ -253,10 +257,12 @@ export const fields = {
 			if (repAdd) {
 				await interaction.reply({
 					content: ln(interaction).edit.field.added.replace("{{field}}", field),
+					ephemeral: true
 				});
 			} else {
 				await interaction.reply({
 					content: ln(interaction).error.field.tooMuch,
+					ephemeral: true
 				});
 			}
 			break;
@@ -269,6 +275,7 @@ export const fields = {
 			if (!fieldToEdit) {
 				await interaction.reply({
 					content: ln(interaction).error.field.notfound.replace("{{field}}", field),
+					ephemeral: true
 				});
 				return;
 			}
@@ -283,6 +290,7 @@ export const fields = {
 			if (reply) {
 				await interaction.reply({
 					content: ln(interaction).edit.field.edited.replace("{{field}}", field),
+					ephemeral: true
 				});
 				return;
 			}

@@ -9,6 +9,7 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 	if (!fieldToEdit) {
 		await interaction.reply({
 			content: ln(interaction).error.field.notfound.replace("{{field}}", field.name),
+			ephemeral: true
 		});
 		return;
 	}

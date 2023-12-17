@@ -2,9 +2,12 @@ export default {
 	common: {
 		role: "role",
 	},
+	created: "Ticket créé !",
+	reason: "Ticket créé par {{nickname}}",
 	error: {
 		channel: "Erreur lors de l'édition du template : message non trouvé. Vous devez utiliser la commande dans le même channel que le JSON du template.",
 		attachment: "Erreur lors de l'édition du template : le message n'a pas de fichier joint.",
+		footer: "Erreur lors de l'édition du template : le footer de l'embed n'a pas le bon format.",
 		field: {
 			"notfound": "Erreur lors de l'édition du template : le champ n'a pas été trouvé.",
 			"exist": "Erreur lors de l'édition du template : le champ existe déjà.",
@@ -40,6 +43,7 @@ export default {
 			required: "Le champ est-il obligatoire ?",
 			short: "Court",
 			paragraph: "Paragraphe",
+			id: "L'ID du champ, gardez-le court et simple",
 		},
 		new: {
 			name: "nouveau",
@@ -90,8 +94,8 @@ export default {
 			title: "champs",
 			description: "Modifier les champs de la template",
 			name: {
-				name: "field_name",
-				description: "Le nom du champ à modifier",
+				name: "field_id",
+				description: "L'id du champ à modifier'",
 			},
 			remove: {
 				name: "supprimer",

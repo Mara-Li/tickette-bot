@@ -2,9 +2,12 @@ export default {
 	common: {
 		role: "role",
 	},
+	created: "Ticket created !",
+	reason: "Ticket created by {{nickname}}",
 	error: {
 		channel: "Error while editing the template: message not found.You need to use the command in the same channel the template JSON was saved.",
 		attachment: "Error while editing the template: the message has no attachment.",
+		footer: "Error while editing the template: the embed footer is not in the good format.",
 		field: {
 			"notfound": "Error while editing the template: the field was not found.",
 			"exist": "Error while editing the template: the field already exist.",
@@ -40,6 +43,7 @@ export default {
 			required: "Is the field required ?",
 			short: "Short",
 			paragraph: "Paragraph",
+			id: "The field id, keep it short and simple",
 		},
 		new: {
 			name: "new",
@@ -90,8 +94,8 @@ export default {
 			title: "fields",
 			description: "Edit the fields of the template",
 			name: {
-				name: "field_name",
-				description: "The name of the field",
+				name: "field_id",
+				description: "The id of the field",
 			},
 			remove: {
 				name: "remove",

@@ -1,6 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Embed, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
 import moment from "moment";
-import { Ticket } from "src/interface";
+
+import { Ticket } from "../interface";
+import { ln } from "../locales";
 
 export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
 	const channel = interaction.guild?.channels.cache.get(ticket.channel);
@@ -62,10 +64,11 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 }
 
 export async function createThread(embed: Embed, interaction: ModalSubmitInteraction | ButtonInteraction) {
+	const lg = ln(interaction);
 	const footer = embed?.footer?.text?.split(" : ");
 	if (!footer || footer.length < 2) {
 		await interaction.reply({
-			content: "Error: Footer not found",
+			content: lg.error.footer,
 			ephemeral: true,
 		});
 		return;
@@ -73,7 +76,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	const template = await getTemplateByIds(footer[1], footer[0], interaction.guild as Guild);
 	if (!template) {
 		await interaction.reply({
-			content: "Error: Template not found",
+			content: lg.error.attachment,
 			ephemeral: true,
 		});
 		return;
@@ -112,11 +115,11 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	const thread = await channelToCreateThread.threads.create({
 		name: newThreadName || "Ticket",
 		autoArchiveDuration: 1440,
-		reason: `Ticket created by ${interaction.user.displayName}`,
+		reason: lg.reason.replace("{{nickname}}", interaction.user.username),
 		invitable: false,
 	});
 	await interaction.reply({
-		content: "Ticket created !",
+		content: lg.created,
 		ephemeral: true,
 	});
 	//add the user to the thread

@@ -28,6 +28,14 @@ const field = (data: SlashCommandSubcommandBuilder, nb: number) => {
 	return data
 		.addStringOption(option =>
 			option
+				.setName(`field_${nb}_id`)
+				.setDescription(en.config.field.id)
+				.setDescriptionLocalizations({
+					fr: fr.config.field.id
+				})
+				.setRequired(false))
+		.addStringOption(option =>
+			option
 				.setName(`field_${nb}_name`)
 				.setDescription(en.config.field.name)
 				.setDescriptionLocalizations({
@@ -309,6 +317,14 @@ export const config = {
 						)
 						.addStringOption(option =>
 							option
+								.setName("field_name")
+								.setDescription(en.config.field.name)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.name
+								})
+								.setRequired(false))
+						.addStringOption(option =>
+							option
 								.setName("field_description")
 								.setDescription(en.config.field.description)
 								.setDescriptionLocalizations({
@@ -371,6 +387,14 @@ export const config = {
 						)
 						.addStringOption(option =>
 							option
+								.setName("field_name")
+								.setDescription(en.config.field.name)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.name
+								})
+								.setRequired(false))
+						.addStringOption(option =>
+							option
 								.setName("field_description")
 								.setDescription(en.config.field.description)
 								.setDescriptionLocalizations({
@@ -415,12 +439,20 @@ export const config = {
 			const threadName = options.getString("thread_name", true);
 			const fields = [];
 			for (let i = 1; i < 5; i++) {
-				const field_name = options.getString(`field_${i}_name`);
+				const field_name = options.getString(`field_${i}_name`, true);
 				const field_description = options.getString(`field_${i}_description`) ?? "";
 				const field_type = options.getString(`field_${i}_type`) ?? "short";
+				const field_id = options.getString(`field_${i}_id`) ?? field_name.replace(" ", "-").toLowerCase();
 				const field_required = options.getBoolean(`field_${i}_required`) ?? false;
 				if (field_name) {
-					fields.push({name: field_name, description: field_description, type: field_type, required: field_required} as TemplateModals);
+					const templateMod: TemplateModals = {
+						name: field_name,
+						description: field_description,
+						type: field_type as "short" | "paragraph",
+						required: field_required,
+						id: field_id
+					};
+					fields.push(templateMod);
 				}
 			}
 			const template: Ticket = {
@@ -489,7 +521,7 @@ export const config = {
 		if (!addSubcommandGroup) return;
 		const addSubcommand = options.getSubcommand(false);
 		if (!addSubcommand) return;
-		const field = options.getString("field_name", true);
+		const field = options.getString("field_id", true);
 		const message_id = options.getString("message_id", true);
 		//download the previous template
 		const template = await downloadJSONTemplate(message_id, interaction);
@@ -515,6 +547,7 @@ export const config = {
 			}
 			break;
 		case "add":
+			const fieldName = options.getString("field_name") ?? field;
 			const fieldDescription = options.getString("field_description") ?? "";
 			const fieldType: "short" | "paragraph" = options.getString("field_type") as "short" | "paragraph" ?? "short";
 			const fieldRequired = options.getBoolean("field_required") ?? false;
@@ -525,7 +558,8 @@ export const config = {
 				return;
 			}
 			const repAdd = await addFieldToTemplate({
-				name: field,
+				id: field,
+				name: fieldName,
 				description: fieldDescription,
 				type: fieldType,
 				required: fieldRequired
@@ -542,10 +576,11 @@ export const config = {
 			}
 			break;
 		case "edit":
+			const field_name = options.getString("field_name") ?? field;
 			const field_description_edit = options.getString("field_description") ?? "";
 			const field_type_edit = options.getString("field_type") ?? "short";
 			const field_required_edit = options.getBoolean("field_required") ?? false;
-			const fieldToEdit = ticket.fields.find(f => f.name === field);
+			const fieldToEdit = ticket.fields.find(f => f.id === field);
 			if (!fieldToEdit) {
 				await interaction.reply({
 					content: ln(interaction).error.field.notfound.replace("{{field}}", field),
@@ -553,7 +588,8 @@ export const config = {
 				return;
 			}
 			const reply = await editFieldToTemplate({
-				name: field,
+				name: field_name,
+				id: field,
 				description: field_description_edit,
 				type: field_type_edit as "short" | "paragraph",
 				required: field_required_edit

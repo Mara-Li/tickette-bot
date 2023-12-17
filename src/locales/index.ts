@@ -1,9 +1,9 @@
-import { CommandInteraction } from "discord.js";
+import { BaseInteraction } from "discord.js";
 
 import en from "./language/en";
 import fr from "./language/fr";
 
-export function ln(interaction: CommandInteraction) {
+export function ln(interaction: BaseInteraction) {
 	const lang = interaction.locale ?? "en";
 	switch (lang) {
 	case "fr":

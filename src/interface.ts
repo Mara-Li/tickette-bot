@@ -3,6 +3,7 @@ export interface TemplateModals {
 	description: string;
 	type: "short" | "paragraph";
 	required: boolean;
+	id: string;
 }
 
 export interface Ticket {

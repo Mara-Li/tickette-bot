@@ -40,7 +40,6 @@ export default (client: Client): void => {
 			const embed = interaction.message?.embeds[0];
 			if (!embed) return;
 			await createThread(embed, interaction);
-
 			return;
 		}
 	});

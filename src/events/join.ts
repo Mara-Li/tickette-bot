@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+
 import { commandsList } from "../commands/index";
 
 export default (client: Client): void => {

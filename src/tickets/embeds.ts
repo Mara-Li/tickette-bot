@@ -52,7 +52,7 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 		const input = new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
 			new TextInputBuilder()
 				.setPlaceholder(field.description)
-				.setCustomId(field.name)
+				.setCustomId(field.id)
 				.setLabel(field.name)
 				.setRequired(field.required)
 				.setStyle(inputStyle)

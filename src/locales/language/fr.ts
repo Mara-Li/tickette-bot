@@ -1,6 +1,7 @@
 export default {
 	common: {
 		role: "role",
+		field: "champs",
 	},
 	created: "Ticket créé !",
 	reason: "Ticket créé par {{nickname}}",

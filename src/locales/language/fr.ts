@@ -1,4 +1,7 @@
 export default {
+	common: {
+		role: "role",
+	},
 	error: {
 		channel: "Erreur lors de l'édition du template : message non trouvé. Vous devez utiliser la commande dans le même channel que le JSON du template.",
 		attachment: "Erreur lors de l'édition du template : le message n'a pas de fichier joint.",
@@ -26,6 +29,83 @@ export default {
 			removed : "Champ {{field}} supprimé avec succès",
 			added: "Champ {{field}} ajouté avec succès",
 		}
+	},
+	config: {
+		title: "config",
+		description: "Configuration des tickets",
+		field: {
+			name: "Le nom du champ",
+			description: "La description du champ",
+			type: "Le type du champ, paragraphe ou court",
+			required: "Le champ est-il obligatoire ?",
+			short: "Court",
+			paragraph: "Paragraphe",
+		},
+		new: {
+			name: "nouveau",
+			description: "Créer une nouvelle template",
+			embed: {
+				name: "name",
+				description: "Le titre de l'embed",
+			},
+			thread_name: {
+				name: "thread_name",
+				description: "Le nom du thread. Utilisez {{value}} pour utiliser la valeur du template.",
+			},
+			role: {
+				description: "Le rôle des personnes qui doivent être ajoutées à la template",
+			},
+			embed_content: {
+				name: "description",
+				description: "Le message dans l'embed pour créer un ticket",
+			},
+			channel: {
+				name: "channel",
+				description: "Le channel où le ticket sera créé",
+			}
+		},
+		edit: {
+			message_id: {
+				name: "message_id",
+				description: "L'ID du message où le JSON de la template est envoyée",
+			},
+		},
+		role: {
+			description: "Ajouter ou supprimer un rôle de la template",
+			choice: {
+				name: "action",
+				description: "L'action à effectuer",
+				add: "Ajouter",
+				remove: "Supprimer",
+			},
+			role: {
+				description: "Le rôle à ajouter ou supprimer",
+			}
+		},
+		rename: {
+			title: "renommer",
+			description: "Modifier la template du nom du ticket"
+		},
+		fields: {
+			title: "champs",
+			description: "Modifier les champs de la template",
+			name: {
+				name: "field_name",
+				description: "Le nom du champ à modifier",
+			},
+			remove: {
+				name: "supprimer",
+				description: "Supprimer un champ de la template",
+			},
+			add: {
+				name: "ajouter",
+				description: "Ajouter un champ à la template",
+			},
+			edit: {
+				name: "modifier",
+				description: "Modifier un champ de la template",
+			},
+		}
 	}
 
-}
+};

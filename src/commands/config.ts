@@ -8,12 +8,13 @@ import {
 
 import { TemplateModals, Ticket } from "../interface";
 import { ln } from "../locales";
+import en from "../locales/language/en";
+import fr from "../locales/language/fr";
 import { renameThread } from "../tickets/editname";
 import { addRoleToTemplate, removeRoleToTemplate } from "../tickets/editRole";
 import { createEmbed } from "../tickets/embeds";
 import { addFieldToTemplate, editFieldToTemplate, removeFieldToTemplate } from "../tickets/fields";
 import { createJSONTemplate, downloadJSONTemplate } from "../tickets/template";
-
 /**
  * Tickets commands :
  * /config new <template name for thread name> <@role> (optional field) // The template is saved as an json in the channel used for ticket creation ; template is pinned
@@ -28,26 +29,38 @@ const field = (data: SlashCommandSubcommandBuilder, nb: number) => {
 		.addStringOption(option =>
 			option
 				.setName(`field_${nb}_name`)
-				.setDescription("The name of the field")
+				.setDescription(en.config.field.name)
+				.setDescriptionLocalizations({
+					fr: fr.config.field.name
+				})
 				.setRequired(false))
 		.addStringOption(option =>
 			option
 				.setName(`field_${nb}_description`)
-				.setDescription("The description of the field")
+				.setDescription(en.config.field.description)
+				.setDescriptionLocalizations({
+					fr: fr.config.field.description
+				})
 				.setRequired(false))
 		.addStringOption(option =>
 			option
 				.setName(`field_${nb}_type`)
-				.setDescription("The type of the field")
+				.setDescription(en.config.field.type)
+				.setDescriptionLocalizations({
+					fr: fr.config.field.type
+				})
 				.setRequired(false)
 				.addChoices(
-					{name: "short", value: "short"},
-					{name: "paragraph", value: "paragraph"}
+					{name: "short", value: "short", name_localizations: {fr: fr.config.field.short}},
+					{name: "paragraph", value: "paragraph", name_localizations: {fr: fr.config.field.paragraph}}
 				))
 		.addBooleanOption(option =>
 			option
 				.setName(`field_${nb}_required`)
-				.setDescription("The field is required during ticket creation modal")
+				.setDescription(en.config.field.required)
+				.setDescriptionLocalizations({
+					fr: fr.config.field.required
+				})
 				.setRequired(false)
 		);
 };
@@ -55,39 +68,81 @@ const field = (data: SlashCommandSubcommandBuilder, nb: number) => {
 
 export const config = {
 	data: new SlashCommandBuilder()
-		.setName("config")
-		.setDescription("Ticket configuration")
+		.setName(en.config.title)
+		.setDescription(en.config.description)
+		.setNameLocalizations({
+			fr: fr.config.title
+		})
+		.setDescriptionLocalizations({
+			fr: fr.config.description
+		})
 		.addSubcommand((group => {
 			let grp = group
-				.setName("new")
-				.setDescription("Create a new template")
+				.setName(en.config.new.name)
+				.setDescription(en.config.new.description)
+				.setNameLocalizations({
+					fr: fr.config.new.name
+				})
+				.setDescriptionLocalizations({
+					fr: fr.config.new.description
+				})
 				.addStringOption(option =>
 					option
-						.setName("name")
-						.setDescription("The title of the embed")
+						.setName(en.config.new.embed.name)
+						.setDescription(en.config.new.embed.description)
+						.setDescriptionLocalizations({
+							fr: fr.config.new.embed.description
+						})
+						.setNameLocalizations({
+							fr: fr.config.new.embed.name
+						})
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("thread_name")
-						.setDescription("The name of the thread, you can use {{value}} to replace the value of the field")
+						.setName(en.config.new.thread_name.name)
+						.setDescription(en.config.new.thread_name.description)
+						.setNameLocalizations({
+							fr: fr.config.new.thread_name.name
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.new.thread_name.description
+						})
 						.setRequired(true)
 				)
 				.addRoleOption(option =>
 					option
-						.setName("role")
-						.setDescription("The role of people that need to be added to the ticket")
+						.setName(en.common.role)
+						.setDescription(en.config.new.role.description)
+						.setNameLocalizations({
+							fr: fr.common.role
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.new.role.description
+						})
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("description")
-						.setDescription("The message in the embed for creating ticket")
+						.setName(en.config.new.embed_content.name)
+						.setDescription(en.config.new.embed_content.description)
+						.setNameLocalizations({
+							fr: fr.config.new.embed_content.name
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.new.embed_content.description
+						})
 						.setRequired(true))
 				.addChannelOption(option =>
 					option
-						.setName("channel")
-						.setDescription("The channel where the ticket will be created")
+						.setName(en.config.new.channel.name)
+						.setDescription(en.config.new.channel.description)
+						.setNameLocalizations({
+							fr: fr.config.new.channel.name
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.new.channel.description
+						})
 						.setRequired(true)
 						.addChannelTypes(ChannelType.GuildText)
 				);
@@ -100,143 +155,248 @@ export const config = {
 		)
 		.addSubcommand(group =>
 			group
-				.setName("role")
-				.setDescription("Edit the role of the template")
+				.setName(en.common.role)
+				.setDescription(en.config.role.description)
+				.setNameLocalizations({
+					fr: fr.common.role
+				})
+				.setDescriptionLocalizations({
+					fr: fr.config.role.description
+				})
 				.addStringOption(option =>
 					option
-						.setName("message_id")
-						.setDescription("The message ID of the template")
+						.setName(en.config.edit.message_id.name)
+						.setDescription(en.config.edit.message_id.description)
+						.setNameLocalizations({
+							fr: fr.config.edit.message_id.name
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.edit.message_id.description
+						})
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("choice")
-						.setDescription("The choice to edit the role")
+						.setName(en.config.role.choice.name)
+						.setDescription(en.config.role.choice.description)
+						.setNameLocalizations({
+							fr: fr.config.role.choice.name
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.role.choice.description
+						})
 						.setRequired(true)
 						.addChoices(
-							{name: "Add", value: "add"},
-							{name: "Remove", value: "remove"},
+							{name: en.config.role.choice.add, value: "add", name_localizations: {fr: fr.config.role.choice.add}},
+							{name: en.config.role.choice.remove, value: "remove", name_localizations: {fr: fr.config.role.choice.remove}},
 						)
 				)
 				.addRoleOption(option =>
 					option
-						.setName("role")
-						.setDescription("The role to add or remove")
+						.setName(en.common.role)
+						.setDescription(en.config.role.role.description)
+						.setNameLocalizations({
+							fr: fr.common.role
+						})
+						.setDescriptionLocalizations({
+							fr: fr.config.role.role.description
+						})
 						.setRequired(true)
 				)
 		)
 		.addSubcommand(group =>
 			group
-				.setName("rename")
-				.setDescription("Edit the name of the thread that will be created")
+				.setName(en.config.rename.title)
+				.setDescription(en.config.rename.description)
+				.setNameLocalizations({
+					fr: fr.config.rename.title
+				})
+				.setDescriptionLocalizations({
+					fr: fr.config.rename.description
+				})
 				.addStringOption(option =>
 					option
-						.setName("message_id")
-						.setDescription("The message ID of the template")
+						.setName(en.config.edit.message_id.name)
+						.setDescription(en.config.edit.message_id.description)
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("thread_name")
-						.setDescription("The name of the thread")
+						.setName(en.config.new.thread_name.name)
+						.setNameLocalizations({
+							fr: fr.config.new.thread_name.name
+						})
+						.setDescription(en.config.new.thread_name.description)
+						.setDescriptionLocalizations({
+							fr: fr.config.new.thread_name.description
+						})
 						.setRequired(true)
 				)
 
 		)
 		.addSubcommandGroup(group =>
 			group
-				.setName("fields")
-				.setDescription("Edit a template")
+				.setName(en.config.fields.title)
+				.setDescription(en.config.fields.description)
+				.setNameLocalizations({
+					fr: fr.config.fields.title
+				})
+				.setDescriptionLocalizations({
+					fr: fr.config.fields.description
+				})
 				.addSubcommand(sub =>
 					sub
-						.setName("remove")
-						.setDescription("Remove a field from the template")
+						.setName(en.config.fields.remove.name)
+						.setDescription(en.config.fields.remove.description)
 						.addStringOption(option =>
 							option
-								.setName("message_id")
-								.setDescription("The message ID of the template")
+								.setName(en.config.edit.message_id.name)
+								.setDescription(en.config.edit.message_id.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.edit.message_id.description
+								})
+								.setNameLocalizations({
+									fr: fr.config.edit.message_id.name
+								})
 								.setRequired(true)
 						)
 						.addStringOption(option =>
 							option
-								.setName("field_name")
-								.setDescription("The name of the field to remove")
+								.setName(en.config.fields.name.name)
+								.setNameLocalizations({
+									fr: fr.config.fields.name.name
+								})
+								.setDescription(en.config.fields.name.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.fields.name.description
+								})
 								.setRequired(true)
 						)
 				)
 				.addSubcommand(sub =>
 					sub
-						.setName("add")
-						.setDescription("Add a field to the template")
+						.setName(en.config.fields.add.name)
+						.setDescription(en.config.fields.add.description)
+						.setDescriptionLocalizations({
+							fr: fr.config.fields.add.description
+						})
+						.setNameLocalizations({
+							fr: fr.config.fields.add.name
+						})
 						.addStringOption(option =>
 							option
-								.setName("message_id")
-								.setDescription("The message ID of the template")
+								.setName(en.config.edit.message_id.name)
+								.setDescription(en.config.edit.message_id.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.edit.message_id.description
+								})
+								.setNameLocalizations({
+									fr: fr.config.edit.message_id.name
+								})
 								.setRequired(true)
 						)
 						.addStringOption(option =>
 							option
-								.setName("field_name")
-								.setDescription("The name of the field to add")
+								.setName(en.config.fields.name.name)
+								.setNameLocalizations({
+									fr: fr.config.fields.name.name
+								})
+								.setDescription(en.config.fields.name.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.fields.name.description
+								})
 								.setRequired(true)
 						)
 						.addStringOption(option =>
 							option
 								.setName("field_description")
-								.setDescription("The description of the field")
+								.setDescription(en.config.field.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.description
+								})
 								.setRequired(false)
 						)
 						.addStringOption(option =>
 							option
 								.setName("field_type")
-								.setDescription("The type of the field")
+								.setDescription(en.config.field.type)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.type
+								})
 								.setRequired(false)
 								.addChoices(
-									{name: "short", value: "short"},
-									{name: "paragraph", value: "paragraph"}
+									{name: en.config.field.short, value: "short", name_localizations: {fr: fr.config.field.short}},
+									{name: en.config.field.paragraph, value: "paragraph", name_localizations: {fr: fr.config.field.paragraph}}
 								))
 						.addBooleanOption(option =>
 							option
 								.setName("field_required")
-								.setDescription("The field is required during ticket creation modal")
+								.setDescription(en.config.field.required)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.required
+								})
 								.setRequired(false)
 						)
 				)
 				.addSubcommand(sub =>
 					sub
-						.setName("edit")
-						.setDescription("Edit a field from the template")
+						.setName(en.config.fields.edit.name)
+						.setDescription(en.config.fields.edit.description)
+						.setDescriptionLocalizations({
+							fr: fr.config.fields.edit.description
+						})
 						.addStringOption(option =>
 							option
-								.setName("message_id")
-								.setDescription("The message ID of the template")
+								.setName(en.config.edit.message_id.name)
+								.setDescription(en.config.edit.message_id.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.edit.message_id.description
+								})
+								.setNameLocalizations({
+									fr: fr.config.edit.message_id.name
+								})
 								.setRequired(true)
 						)
 						.addStringOption(option =>
 							option
-								.setName("field_name")
-								.setDescription("The name of the field to edit")
+								.setName(en.config.fields.name.name)
+								.setNameLocalizations({
+									fr: fr.config.fields.name.name
+								})
+								.setDescription(en.config.fields.name.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.fields.name.description
+								})
 								.setRequired(true)
 						)
 						.addStringOption(option =>
 							option
 								.setName("field_description")
-								.setDescription("The new description of the field")
+								.setDescription(en.config.field.description)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.description
+								})
 								.setRequired(false)
 						)
 						.addStringOption(option =>
 							option
 								.setName("field_type")
-								.setDescription("The new type of the field")
+								.setDescription(en.config.field.type)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.type
+								})
 								.setRequired(false)
 								.addChoices(
-									{name: "short", value: "short"},
-									{name: "paragraph", value: "paragraph"}
+									{ name: en.config.field.short, value: "short", name_localizations: { fr: fr.config.field.short } },
+									{ name: en.config.field.paragraph, value: "paragraph", name_localizations: { fr: fr.config.field.paragraph } }
 								))
 						.addBooleanOption(option =>
 							option
 								.setName("field_required")
-								.setDescription("The field is required during ticket creation modal")
+								.setDescription(en.config.field.required)
+								.setDescriptionLocalizations({
+									fr: fr.config.field.required
+								})
 								.setRequired(false)
 						)
 				)

@@ -44,7 +44,7 @@ export default {
 			required: "Is the field required ?",
 			short: "Short",
 			paragraph: "Paragraph",
-			id: "The field id, keep it short and simple",
+			id: "The id of the field, keep it short and simple. Use the field in the thread name with {{value}}",
 		},
 		new: {
 			name: "new",
@@ -55,7 +55,7 @@ export default {
 			},
 			thread_name: {
 				name: "thread_name",
-				description: "The name of the thread. Use {{value}} to use template value.",
+				description: "The name of the thread. Variables can be transformed with {{value}}",
 			},
 			role: {
 				description: "The role of people who need to be added to the template",
@@ -96,7 +96,7 @@ export default {
 			description: "Edit the fields of the template",
 			name: {
 				name: "field_id",
-				description: "The id of the field",
+				description: "The id of the field, keep it short and simple. Use the field in the thread name with {{value}}",
 			},
 			remove: {
 				name: "remove",

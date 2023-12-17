@@ -44,7 +44,7 @@ export default {
 			required: "Le champ est-il obligatoire ?",
 			short: "Court",
 			paragraph: "Paragraphe",
-			id: "L'ID du champ, gardez-le court et simple",
+			id: "L'ID du champ, gardez-le court et simple. Utiliser le champ dans le nom du thread avec {{nom}}.",
 		},
 		new: {
 			name: "nouveau",
@@ -55,7 +55,7 @@ export default {
 			},
 			thread_name: {
 				name: "thread_name",
-				description: "Le nom du thread. Utilisez {{value}} pour utiliser la valeur du template.",
+				description: "Le nom du thread. Les variables peuvent être transformée avec {{valeur}}",
 			},
 			role: {
 				description: "Le rôle des personnes qui doivent être ajoutées à la template",
@@ -96,7 +96,7 @@ export default {
 			description: "Modifier les champs de la template",
 			name: {
 				name: "field_id",
-				description: "L'id du champ à modifier'",
+				description: "L'id du champ, gardez-le court et simple. Utiliser le champ dans le nom du thread avec {{valeur}}",
 			},
 			remove: {
 				name: "supprimer",

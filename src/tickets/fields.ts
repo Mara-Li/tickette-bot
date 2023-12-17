@@ -1,4 +1,5 @@
 import { CommandInteraction, Message } from "discord.js";
+
 import { TemplateModals, Ticket } from "../interface";
 import { ln } from "../locales";
 import { createFile, deleteFile } from "./template";
@@ -10,7 +11,7 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 			content: ln(interaction).error.field.notfound.replace("{{field}}", field.name),
 		});
 		return;
-	};
+	}
 	fieldToEdit.description = field.description;
 	fieldToEdit.required = field.required;
 	fieldToEdit.type = field.type;

@@ -439,10 +439,10 @@ export const config = {
 			const threadName = options.getString("thread_name", true);
 			const fields = [];
 			for (let i = 1; i < 5; i++) {
-				const field_name = options.getString(`field_${i}_name`) ?? `${ln(interaction).common.field}: ${i}`;
+				const field_name = options.getString(`field_${i}_name`);
 				const field_description = options.getString(`field_${i}_description`) ?? "";
 				const field_type = options.getString(`field_${i}_type`) ?? "short";
-				const field_id = options.getString(`field_${i}_id`) ?? field_name.replace(/\W+/g, "-").toLowerCase();
+				const field_id = options.getString(`field_${i}_id`) ?? `${ln(interaction).common.field}-${i}`;
 				const field_required = options.getBoolean(`field_${i}_required`) ?? false;
 				if (field_name) {
 					const templateMod: TemplateModals = {

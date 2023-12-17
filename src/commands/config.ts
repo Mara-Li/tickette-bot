@@ -408,7 +408,7 @@ export const config = {
 		if (!interaction.guildId) return;
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const subcommand = options.getSubcommand();
-		if (subcommand === "new") {
+		if (subcommand === en.config.new.name) {
 			const name = options.getString("name", true);
 			const role = [options.getRole("role", true).id];
 			const channel = options.getChannel("channel", true).id;

@@ -5,10 +5,10 @@ import {
 	SlashCommandBuilder,
 	SlashCommandSubcommandBuilder,
 } from "discord.js";
-import { renameThread } from "src/tickets/editname";
 
 import { TemplateModals, Ticket } from "../interface";
 import { ln } from "../locales";
+import { renameThread } from "../tickets/editname";
 import { addRoleToTemplate, removeRoleToTemplate } from "../tickets/editRole";
 import { createEmbed } from "../tickets/embeds";
 import { addFieldToTemplate, editFieldToTemplate, removeFieldToTemplate } from "../tickets/fields";
@@ -125,25 +125,23 @@ export const config = {
 						.setRequired(true)
 				)
 		)
-		.addSubcommandGroup(group =>
+		.addSubcommand(group =>
 			group
 				.setName("rename")
 				.setDescription("Edit the name of the thread that will be created")
-				.addSubcommand(sub =>
-					sub
-						.addStringOption(option =>
-							option
-								.setName("message_id")
-								.setDescription("The message ID of the template")
-								.setRequired(true)
-						)
-						.addStringOption(option =>
-							option
-								.setName("thread_name")
-								.setDescription("The name of the thread, you can use {{value}} to set the value of the field")
-								.setRequired(true)
-						)
+				.addStringOption(option =>
+					option
+						.setName("message_id")
+						.setDescription("The message ID of the template")
+						.setRequired(true)
 				)
+				.addStringOption(option =>
+					option
+						.setName("thread_name")
+						.setDescription("The name of the thread")
+						.setRequired(true)
+				)
+
 		)
 		.addSubcommandGroup(group =>
 			group

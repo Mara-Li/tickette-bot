@@ -1,4 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Guild, ModalActionRowComponentBuilder, ModalBuilder, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Embed, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import moment from "moment";
 import { Ticket } from "src/interface";
 
 export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
@@ -38,16 +39,9 @@ export async function getTemplateByIds(messageId: string, channelId: string, gui
 	return await response.json() as Ticket;
 }
 
-export async function createModal(command: ButtonInteraction) {
+export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 	//get the template using the embed message id
-	const embed = command.message.embeds[0];
-	//footer is Ticket ID: <messageId>
-	const messageInfo = embed.footer?.text?.split(" : ");
-	//download the template
-	if (!messageInfo ||messageInfo?.length < 2) return;
-	const ticket = await getTemplateByIds(messageInfo[1], messageInfo[0], command.guild!);
-	if (!ticket) return;
-	// create modal !
+
 	const modal = new ModalBuilder()
 		.setCustomId("ticket")
 		.setTitle("New ticket");
@@ -65,4 +59,81 @@ export async function createModal(command: ButtonInteraction) {
 	}
 	await command.showModal(modal);
 
+}
+
+export async function createThread(embed: Embed, interaction: ModalSubmitInteraction | ButtonInteraction) {
+	const footer = embed?.footer?.text?.split(" : ");
+	if (!footer || footer.length < 2) {
+		await interaction.reply({
+			content: "Error: Footer not found",
+			ephemeral: true,
+		});
+		return;
+	}
+	const template = await getTemplateByIds(footer[1], footer[0], interaction.guild as Guild);
+	if (!template) {
+		await interaction.reply({
+			content: "Error: Template not found",
+			ephemeral: true,
+		});
+		return;
+	}
+	const threadName = template.threadName || "Ticket";
+	let newThreadName = threadName;
+	if (interaction.isModalSubmit()) {
+		const fields = interaction.fields.fields;
+		//replace the threadName {{value}}
+		newThreadName = threadName?.replace(
+			/{{([^{}]*)}}/g,
+			(match, p1 : string) => {
+				return fields.find((field) => field.customId.toLowerCase() === p1.toLowerCase())?.value || match;
+			}
+		);
+	}
+	const DEFAULT_TEMPLATE_VALUE: {
+		date: string;
+		time: string;
+		user_id: string;
+		nickname: string;
+	} = {
+		"date": moment().format("YYYY-MM-DD"),
+		"time": moment().format("HH:mm"),
+		"user_id": interaction.user.id,
+		"nickname": interaction.user.displayName,
+	};
+	newThreadName = newThreadName.replace(
+		/{{([^{}]*)}}/g,
+		(match, p1: string) => {
+			return DEFAULT_TEMPLATE_VALUE[p1.toLowerCase() as keyof typeof DEFAULT_TEMPLATE_VALUE] || match;
+		}
+	);
+	const channelToCreateThread = interaction.channel as TextChannel;
+	//create the thread
+	const thread = await channelToCreateThread.threads.create({
+		name: newThreadName || "Ticket",
+		autoArchiveDuration: 1440,
+		reason: `Ticket created by ${interaction.user.displayName}`,
+		invitable: false,
+	});
+	await interaction.reply({
+		content: "Ticket created !",
+		ephemeral: true,
+	});
+	//add the user to the thread
+	await thread.members.add(interaction.user.id);
+	//add role to the thread
+	const roles = template.roles;
+	const msg = await thread.send({
+		content: "_ _",
+	});
+	const allRoleMention = roles.map((role) => `<@&${role}>`).join(" ");
+	await msg.edit({
+		content: allRoleMention,
+	});
+	await msg.delete();
+	//delete the last message in the channel
+	const lastMessage = channelToCreateThread.lastMessage;
+	if (lastMessage) {
+		await lastMessage.delete();
+	}
 }

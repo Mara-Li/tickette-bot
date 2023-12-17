@@ -17,4 +17,4 @@ At the creation, the template is facultative, and you can use the bot to create 
 
 To use edit the template (using `/config`), you need to have the id of the message where the template was saved. To do that, you need to have the developper mode enabled in Discord (in the settings), and right click on the message, and click on "Copy ID".
 
-The `/config` command can only be used by
+The `/config` command can only be used by user with the permission "manage channel".

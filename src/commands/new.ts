@@ -113,6 +113,8 @@ export const create = {
 		};
 		await createJSONTemplate(template, interaction.guildId!, interaction.channelId, interaction);
 		const fetchedReply = await interaction.fetchReply();
+		//pins the message
+		await fetchedReply.pin();
 		await createEmbed(interaction, template, fetchedReply.id, interaction.channelId);
 		return;
 

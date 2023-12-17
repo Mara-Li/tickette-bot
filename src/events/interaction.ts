@@ -1,6 +1,7 @@
 import { BaseInteraction, Client } from "discord.js";
 
 import { commandsList } from "../commands/index";
+import { ln } from "../locales/index";
 import { createModal, createThread, getTemplateByIds } from "../tickets/embeds";
 
 export default (client: Client): void => {
@@ -23,7 +24,17 @@ export default (client: Client): void => {
 				//download the template
 				if (!messageInfo || messageInfo?.length < 2) return;
 				const ticket = await getTemplateByIds(messageInfo[1], messageInfo[0], interaction.guild!);
-				if (!ticket) return;
+				const lg = ln(interaction);
+
+				if (!ticket) {
+					//delete embed
+					await interaction.message.delete();
+					await interaction.reply({
+						content: `${lg.error.attachment}\n${lg.error.administrator}`,
+						ephemeral: true,
+					});
+					return;
+				}
 				if (!interaction.guild || !interaction.channel) return;
 				// create modal !
 				if (ticket.fields.length === 0) {

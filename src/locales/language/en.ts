@@ -8,6 +8,7 @@ export default {
 	error: {
 		channel: "Error while editing the template: message not found.You need to use the command in the same channel the template JSON was saved.",
 		attachment: "Error while editing the template: the message has no attachment.",
+		administrator: "Please, contact an administrator to edit the template.",
 		footer: "Error while editing the template: the embed footer is not in the good format.",
 		field: {
 			"notfound": "Error while editing the template: the field was not found.",

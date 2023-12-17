@@ -9,6 +9,7 @@ export default {
 		channel: "Erreur lors de l'édition du template : message non trouvé. Vous devez utiliser la commande dans le même channel que le JSON du template.",
 		attachment: "Erreur lors de l'édition du template : le message n'a pas de fichier joint.",
 		footer: "Erreur lors de l'édition du template : le footer de l'embed n'a pas le bon format.",
+		administrator: "Merci de contacter un administrateur pour éditer le template.",
 		field: {
 			"notfound": "Erreur lors de l'édition du template : le champ n'a pas été trouvé.",
 			"exist": "Erreur lors de l'édition du template : le champ existe déjà.",

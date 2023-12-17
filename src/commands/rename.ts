@@ -1,4 +1,4 @@
-import { CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, CommandInteractionOptionResolver, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 import { ln } from "../locales";
 import en from "../locales/language/en";
@@ -10,6 +10,7 @@ export const rename = {
 	data : new SlashCommandBuilder()
 		.setName(en.config.rename.title)
 		.setDescription(en.config.rename.description)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setNameLocalizations({
 			fr: fr.config.rename.title
 		})

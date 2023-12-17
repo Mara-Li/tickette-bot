@@ -1,6 +1,7 @@
 import {
 	CommandInteraction,
 	CommandInteractionOptionResolver,
+	PermissionFlagsBits,
 	SlashCommandBuilder,
 } from "discord.js";
 
@@ -22,6 +23,7 @@ import { downloadJSONTemplate } from "../tickets/template";
 export const fields = {
 	data: new SlashCommandBuilder()
 		.setName(en.config.fields.title)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setDescription(en.config.fields.description)
 		.setNameLocalizations({
 			fr: fr.config.fields.title

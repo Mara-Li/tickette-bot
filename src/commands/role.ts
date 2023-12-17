@@ -1,4 +1,4 @@
-import { CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, CommandInteractionOptionResolver, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
 import { ln } from "../locales";
 import en from "../locales/language/en";
@@ -10,6 +10,7 @@ export const role = {
 	data: new SlashCommandBuilder()
 		.setName(en.common.role)
 		.setDescription(en.config.role.description)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setNameLocalizations({
 			fr: fr.common.role
 		})

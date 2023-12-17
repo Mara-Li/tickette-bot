@@ -23,6 +23,7 @@ export default {
 	modal: {
 		ticket: "New ticket",
 		button: "Create a new ticket",
+		description: "{{user}} created a new ticket !\n Here are the informations provided by the user:",
 	},
 	new: {
 		success: "Template created successfully",

@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Embed, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Embed, EmbedBuilder, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
 import moment from "moment";
 
 import { Ticket } from "../interface";
@@ -140,4 +140,31 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	if (lastMessage) {
 		await lastMessage.delete();
 	}
+	if (interaction.isModalSubmit()) {
+		//delete the message
+		const fields = interaction.fields.fields;
+		//embed
+		const embed = new EmbedBuilder()
+			.setTitle(ln(interaction).modal.ticket)
+			.setDescription(ln(interaction).modal.description.replace("{{user}}", interaction.user.displayName))
+			.setAuthor({
+				name: interaction.user.username,
+				iconURL: interaction.user.displayAvatarURL(),
+			})
+			.setColor(0x2f3136)
+			.setTimestamp();
+		for (const field of fields.values()) {
+			const name = template.fields.find((f) => f.id === field.customId)?.name;
+			embed.addFields({
+				name: name || field.customId,
+				value: field.value,
+				inline: true,
+			});
+		}
+		await thread.send({
+			embeds: [embed],
+		});
+	}
+
+
 }

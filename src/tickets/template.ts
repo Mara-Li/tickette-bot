@@ -44,7 +44,7 @@ export async function createJSONTemplate(
 ) {
 	createFile(template, serverID, channelID);
 	const message_id = await interaction.reply({
-		content: ln(interaction).new.success,
+		content: `__Template__ : ${template.name}`,
 		files: [`tickets/${serverID}/${channelID}.json`]
 	});
 	deleteFile(serverID, channelID);

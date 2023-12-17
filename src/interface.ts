@@ -7,6 +7,12 @@ export interface TemplateModals {
 
 export interface Ticket {
 	fields: TemplateModals[];
+	ticketMessage: string;
 	roles: string[]; // role id
 	name: string;
+	channel: string;
+	threadName: string;
 }
+
+
+

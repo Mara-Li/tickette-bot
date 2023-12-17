@@ -9,13 +9,14 @@
  * Field form: Template[]
  *
 */
+import { CommandInteraction } from "discord.js";
 import fs from "fs";
-import { TemplateModals, Ticket } from "../interface";
-import { CommandInteraction, Message } from "discord.js";
+
+import { Ticket } from "../interface";
 import { ln } from "../locales";
 
 export function createFile(template: Ticket, serverID: string, channelID: string) {
-	const tmpFileContent = JSON.stringify(template, null, 2)
+	const tmpFileContent = JSON.stringify(template, null, 2);
 	if (fs.existsSync(`tickets/${serverID}/${channelID}.json`)) {
 		fs.rmSync(`tickets/${serverID}/${channelID}.json`);
 	}
@@ -36,20 +37,19 @@ export function deleteFile(serverID: string, channelID: string) {
 }
 
 export async function createJSONTemplate(
-	name: string,
-	role: string[],
-	fields: TemplateModals[],
+	template: Ticket,
 	serverID: string,
 	channelID: string,
 	interaction: CommandInteraction
 ) {
-	createFile({ name, roles: role, fields }, serverID, channelID);
-	await interaction.reply({
+	createFile(template, serverID, channelID);
+	const message_id = await interaction.reply({
 		content: ln(interaction).new.success,
 		files: [`tickets/${serverID}/${channelID}.json`]
-	})
+	});
 	deleteFile(serverID, channelID);
-};
+	return message_id.id;
+}
 
 export async function downloadJSONTemplate(
 	messageID: string,

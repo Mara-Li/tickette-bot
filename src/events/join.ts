@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { commandsList } from "../commands";
+import { commandsList } from "../commands/index";
 
 export default (client: Client): void => {
 	client.on("guildCreate", async (guild) => {

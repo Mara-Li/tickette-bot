@@ -5,6 +5,7 @@ import { Ticket } from "../interface";
 import { ln } from "../locales";
 
 export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
+	const lg = ln(interaction);
 	const channel = interaction.guild?.channels.cache.get(ticket.channel);
 	if (!channel || !(channel instanceof TextChannel)) return;
 	const embed = {
@@ -18,7 +19,7 @@ export async function createEmbed(interaction: CommandInteraction, ticket: Ticke
 	//add button to create ticket
 	const createTicket = new ButtonBuilder()
 		.setCustomId("createTicket")
-		.setLabel("Create ticket")
+		.setLabel(`📝 ${lg.modal.button}`)
 		.setStyle(ButtonStyle.Primary);
 
 	await channel.send({
@@ -46,7 +47,7 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 
 	const modal = new ModalBuilder()
 		.setCustomId("ticket")
-		.setTitle("New ticket");
+		.setTitle(ln(command).modal.ticket);
 	for (const field of ticket.fields) {
 		const inputStyle = field.type === "short" ? TextInputStyle.Short : TextInputStyle.Paragraph;
 		const input = new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(

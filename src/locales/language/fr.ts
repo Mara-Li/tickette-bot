@@ -20,6 +20,10 @@ export default {
 			notInTemplate: "Le rôle {{role}} n'est pas dans le template."
 		}
 	},
+	modal: {
+		ticket: "Nouveau ticket",
+		button: "Créer un nouveau ticket",
+	},
 	new: {
 		success: "Template créé avec succès",
 	},

@@ -114,6 +114,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 		autoArchiveDuration: 1440,
 		reason: lg.reason.replace("{{nickname}}", interaction.user.username),
 		type: ChannelType.PrivateThread,
+		invitable: false,
 	});
 	await interaction.reply({
 		content: lg.created,

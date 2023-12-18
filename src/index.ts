@@ -11,10 +11,7 @@ dotenv.config({ path: ".env" });
 
 export const client = new Client({
 	intents: [
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMembers,
 	],
 	partials: [
 		Partials.Channel,

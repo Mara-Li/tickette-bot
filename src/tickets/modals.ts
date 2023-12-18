@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, Embed, EmbedBuilder, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, CommandInteraction, Embed, EmbedBuilder, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
 import moment from "moment";
 
 import { Ticket } from "../interface";
@@ -117,7 +117,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 		name: newThreadName || "Ticket",
 		autoArchiveDuration: 1440,
 		reason: lg.reason.replace("{{nickname}}", interaction.user.username),
-		invitable: false,
+		type: ChannelType.PrivateThread,
 	});
 	await interaction.reply({
 		content: lg.created,

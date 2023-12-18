@@ -2,7 +2,7 @@ import { BaseInteraction, Client } from "discord.js";
 
 import { commandsList } from "../commands/index";
 import { ln } from "../locales/index";
-import { createModal, createThread, getTemplateByIds } from "../tickets/embeds";
+import { createModal, createThread, getTemplateByIds } from "../tickets/modals";
 
 export default (client: Client): void => {
 	client.on("interactionCreate", async (interaction: BaseInteraction) => {

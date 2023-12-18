@@ -4,7 +4,7 @@ import { TemplateModals, Ticket } from "../interface";
 import { ln } from "../locales/index";
 import en from "../locales/language/en";
 import fr from "../locales/language/fr";
-import { createEmbed } from "../tickets/embeds";
+import { createEmbed } from "../tickets/modals";
 import { createJSONTemplate } from "../tickets/template";
 
 

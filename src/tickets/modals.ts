@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, CommandInteraction, Embed, EmbedBuilder, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
 import moment from "moment";
 
-import { Ticket } from "../interface";
+import { DEFAULT_TEMPLATE_VALUE, Ticket } from "../interface";
 import { ln } from "../locales";
 
 export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
@@ -94,21 +94,17 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 			}
 		);
 	}
-	const DEFAULT_TEMPLATE_VALUE: {
-		date: string;
-		time: string;
-		user_id: string;
-		nickname: string;
-	} = {
-		"date": moment().format("YYYY-MM-DD"),
-		"time": moment().format("HH:mm"),
-		"user_id": interaction.user.id,
-		"nickname": interaction.user.displayName,
-	};
+
+	const TEMPLATE_VALUE = DEFAULT_TEMPLATE_VALUE(
+		moment().format("DD/MM/YYYY"),
+		moment().format("HH:mm"),
+		interaction
+	);
+
 	newThreadName = newThreadName.replace(
 		/{{([^{}]*)}}/g,
 		(match, p1: string) => {
-			return DEFAULT_TEMPLATE_VALUE[p1.toLowerCase() as keyof typeof DEFAULT_TEMPLATE_VALUE] || match;
+			return TEMPLATE_VALUE[p1.toLowerCase() as keyof typeof TEMPLATE_VALUE] || match;
 		}
 	);
 	const channelToCreateThread = interaction.channel as TextChannel;

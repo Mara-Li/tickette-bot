@@ -143,11 +143,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 		content: allRoleMention,
 	});
 	await msg.delete();
-	//delete the last message in the channel
-	const lastMessage = thread.lastMessage;
-	if (lastMessage) {
-		await lastMessage.delete();
-	}
+
 	if (interaction.isModalSubmit()) {
 		//delete the message
 		const fields = interaction.fields.fields;

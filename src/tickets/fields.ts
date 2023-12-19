@@ -5,7 +5,7 @@ import { ln } from "../locales";
 import { createFile, deleteFile } from "./template";
 
 export async function editFieldToTemplate(field: TemplateModals, template: Ticket, message: Message, interaction: CommandInteraction) {
-	const fieldToEdit = template.fields.find(f => f.name === field.name);
+	const fieldToEdit = template.fields.find(f => f.id === field.id);
 	if (!fieldToEdit) {
 		await interaction.reply({
 			content: ln(interaction).error.field.notfound.replace("{{field}}", field.name),
@@ -13,6 +13,7 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 		});
 		return;
 	}
+	fieldToEdit.name = field.name;
 	fieldToEdit.description = field.description;
 	fieldToEdit.required = field.required;
 	fieldToEdit.type = field.type;
@@ -37,7 +38,7 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 }
 
 export async function addFieldToTemplate(field: TemplateModals, template: Ticket, message: Message) {
-	if (template.fields.length > 5) {
+	if (template.fields.length === 5) {
 		return false;
 	}
 	template.fields.push(field);
@@ -55,7 +56,7 @@ export async function addFieldToTemplate(field: TemplateModals, template: Ticket
 }
 
 export async function removeFieldToTemplate(field: string, template: Ticket, message: Message) {
-	template.fields = template.fields.filter(f => f.name !== field);
+	template.fields = template.fields.filter(f => f.id !== field);
 	if (template.fields.length === 0) {
 		//delete the message
 		await message.delete();

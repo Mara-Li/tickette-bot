@@ -271,6 +271,7 @@ export const fields = {
 			}
 			break;
 		case "edit":
+			console.log(ticket.fields, field);
 			const field_name = options.getString("field_name") ?? field;
 			const field_description_edit = options.getString("field_description") ?? "";
 			const field_type_edit = options.getString("field_type") ?? "short";

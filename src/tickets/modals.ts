@@ -30,8 +30,11 @@ export async function createEmbed(interaction: CommandInteraction, ticket: Ticke
 
 export async function getTemplateByIds(messageId: string, channelId: string, guild: Guild) {
 	//download the template
+	await guild.channels.fetch();
 	const channel = await guild.channels.fetch(channelId);
 	if (!channel || !(channel instanceof TextChannel)) return;
+	//force refresh cache
+	await channel.messages.fetch();
 	const message = await channel.messages.fetch(messageId);
 	if (!message) return;
 	//download the template
@@ -48,6 +51,7 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 	const modal = new ModalBuilder()
 		.setCustomId("ticket")
 		.setTitle(ln(command).modal.ticket);
+
 	for (const field of ticket.fields) {
 		const inputStyle = field.type === "short" ? TextInputStyle.Short : TextInputStyle.Paragraph;
 		const input = new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
@@ -87,10 +91,18 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	if (interaction.isModalSubmit()) {
 		const fields = interaction.fields.fields;
 		//replace the threadName {{value}}
+
 		newThreadName = threadName?.replace(
 			/{{([^{}]*)}}/g,
 			(match, p1 : string) => {
-				return fields.find((field) => field.customId.toLowerCase() === p1.toLowerCase())?.value || match;
+				const field = fields.find((field) => field.customId.toLowerCase() === p1.toLowerCase());
+				if (field) {
+					//find the type in template
+					const type = template.fields.find((f) => f.id === field.customId)?.type;
+					if (type === "paragraph") return field.value.slice(0, 11);
+					return field.value;
+				}
+				return match;
 			}
 		);
 	}
@@ -111,7 +123,6 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	//create the thread
 	const thread = await channelToCreateThread.threads.create({
 		name: newThreadName || "Ticket",
-		autoArchiveDuration: 1440,
 		reason: lg.reason.replace("{{nickname}}", interaction.user.username),
 		type: ChannelType.PrivateThread,
 		invitable: false,
@@ -133,7 +144,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	});
 	await msg.delete();
 	//delete the last message in the channel
-	const lastMessage = channelToCreateThread.lastMessage;
+	const lastMessage = thread.lastMessage;
 	if (lastMessage) {
 		await lastMessage.delete();
 	}

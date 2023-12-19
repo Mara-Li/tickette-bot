@@ -101,6 +101,7 @@ export const fields = {
 						.setDescriptionLocalizations({
 							fr: fr.config.field.name
 						})
+						.setMaxLength(45)
 						.setRequired(false))
 				.addStringOption(option =>
 					option
@@ -171,6 +172,7 @@ export const fields = {
 						.setDescriptionLocalizations({
 							fr: fr.config.field.name
 						})
+						.setMaxLength(45)
 						.setRequired(false))
 				.addStringOption(option =>
 					option

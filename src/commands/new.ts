@@ -138,6 +138,7 @@ for (let i = 1; i <= 4; i++) {
 				.setDescriptionLocalizations({
 					fr: fr.config.field.name
 				})
+				.setMaxLength(45)
 				.setRequired(false))
 		.addStringOption(option =>
 			option

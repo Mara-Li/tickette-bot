@@ -1,18 +1,10 @@
-import { CommandInteraction, Message } from "discord.js";
+import {Message } from "discord.js";
 
 import { TemplateModals, Ticket } from "../interface";
-import { ln } from "../locales";
 import { createFile, deleteFile } from "./template";
 
-export async function editFieldToTemplate(field: TemplateModals, template: Ticket, message: Message, interaction: CommandInteraction) {
-	const fieldToEdit = template.fields.find(f => f.id === field.id);
-	if (!fieldToEdit) {
-		await interaction.reply({
-			content: ln(interaction).error.field.notfound.replace("{{field}}", field.name),
-			ephemeral: true
-		});
-		return;
-	}
+export async function editFieldToTemplate(field: TemplateModals, template: Ticket, message: Message, fieldToEdit: TemplateModals) {
+
 	fieldToEdit.name = field.name;
 	fieldToEdit.description = field.description;
 	fieldToEdit.required = field.required;

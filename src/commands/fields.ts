@@ -271,7 +271,6 @@ export const fields = {
 			}
 			break;
 		case "edit":
-			console.log(ticket.fields, field);
 			const field_name = options.getString("field_name") ?? field;
 			const field_description_edit = options.getString("field_description") ?? "";
 			const field_type_edit = options.getString("field_type") ?? "short";
@@ -291,7 +290,7 @@ export const fields = {
 				type: field_type_edit as "short" | "paragraph",
 				required: field_required_edit
 			},
-			ticket, message, interaction);
+			ticket, message, fieldToEdit);
 			if (reply) {
 				await interaction.reply({
 					content: ln(interaction).edit.field.edited.replace("{{field}}", field),

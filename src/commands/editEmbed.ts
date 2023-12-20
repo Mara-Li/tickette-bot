@@ -130,6 +130,7 @@ async function editEmbed(options: CommandInteractionOptionResolver, interaction:
 		return;
 	}
 	//force refresh cache
+	await interaction.guild?.channels.fetch();
 	await channel.messages.fetch();
 	const message = await channel.messages.fetch(messageId);
 	if (!message) {
@@ -188,7 +189,7 @@ async function resend(options: CommandInteractionOptionResolver, interaction: Co
 		await interaction.reply({ content: ln(interaction).embed.resend.error.textChannel, ephemeral: true });
 		return;
 	}
-	//force refresh cache
+	await interaction.guild?.channels.fetch();
 	await channel.messages.fetch();
 	if (!await channel.messages.fetch(templateID)) {
 		await interaction.reply({ content: ln(interaction).embed.resend.error.notFound, ephemeral: true });

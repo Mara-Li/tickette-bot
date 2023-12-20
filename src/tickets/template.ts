@@ -60,8 +60,8 @@ export async function downloadJSONTemplate(
 	interaction: CommandInteraction
 ) {
 	//search the message
-	if (!interaction.channel) return;
-	//force to fetch the message
+	if (!interaction.channel || !interaction.guild) return;
+	await interaction.guild.channels.fetch();
 	await interaction.channel.messages.fetch();
 	const message = await interaction.channel.messages.fetch(messageID);
 	if (!message) {

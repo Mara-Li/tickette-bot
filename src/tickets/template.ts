@@ -16,6 +16,8 @@ import { Ticket } from "../interface";
 import { ln } from "../locales";
 
 export function createFile(template: Ticket, serverID: string, channelID: string) {
+	delete template.channel;
+	delete template.name;
 	const tmpFileContent = JSON.stringify(template, null, 2);
 	if (fs.existsSync(`tickets/${serverID}/${channelID}.json`)) {
 		fs.rmSync(`tickets/${serverID}/${channelID}.json`);

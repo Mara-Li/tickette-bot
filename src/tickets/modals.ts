@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, CommandInteraction, Embed, EmbedBuilder, Guild, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, CommandInteraction, Embed, EmbedBuilder, Guild, GuildBasedChannel, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
 import moment from "moment";
 
 import { DEFAULT_TEMPLATE_VALUE, Ticket } from "../interface";
@@ -6,7 +6,7 @@ import { ln } from "../locales";
 
 export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
 	const lg = ln(interaction);
-	const channel = interaction.guild?.channels.cache.get(ticket.channel);
+	const channel : GuildBasedChannel | TextChannel | undefined = ticket.channel ? interaction.guild?.channels.cache.get(ticket.channel) : interaction.channel as GuildBasedChannel;
 	if (!channel || !(channel instanceof TextChannel)) return;
 	const embed = {
 		title: ticket.name,

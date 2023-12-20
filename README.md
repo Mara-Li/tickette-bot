@@ -1,3 +1,6 @@
+-> [Invite the bot](https://discord.com/api/oauth2/authorize?client_id=1186067111760629812&permissions=395137248256&scope=bot+applications.commands)
+
+
 Ticket+ is a bot that allows to create template for ticket creation. When clicking on the embed, a modals will be opened and the user that triggered it can fill some informations you choose.
 Thereafter, theses informations can be used for the ticket name generation.
 

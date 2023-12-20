@@ -225,18 +225,12 @@ export const fields = {
 				});
 				return;
 			}
-			const rep = await removeFieldToTemplate(field, ticket, message);
-			if (rep === "deleted") {
-				await interaction.reply({
-					content: ln(interaction).edit.field.deleted,
-					ephemeral: true
-				});
-			} else {
-				await interaction.reply({
-					content: ln(interaction).edit.field.removed.replace("{{field}}", field),
-					ephemeral: true
-				});
-			}
+			await removeFieldToTemplate(field, ticket, message);
+			await interaction.reply({
+				content: ln(interaction).edit.field.removed.replace("{{field}}", field),
+				ephemeral: true
+			});
+
 			break;
 		case "add":
 			const fieldName = options.getString("field_name") ?? field;

@@ -64,11 +64,6 @@ export async function addFieldToTemplate(field: TemplateModals, template: Ticket
 
 export async function removeFieldToTemplate(field: string, template: Ticket, message: Message) {
 	template.fields = template.fields.filter(f => f.id !== field);
-	if (template.fields.length === 0) {
-		//delete the message
-		await message.delete();
-		return "deleted";
-	}
 	//remove attachment
 	await message.edit({
 		files: []
@@ -79,5 +74,5 @@ export async function removeFieldToTemplate(field: string, template: Ticket, mes
 		files: [`tickets/${message.guild?.id}/${message.id}.json`]
 	});
 	deleteFile(message.guild?.id as string, message.id);
-	return "removed";
+	return;
 }

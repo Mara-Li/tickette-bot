@@ -10,71 +10,71 @@ import { createJSONTemplate } from "../tickets/template";
 
 export const create = {
 	data: new SlashCommandBuilder()
-		.setName(en.config.new.name)
+		.setName(en.new.name)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
-		.setDescription(en.config.new.description)
+		.setDescription(en.new.description)
 		.setNameLocalizations({
-			fr: fr.config.new.name
+			fr: fr.new.name
 		})
 		.setDescriptionLocalizations({
-			fr: fr.config.new.description
+			fr: fr.new.description
 		})
 		.addStringOption(option =>
 			option
-				.setName(en.config.new.embed.name)
-				.setDescription(en.config.new.embed.description)
+				.setName(en.new.embed.name)
+				.setDescription(en.new.embed.description)
 				.setDescriptionLocalizations({
-					fr: fr.config.new.embed.description
+					fr: fr.new.embed.description
 				})
 				.setNameLocalizations({
-					fr: fr.config.new.embed.name
+					fr: fr.new.embed.name
 				})
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName(en.config.new.thread_name.name)
-				.setDescription(en.config.new.thread_name.description)
+				.setName(en.new.thread_name.name)
+				.setDescription(en.new.thread_name.description)
 				.setNameLocalizations({
-					fr: fr.config.new.thread_name.name
+					fr: fr.new.thread_name.name
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.new.thread_name.description
+					fr: fr.new.thread_name.description
 				})
 				.setRequired(true)
 		)
 		.addRoleOption(option =>
 			option
 				.setName(en.common.role)
-				.setDescription(en.config.new.role.description)
+				.setDescription(en.new.role.description)
 				.setNameLocalizations({
 					fr: fr.common.role
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.new.role.description
+					fr: fr.new.role.description
 				})
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName(en.config.new.embed_content.name)
-				.setDescription(en.config.new.embed_content.description)
+				.setName(en.new.embed_content.name)
+				.setDescription(en.new.embed_content.description)
 				.setNameLocalizations({
-					fr: fr.config.new.embed_content.name
+					fr: fr.new.embed_content.name
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.new.embed_content.description
+					fr: fr.new.embed_content.description
 				})
 				.setRequired(true))
 		.addChannelOption(option =>
 			option
-				.setName(en.config.new.channel.name)
-				.setDescription(en.config.new.channel.description)
+				.setName(en.new.channel.name)
+				.setDescription(en.new.channel.description)
 				.setNameLocalizations({
-					fr: fr.config.new.channel.name
+					fr: fr.new.channel.name
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.new.channel.description
+					fr: fr.new.channel.description
 				})
 				.setRequired(true)
 				.addChannelTypes(ChannelType.GuildText)
@@ -126,46 +126,46 @@ for (let i = 1; i <= 4; i++) {
 		.addStringOption(option =>
 			option
 				.setName(`field_${i}_id`)
-				.setDescription(en.config.field.id)
+				.setDescription(en.field.id)
 				.setDescriptionLocalizations({
-					fr: fr.config.field.id
+					fr: fr.field.id
 				})
 				.setRequired(false))
 		.addStringOption(option =>
 			option
 				.setName(`field_${i}_name`)
-				.setDescription(en.config.field.name)
+				.setDescription(en.field.name)
 				.setDescriptionLocalizations({
-					fr: fr.config.field.name
+					fr: fr.field.name
 				})
 				.setMaxLength(45)
 				.setRequired(false))
 		.addStringOption(option =>
 			option
 				.setName(`field_${i}_description`)
-				.setDescription(en.config.field.description)
+				.setDescription(en.field.description)
 				.setDescriptionLocalizations({
-					fr: fr.config.field.description
+					fr: fr.field.description
 				})
 				.setRequired(false))
 		.addStringOption(option =>
 			option
 				.setName(`field_${i}_type`)
-				.setDescription(en.config.field.type)
+				.setDescription(en.field.type)
 				.setDescriptionLocalizations({
-					fr: fr.config.field.type
+					fr: fr.field.type
 				})
 				.setRequired(false)
 				.addChoices(
-					{ name: "short", value: "short", name_localizations: { fr: fr.config.field.short } },
-					{ name: "paragraph", value: "paragraph", name_localizations: { fr: fr.config.field.paragraph } }
+					{ name: "short", value: "short", name_localizations: { fr: fr.field.short } },
+					{ name: "paragraph", value: "paragraph", name_localizations: { fr: fr.field.paragraph } }
 				))
 		.addBooleanOption(option =>
 			option
 				.setName(`field_${i}_required`)
-				.setDescription("en.config.field.required")
+				.setDescription("en.field.required")
 				.setDescriptionLocalizations({
-					fr: fr.config.field.required
+					fr: fr.field.required
 				})
 				.setRequired(false)
 		);

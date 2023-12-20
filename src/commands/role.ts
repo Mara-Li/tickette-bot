@@ -9,51 +9,51 @@ import { downloadJSONTemplate } from "../tickets/template";
 export const role = {
 	data: new SlashCommandBuilder()
 		.setName(en.common.role)
-		.setDescription(en.config.role.description)
+		.setDescription(en.role.description)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setNameLocalizations({
 			fr: fr.common.role
 		})
 		.setDescriptionLocalizations({
-			fr: fr.config.role.description
+			fr: fr.role.description
 		})
 		.addStringOption(option =>
 			option
-				.setName(en.config.edit.message_id.name)
-				.setDescription(en.config.edit.message_id.description)
+				.setName(en.message_id.name)
+				.setDescription(en.message_id.description)
 				.setNameLocalizations({
-					fr: fr.config.edit.message_id.name
+					fr: fr.message_id.name
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.edit.message_id.description
+					fr: fr.message_id.description
 				})
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName(en.config.role.choice.name)
-				.setDescription(en.config.role.choice.description)
+				.setName(en.role.choice.name)
+				.setDescription(en.role.choice.description)
 				.setNameLocalizations({
-					fr: fr.config.role.choice.name
+					fr: fr.role.choice.name
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.role.choice.description
+					fr: fr.role.choice.description
 				})
 				.setRequired(true)
 				.addChoices(
-					{ name: en.config.role.choice.add, value: "add", name_localizations: { fr: fr.config.role.choice.add } },
-					{ name: en.config.role.choice.remove, value: "remove", name_localizations: { fr: fr.config.role.choice.remove } },
+					{ name: en.role.choice.add, value: "add", name_localizations: { fr: fr.role.choice.add } },
+					{ name: en.role.choice.remove, value: "remove", name_localizations: { fr: fr.role.choice.remove } },
 				)
 		)
 		.addRoleOption(option =>
 			option
 				.setName(en.common.role)
-				.setDescription(en.config.role.role.description)
+				.setDescription(en.role.role.description)
 				.setNameLocalizations({
 					fr: fr.common.role
 				})
 				.setDescriptionLocalizations({
-					fr: fr.config.role.role.description
+					fr: fr.role.role.description
 				})
 				.setRequired(true)
 		),

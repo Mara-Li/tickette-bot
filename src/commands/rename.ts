@@ -8,30 +8,30 @@ import { downloadJSONTemplate } from "../tickets/template";
 
 export const rename = {
 	data : new SlashCommandBuilder()
-		.setName(en.config.rename.title)
-		.setDescription(en.config.rename.description)
+		.setName(en.rename.title)
+		.setDescription(en.rename.description)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setNameLocalizations({
-			fr: fr.config.rename.title
+			fr: fr.rename.title
 		})
 		.setDescriptionLocalizations({
-			fr: fr.config.rename.description
+			fr: fr.rename.description
 		})
 		.addStringOption(option =>
 			option
-				.setName(en.config.edit.message_id.name)
-				.setDescription(en.config.edit.message_id.description)
+				.setName(en.message_id.name)
+				.setDescription(en.message_id.description)
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName(en.config.new.thread_name.name)
+				.setName(en.new.thread_name.name)
 				.setNameLocalizations({
-					fr: fr.config.new.thread_name.name
+					fr: fr.new.thread_name.name
 				})
-				.setDescription(en.config.new.thread_name.description)
+				.setDescription(en.new.thread_name.description)
 				.setDescriptionLocalizations({
-					fr: fr.config.new.thread_name.description
+					fr: fr.new.thread_name.description
 				})
 				.setRequired(true)
 		),

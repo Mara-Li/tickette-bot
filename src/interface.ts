@@ -33,6 +33,6 @@ export const DEFAULT_TEMPLATE_VALUE = (date: string, time: string, interaction: 
 		"user_id": interaction.user.id,
 		"nickname": interaction.user.displayName,
 		"username" : interaction.user.username,
-		"display" : (interaction.member as GuildMember)?.displayName || interaction.user.username,
+		"display" : (interaction.member as GuildMember)?.displayName || interaction.user.displayName,
 	};
 };

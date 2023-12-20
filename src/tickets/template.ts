@@ -70,6 +70,8 @@ export async function downloadJSONTemplate(
 		});
 		return;
 	}
+	//fetch the message
+	await message.fetch(true);
 	//search the file
 	const attachment = message.attachments.first();
 	if (!attachment) {

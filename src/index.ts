@@ -7,7 +7,11 @@ import interaction from "./events/interaction";
 import join from "./events/join";
 import ready from "./events/ready";
 
-dotenv.config({ path: ".env" });
+if (process.env.ENV === "production") {
+	dotenv.config({ path: ".env.prod" });
+} else {
+	dotenv.config({ path: ".env" });
+}
 
 export const client = new Client({
 	intents: [

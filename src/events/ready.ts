@@ -6,8 +6,11 @@ import { commandsList } from "../commands/index";
 import { VERSION } from "../index";
 
 
-dotenv.config({ path: ".env" });
-
+if (process.env.ENV === "production") {
+	dotenv.config({ path: ".env.prod" });
+} else {
+	dotenv.config({ path: ".env" });
+}
 const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? "0");
 
 export default (client: Client): void => {

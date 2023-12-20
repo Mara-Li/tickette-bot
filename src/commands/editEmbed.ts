@@ -1,10 +1,10 @@
 import { ChannelType, ColorResolvable, Colors, CommandInteraction, CommandInteractionOptionResolver, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder, TextChannel } from "discord.js";
-import { createEmbed } from "src/tickets/modals";
-import { downloadJSONTemplate } from "src/tickets/template";
 
 import { ln } from "../locales";
 import en from "../locales/language/en";
 import fr from "../locales/language/fr";
+import { createEmbed } from "../tickets/modals";
+import { downloadJSONTemplate } from "../tickets/template";
 
 function toTitle(str : string) {
 	return str.charAt(0).toUpperCase() + str.slice(1);

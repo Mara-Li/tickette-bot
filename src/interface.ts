@@ -1,4 +1,4 @@
-import { ButtonInteraction, CacheType, GuildMember, ModalSubmitInteraction } from "discord.js";
+import { ButtonInteraction, CacheType, GuildMember, Message, ModalSubmitInteraction, TextChannel } from "discord.js";
 
 export interface TemplateModals {
 	name: string;
@@ -7,6 +7,13 @@ export interface TemplateModals {
 	required: boolean;
 	id: string;
 }
+
+export interface ParseLink {
+	channel?: TextChannel;
+	message?: Message;
+	guild: string;
+}
+
 
 export interface Ticket {
 	fields: TemplateModals[];

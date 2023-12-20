@@ -9,10 +9,10 @@
  * Field form: Template[]
  *
 */
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, GuildBasedChannel, TextBasedChannel, TextChannel } from "discord.js";
 import fs from "fs";
 
-import { Ticket } from "../interface";
+import { ParseLink, Ticket } from "../interface";
 import { ln } from "../locales";
 
 export function createFile(template: Ticket, serverID: string, channelID: string) {
@@ -55,15 +55,65 @@ export async function createJSONTemplate(
 	return message_id.id;
 }
 
+async function fetchMessage(messageID: string, interaction: CommandInteraction, channelID: string | undefined) {
+	await interaction.guild?.channels.fetch();
+	if (!channelID)
+		return {
+			channel: undefined,
+			message: undefined
+		};
+	let channel: GuildBasedChannel | null | undefined | TextBasedChannel = await interaction.guild?.channels.fetch(channelID) as TextChannel;
+	//force fetch message cache
+	if (!channel)
+		channel = interaction.channel;
+	if (!channel || !(channel instanceof TextChannel)) {
+		return {
+			channel: undefined,
+			message: undefined
+		};
+	}
+	await channel.messages.fetch();
+	return {
+		message: await channel.messages.fetch(messageID),
+		channel
+	};
+
+}
+
+export async function parseLinkFromDiscord(link: string, interaction: CommandInteraction):Promise<ParseLink> {
+	const regex = /https:\/\/(.*)discord.com\/channels\/(\d+)\/(\d+)\/(\d+)/;
+	const match = regex.exec(link);
+	if (!match) {
+		return {
+			guild: interaction.guild?.id as string,
+			channel: interaction.channel as TextChannel,
+			message: (await fetchMessage(link, interaction, interaction.channel?.id)).message
+		} as ParseLink;
+	}
+	console.log(match);
+	//force fetch cache
+	const { message, channel } = await fetchMessage(match[4], interaction, match[3]);
+	if (!message) {
+		await interaction.reply({
+			content: ln(interaction).error.channel,
+		});
+		return {
+			guild: match[2],
+		};
+	}
+	return {
+		guild: match[2],
+		channel,
+		message,
+	};
+}
+
 export async function downloadJSONTemplate(
 	messageID: string,
 	interaction: CommandInteraction
 ) {
 	//search the message
-	if (!interaction.channel || !interaction.guild) return;
-	await interaction.guild.channels.fetch();
-	await interaction.channel.messages.fetch();
-	let message = await interaction.channel.messages.fetch(messageID);
+	const {message} = await parseLinkFromDiscord(messageID, interaction);
 	if (!message) {
 		await interaction.reply({
 			content: ln(interaction).error.channel,
@@ -71,8 +121,6 @@ export async function downloadJSONTemplate(
 		return;
 	}
 	//fetch the message
-	message = await message.fetch(true);
-	//search the file
 	const attachment = message.attachments.first();
 	if (!attachment) {
 		await interaction.reply({

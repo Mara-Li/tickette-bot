@@ -4,7 +4,7 @@ import { ln } from "../locales";
 import en from "../locales/language/en";
 import fr from "../locales/language/fr";
 import { createEmbed } from "../tickets/modals";
-import { downloadJSONTemplate } from "../tickets/template";
+import { downloadJSONTemplate, parseLinkFromDiscord } from "../tickets/template";
 
 function toTitle(str : string) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -122,17 +122,14 @@ export const embedCommands = {
 
 async function editEmbed(options: CommandInteractionOptionResolver, interaction: CommandInteraction) {
 	const messageId = options.getString("message_id", true);
+	const {message, channel} = await parseLinkFromDiscord(messageId, interaction);
+
 	//get the embed
 	const lang = ln(interaction);
-	const channel = interaction.channel;
 	if (!channel || !(channel instanceof TextChannel)) {
 		await interaction.reply({ content: lang.embed.edit.error.textChannel, ephemeral: true });
 		return;
 	}
-	//force refresh cache
-	await interaction.guild?.channels.fetch();
-	await channel.messages.fetch();
-	const message = await channel.messages.fetch(messageId);
 	if (!message) {
 		await interaction.reply({ content: lang.embed.edit.error.notFound, ephemeral: true });
 		return;
@@ -183,15 +180,15 @@ async function editEmbed(options: CommandInteractionOptionResolver, interaction:
 }
 
 async function resend(options: CommandInteractionOptionResolver, interaction: CommandInteraction) {
-	const templateID = options.getString("message_id", true);
-	const channel = interaction.channel;
+	const id = options.getString("message_id", true);
+	const link = await parseLinkFromDiscord(id, interaction);
+	const templateID = link.message?.id;
+	const channel = link.channel;
 	if (!channel || !(channel instanceof TextChannel)) {
 		await interaction.reply({ content: ln(interaction).embed.resend.error.textChannel, ephemeral: true });
 		return;
 	}
-	await interaction.guild?.channels.fetch();
-	await channel.messages.fetch();
-	if (!await channel.messages.fetch(templateID)) {
+	if (!templateID) {
 		await interaction.reply({ content: ln(interaction).embed.resend.error.notFound, ephemeral: true });
 		return;
 	}

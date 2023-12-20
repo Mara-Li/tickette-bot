@@ -10,7 +10,7 @@ export async function createEmbed(interaction: CommandInteraction, ticket: Ticke
 	if (!channel || !(channel instanceof TextChannel)) return;
 	const embed = {
 		title: ticket.name,
-		description: ticket.ticketMessage,
+		description: ticket.description,
 		color: 0x2f3136,
 		footer: {
 			text: `${channelId} : ${messageId}`,

@@ -108,7 +108,7 @@ export const create = {
 			roles: role,
 			name,
 			channel,
-			ticketMessage: options.getString("description", true),
+			description: options.getString("description", true),
 			threadName
 		};
 		await createJSONTemplate(template, interaction.guildId!, interaction.channelId, interaction);

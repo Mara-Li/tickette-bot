@@ -17,7 +17,6 @@ import { ln } from "../locales";
 
 export function createFile(template: Ticket, serverID: string, channelID: string) {
 	const cloneTemplate = JSON.parse(JSON.stringify(template));
-	delete cloneTemplate.name;
 	delete cloneTemplate.channel;
 	const tmpFileContent = JSON.stringify(cloneTemplate, null, 2);
 	if (fs.existsSync(`tickets/${serverID}/${channelID}.json`)) {

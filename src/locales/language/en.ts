@@ -114,43 +114,54 @@ export default {
 	},
 	embed: {
 		name: "embed",
-		description: "Edit the embed for the ticket creation",
-		message_id: {
-			name: "message_id",
-			description: "The message ID of the embed. You need to use the command in the channel of the embed.",
+		description: "Edit or resend the embed for the ticket creation",
+		edit: {
+			name: "edit",
+			description: "Edit the embed for the ticket creation",
+			message_id: {
+				name: "message_id",
+				description: "The message ID of the embed. You need to use the command in the channel of the embed.",
+			},
+			channel: {
+				name: "channel",
+				description: "The channel where the embed can be resend",
+			},
+			content: {
+				name: "content",
+				description: "The content of the embed",
+			},
+			title: {
+				name: "title",
+				description: "The title of the embed",
+			},
+			color: {
+				name: "color",
+				description: "Allow to changing the color. Hexadecimal value, rgb value, or via a color name",
+			},
+			thumbnail: {
+				name: "thumbnail",
+				description: "The image to add to the embed",
+			},
+			error: {
+				textChannel: "This command can only be used in a text channel",
+				notFound: "The message was not found: you need to use the command in the embed's channel.",
+				noEmbed: "The message has no embed",
+				invalidColor: "The color is not valid. You must use a hexadecimal value, a rgb value (in the format `(1, 2, 3)` or `[1,2,3]`) or [a color name from this list](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors)",
+			},
+			success: {
+				jump: "Embed edited.\n[Jump to message]({{url}})",
+				simple: "Embed edited"
+			}
 		},
-		channel: {
-			name: "channel",
-			description: "The channel where the embed can be resend",
+		resend: {
+			name: "recreate",
+			description: "Resend the embed",
+			channel: "the channel to recreate the embed",
+			error: {
+				textChannel: "This command can only be used in a text channel",
+				notFound: "The message was not found: you need to use the command in the template's channel.",
+			}
 		},
-		content: {
-			name: "content",
-			description: "The content of the embed",
-		},
-		title: {
-			name: "title",
-			description: "The title of the embed",
-		},
-		color: {
-			name: "color",
-			description: "Allow to changing the color. Hexadecimal value, rgb value, or via a color name",
-		},
-		thumbnail: {
-			name: "thumbnail",
-			description: "The image to add to the embed",
-		},
-		error: {
-			textChannel: "This command can only be used in a text channel",
-			notFound: "The message was not found: you need to use the command in the embed's channel.",
-			noEmbed: "The message has no embed",
-			invalidColor: "The color is not valid. You must use a hexadecimal value, a rgb value (in the format `(1, 2, 3)` or `[1,2,3]`) or [a color name from this list](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors)",
-		},
-		success: {
-			jump: "Embed edited.\n[Jump to message]({{url}})",
-			simple: "Embed edited"
-		}
-
-
 	}
 
 };

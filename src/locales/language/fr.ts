@@ -115,41 +115,53 @@ export default {
 	},
 	embed: {
 		name: "embed",
-		description: "Modifier l'embed pour la création de ticket",
-		message_id: {
-			name: "message_id",
-			description: "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
+		description: "Modifier ou renvoyer l'embed pour la création de ticket",
+		edit: {
+			name: "modifier",
+			description: "Modifier l'embed pour la création de ticket",
+			message_id: {
+				name: "message_id",
+				description: "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
+			},
+			channel: {
+				name: "channel",
+				description: "Le channel où l'embed peut être renvoyé (supprimera l'ancien)",
+			},
+			content: {
+				name: "description",
+				description: "La contenu de l'embed",
+			},
+			title: {
+				name: "titre",
+				description: "Le titre de l'embed",
+			},
+			color: {
+				name: "couleur",
+				description: "La couleur de l'embed. Accepte des valeurs hexadecimal, rgb ou un nom de couleur",
+			},
+			thumbnail: {
+				name: "thumbnail",
+				description: "L'image à ajouter à l'embed",
+			},
+			error: {
+				textChannel: "Cette commande ne peut être utilisée que dans un channel.",
+				notFound: "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
+				noEmbed: "Le message n'a pas d'embed.",
+				invalidColor: "La couleur n'est pas valide. Merci d'utiliser une valeur hexadécimal, un [nom de couleur depuis cette liste](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors) ou une valeur rgb.",
+			},
+			success: {
+				jump: "Embed modifié.\n[Cliquez ici pour voir le message]({{url}})",
+				simple: "Embed modifié."
+			}
 		},
-		channel: {
-			name: "channel",
-			description: "Le channel où l'embed peut être renvoyé (supprimera l'ancien)",
-		},
-		content: {
-			name: "description",
-			description: "La contenu de l'embed",
-		},
-		title: {
-			name: "titre",
-			description: "Le titre de l'embed",
-		},
-		color: {
-			name: "couleur",
-			description: "La couleur de l'embed. Accepte des valeurs hexadecimal, rgb ou un nom de couleur",
-		},
-		thumbnail: {
-			name: "thumbnail",
-			description: "L'image à ajouter à l'embed",
-		},
-		error: {
-			textChannel: "Cette commande ne peut être utilisée que dans un channel.",
-			notFound: "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
-			noEmbed: "Le message n'a pas d'embed.",
-			invalidColor: "La couleur n'est pas valide. Merci d'utiliser une valeur hexadécimal, un [nom de couleur depuis cette liste](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors) ou une valeur rgb.",
-		},
-		success: {
-			jump: "Embed modifié.\n[Cliquez ici pour voir le message]({{url}})",
-			simple: "Embed modifié."
+		resend: {
+			name: "recréé",
+			description: "Renvoyer l'embed dans le channel",
+			channel: "Le channel où l'embed doit être re-créé",
+			error: {
+				textChannel: "Cette commande ne peut être utilisée que dans un channel.",
+				notFound: "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
+			}
 		}
 	}
-
 };

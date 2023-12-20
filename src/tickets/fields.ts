@@ -29,6 +29,21 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 	return true;
 }
 
+export async function editChannelToTemplate(template: Ticket, message: Message) {
+	//remove attachment
+	await message.edit({
+		files: []
+	});
+	//add new attachment
+	createFile(template, message.guild?.id as string, message.id);
+	await message.edit({
+		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+	});
+	deleteFile(message.guild?.id as string, message.id);
+	return true;
+
+}
+
 export async function addFieldToTemplate(field: TemplateModals, template: Ticket, message: Message) {
 	if (template.fields.length === 5) {
 		return false;

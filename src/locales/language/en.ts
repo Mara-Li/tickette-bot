@@ -155,11 +155,12 @@ export default {
 		},
 		resend: {
 			name: "recreate",
-			description: "Resend the embed",
+			description: "Resend the embed from the template",
 			channel: "the channel to recreate the embed",
 			error: {
 				textChannel: "This command can only be used in a text channel",
 				notFound: "The message was not found: you need to use the command in the template's channel.",
+				notSend: "The message was not send for an unknown reason."
 			}
 		},
 	}

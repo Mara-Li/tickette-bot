@@ -87,8 +87,8 @@ export const embedCommands = {
 						.setName(en.message_id.name)
 						.setDescription(en.message_id.description)
 						.setDescriptionLocalizations({ fr: fr.message_id.description })
-						.setNameLocalizations({ fr: fr.message_id.description })
-						.setRequired(false)
+						.setNameLocalizations({ fr: fr.message_id.name })
+						.setRequired(true)
 				)
 		),
 
@@ -182,6 +182,12 @@ async function resend(options: CommandInteractionOptionResolver, interaction: Co
 	if (!template) return;
 	const { ticket, message } = template;
 	ticket.channel = newChannel.id;
-	await createEmbed(interaction, ticket, message.id, channel.id);
+	const msg = await createEmbed(interaction, ticket, message.id, channel.id);
+	if (!msg) {
+		await interaction.reply({ content: ln(interaction).embed.resend.error.notSend, ephemeral: true });
+		return;
+	}
+	await interaction.reply({ content: ln(interaction).embed.edit.success.jump.replace("{{url}}", msg.url), ephemeral: true });
+	return;
 
 }

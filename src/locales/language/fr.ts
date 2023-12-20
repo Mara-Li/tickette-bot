@@ -156,11 +156,12 @@ export default {
 		},
 		resend: {
 			name: "recréé",
-			description: "Renvoyer l'embed dans le channel",
+			description: "Renvoyer l'embed dans le channel depuis la template",
 			channel: "Le channel où l'embed doit être re-créé",
 			error: {
 				textChannel: "Cette commande ne peut être utilisée que dans un channel.",
 				notFound: "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
+				notSend: "Le message n'a pas été envoyé pour une raison inconnue.",
 			}
 		}
 	}

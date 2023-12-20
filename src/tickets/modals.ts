@@ -22,7 +22,7 @@ export async function createEmbed(interaction: CommandInteraction, ticket: Ticke
 		.setLabel(`📝 ${lg.modal.button}`)
 		.setStyle(ButtonStyle.Primary);
 
-	await channel.send({
+	return await channel.send({
 		embeds: [embed],
 		components: [new ActionRowBuilder<ButtonBuilder>().addComponents(createTicket)],
 	});

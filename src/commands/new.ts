@@ -81,7 +81,7 @@ export const create = {
 		),
 	async execute(interaction: CommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
-		const name = options.getString("name", true);
+		const name = options.getString(en.new.embed.name, true);
 		const role = [options.getRole("role", true).id];
 		const channel = options.getChannel("channel", true).id;
 		const threadName = options.getString("thread_name", true);
@@ -108,7 +108,7 @@ export const create = {
 			roles: role,
 			name,
 			channel,
-			description: options.getString("description", true),
+			description: options.getString(en.new.embed_content.name, true),
 			threadName
 		};
 		await createJSONTemplate(template, interaction.guildId!, interaction.channelId, interaction);

@@ -30,7 +30,7 @@ export default {
 		name: "new",
 		description: "Create a new template",
 		embed: {
-			name: "name",
+			name: "title",
 			description: "The title of the embed",
 		},
 		thread_name: {
@@ -42,7 +42,7 @@ export default {
 		},
 		embed_content: {
 			name: "description",
-			description: "The message in the embed for creating ticket",
+			description: "The message in the embed",
 		},
 		channel: {
 			name: "channel",
@@ -155,8 +155,8 @@ export default {
 		},
 		resend: {
 			name: "recreate",
-			description: "Resend the embed from the template",
-			channel: "the channel to recreate the embed",
+			description: "Recreate the embed from the template",
+			channel: "the channel where to recreate the embed",
 			error: {
 				textChannel: "This command can only be used in a text channel",
 				notFound: "The message was not found: you need to use the command in the template's channel.",

@@ -78,7 +78,9 @@ export const embedCommands = {
 				.addChannelOption(option =>
 					option
 						.setName(en.embed.edit.channel.name)
-						.setDescription(en.embed.resend.description)
+						.setDescription(en.embed.resend.channel)
+						.setDescriptionLocalizations({ fr: fr.embed.resend.channel })
+						.setNameLocalizations({ fr: fr.embed.edit.channel.name })
 						.setRequired(true)
 						.addChannelTypes(ChannelType.GuildText)
 				)
@@ -88,6 +90,22 @@ export const embedCommands = {
 						.setDescription(en.message_id.description)
 						.setDescriptionLocalizations({ fr: fr.message_id.description })
 						.setNameLocalizations({ fr: fr.message_id.name })
+						.setRequired(true)
+				)
+				.addStringOption(option =>
+					option
+						.setName(en.embed.edit.title.name)
+						.setDescription(en.embed.edit.title.description)
+						.setDescriptionLocalizations({ fr: fr.embed.edit.title.description })
+						.setNameLocalizations({ fr: fr.embed.edit.title.name })
+						.setRequired(true)
+				)
+				.addStringOption(option =>
+					option
+						.setName(en.new.embed_content.name)
+						.setDescription(en.embed.edit.content.description)
+						.setDescriptionLocalizations({ fr: fr.embed.edit.content.description })
+						.setNameLocalizations({ fr: fr.embed.edit.content.name })
 						.setRequired(true)
 				)
 		),
@@ -181,6 +199,10 @@ async function resend(options: CommandInteractionOptionResolver, interaction: Co
 	const template = await downloadJSONTemplate(templateID, interaction);
 	if (!template) return;
 	const { ticket, message } = template;
+	const desc = options.getString(en.new.embed_content.name, true);
+	const title = options.getString(en.new.embed.name, true);
+	ticket.description = desc;
+	ticket.name = title;
 	ticket.channel = newChannel.id;
 	const msg = await createEmbed(interaction, ticket, message.id, channel.id);
 	if (!msg) {

@@ -30,7 +30,7 @@ export default {
 		name: "nouveau",
 		description: "Créer une nouvelle template",
 		embed: {
-			name: "name",
+			name: "titre",
 			description: "Le titre de l'embed",
 		},
 		thread_name: {
@@ -42,7 +42,7 @@ export default {
 		},
 		embed_content: {
 			name: "description",
-			description: "Le message dans l'embed pour créer un ticket",
+			description: "Le message dans l'embed",
 		},
 		channel: {
 			name: "channel",
@@ -156,7 +156,7 @@ export default {
 		},
 		resend: {
 			name: "recréé",
-			description: "Renvoyer l'embed dans le channel depuis la template",
+			description: "Recréer l'embed dans un channel depuis la template",
 			channel: "Le channel où l'embed doit être re-créé",
 			error: {
 				textChannel: "Cette commande ne peut être utilisée que dans un channel.",

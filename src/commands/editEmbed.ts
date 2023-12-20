@@ -140,7 +140,7 @@ async function editEmbed(options: CommandInteractionOptionResolver, interaction:
 			validColor = true;
 		} else if (!Number.isNaN(parseInt(newColor, 16))) validColor = true;
 	}
-	if (!validColor) {
+	if (!validColor && newColor) {
 		await interaction.reply({ content: lang.embed.edit.error.invalidColor, ephemeral: true });
 		return;
 	}

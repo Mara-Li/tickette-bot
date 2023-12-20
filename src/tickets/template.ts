@@ -63,7 +63,7 @@ export async function downloadJSONTemplate(
 	if (!interaction.channel || !interaction.guild) return;
 	await interaction.guild.channels.fetch();
 	await interaction.channel.messages.fetch();
-	const message = await interaction.channel.messages.fetch(messageID);
+	let message = await interaction.channel.messages.fetch(messageID);
 	if (!message) {
 		await interaction.reply({
 			content: ln(interaction).error.channel,
@@ -71,7 +71,7 @@ export async function downloadJSONTemplate(
 		return;
 	}
 	//fetch the message
-	await message.fetch(true);
+	message = await message.fetch(true);
 	//search the file
 	const attachment = message.attachments.first();
 	if (!attachment) {

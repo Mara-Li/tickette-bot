@@ -61,6 +61,8 @@ export async function downloadJSONTemplate(
 ) {
 	//search the message
 	if (!interaction.channel) return;
+	//force to fetch the message
+	await interaction.channel.messages.fetch();
 	const message = await interaction.channel.messages.fetch(messageID);
 	if (!message) {
 		await interaction.reply({

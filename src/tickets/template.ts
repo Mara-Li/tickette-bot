@@ -73,10 +73,25 @@ async function fetchMessage(messageID: string, interaction: CommandInteraction, 
 		};
 	}
 	await channel.messages.fetch();
-	return {
-		message: await channel.messages.fetch(messageID),
-		channel
-	};
+	try {
+		const message = await channel.messages.fetch(messageID);
+		if (!message) {
+			return {
+				channel,
+				message: undefined
+			};
+		}
+		return {
+			message,
+			channel
+		};
+	} catch (error) {
+		return {
+			channel,
+			message: undefined
+		};
+	}
+
 
 }
 

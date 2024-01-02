@@ -69,7 +69,7 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 }
 
 export async function createThread(embed: Embed, interaction: ModalSubmitInteraction | ButtonInteraction) {
-	const lg = ln(interaction);
+	const lg = ln(interaction, interaction.guild as Guild);
 	const footer = embed?.footer?.text?.split(" : ");
 	if (!footer || footer.length < 2) {
 		await interaction.reply({

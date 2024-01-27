@@ -14,7 +14,7 @@ Ticket are created as thread, so you can manage them easy by archive, adding use
 
 # Template and fields definition
 
-> [!INFO]
+> [!note]  
 > A "template" is a model. The template contains :
 > - The futur thread name;
 > - The role(s) that must be added
@@ -29,7 +29,7 @@ Each fields contains :
 - An (optional) `required` : If the field **needs** to be fill before sending (default: `false`).
 - And an optional `type`. Type correspond to "**short**" or "**paragraph**". Paragraph reply will be cropped if used in the thread-name generation (default: `short`).
 
-> [!EXAMPLE]
+> [!tip]
 > If you set a fields with :
 > - id: `type`
 > - name: "What is your problem ?"
@@ -62,7 +62,7 @@ You can define multiple template without problem. You need to know :
 
 ## Create a new template : `/new`
 
-> [!NOTE]
+> [!note]
 > The `/new` commands can only add 4 fields to the modals, instead of 5. It's a limitation of discord, as you can only have 25 fields (including optional and mandatory)
 > If you need to add one more fields, use the `/add`commands.
 
@@ -77,7 +77,7 @@ After, you can choose to create 4 fields. See [#Template and fields definition](
 
 ## Rename : `/rename`
 
-> [!INFO]
+> [!note]
 > Allow to edit the ticket template name.
 
 The command needs:
@@ -86,7 +86,7 @@ The command needs:
 
 ## Manage role : `/role`
 
-> [!info]
+> [!note]
 > Allow to :
 > - Add
 > - Remove
@@ -101,10 +101,11 @@ The command needs:
 ## Manage field : `/fields`
 ### Add : `/fields add`
 
-> [!info]
+> [!note]
 > Allow to add a field into the template
 
-> [!warning] You can't add more than 5 fields onto the template
+> [!warning]
+> You can't add more than 5 fields onto the template
 
 Needs:
 - `message_id`
@@ -114,7 +115,7 @@ You can add each option or just one.
 
 ### Edit: `/fields edit`
 
-> [!info]
+> [!note]
 > Allow to edit a field from the template
 
 Needs:
@@ -125,7 +126,7 @@ As before, you can edit each option separately.
 
 ### Remove : `/fields remove`
 
-> [!info]
+> [!note]
 > Remove a field from the template
 
 Needs:
@@ -135,7 +136,7 @@ Needs:
 ## Embeds : `/embed`
 ### Edit : `/embed edit`
 
-> [!info]
+> [!note]
 > Allow to edit the embed that create the ticket.
 
 The commands must be used in the channel where the embed is. Moreover, the commands needs the `message_id` of the embed.

@@ -1,7 +1,7 @@
 import {Message } from "discord.js";
 
 import { TemplateModals, Ticket } from "../interface";
-import { createFile, deleteFile } from "./template";
+import { createFile } from "./template";
 
 export async function editFieldToTemplate(field: TemplateModals, template: Ticket, message: Message, fieldToEdit: TemplateModals) {
 
@@ -21,11 +21,9 @@ export async function editFieldToTemplate(field: TemplateModals, template: Ticke
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 	return true;
 }
 
@@ -35,11 +33,9 @@ export async function editChannelToTemplate(template: Ticket, message: Message) 
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 	return true;
 
 }
@@ -54,11 +50,9 @@ export async function addFieldToTemplate(field: TemplateModals, template: Ticket
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 	return true;
 }
 
@@ -69,10 +63,8 @@ export async function removeFieldToTemplate(field: string, template: Ticket, mes
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 	return;
 }

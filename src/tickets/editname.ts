@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 
 import { Ticket } from "../interface";
-import { createFile, deleteFile } from "./template";
+import { createFile } from "./template";
 
 export async function renameThread(newThreadName: string, template: Ticket, message: Message) {
 	template.threadName = newThreadName;
@@ -10,9 +10,8 @@ export async function renameThread(newThreadName: string, template: Ticket, mess
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
+	
 }

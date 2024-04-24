@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 
 import { Ticket } from "../interface";
-import { createFile, deleteFile } from "./template";
+import { createFile } from "./template";
 
 export async function addRoleToTemplate(role: string, template: Ticket, message: Message) {
 	template.roles.push(role);
@@ -10,11 +10,9 @@ export async function addRoleToTemplate(role: string, template: Ticket, message:
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 }
 
 export async function removeRoleToTemplate(role: string, template: Ticket, message: Message) {
@@ -24,9 +22,7 @@ export async function removeRoleToTemplate(role: string, template: Ticket, messa
 		files: []
 	});
 	//add new attachment
-	createFile(template, message.guild?.id as string, message.id);
 	await message.edit({
-		files: [`tickets/${message.guild?.id}/${message.id}.json`]
+		files: createFile(template)
 	});
-	deleteFile(message.guild?.id as string, message.id);
 }

@@ -7,7 +7,7 @@ Thereafter, theses informations can be used for the ticket name generation.
 Ticket are created as thread, so you can manage them easy by archive, adding user, delete…
 
 > [!warning]
-> The bot doesn't use ANY DATABASE. It is better for security. As a fallback, the template are save into your own server, in a JSON file send as an attachment. The server will have a temp file only for send it (file are directly deleted after the send).
+> The bot doesn't use ANY DATABASE. It is better for security. As a fallback, the template are save into your own server, in a JSON file send as an attachment. 
 
 > [!important]
 > Command can only be used by user that have the `Manage channel` permissions.

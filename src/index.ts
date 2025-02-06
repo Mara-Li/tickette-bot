@@ -1,6 +1,6 @@
+import * as process from "node:process";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import dotenv from "dotenv";
-import * as process from "process";
 
 import * as pkg from "../package.json";
 import interaction from "./events/interaction";
@@ -14,14 +14,8 @@ if (process.env.ENV === "production") {
 }
 
 export const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-	],
-	partials: [
-		Partials.Channel,
-		Partials.GuildMember,
-		Partials.User
-	],
+	intents: [GatewayIntentBits.Guilds],
+	partials: [Partials.Channel, Partials.GuildMember, Partials.User],
 });
 
 export const VERSION = pkg.version ?? "0.0.0";
@@ -32,10 +26,8 @@ try {
 	ready(client);
 	interaction(client);
 	join(client);
-}
-catch (error) {
+} catch (error) {
 	console.error(error);
 }
 
-
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.DISCORD_TOKEN).then().catch(console.error);

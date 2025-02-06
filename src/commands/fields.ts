@@ -1,6 +1,7 @@
 import {
-	CommandInteraction,
-	CommandInteractionOptionResolver,
+	type CommandInteraction,
+	type CommandInteractionOptionResolver,
+	MessageFlags,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
 } from "discord.js";
@@ -8,7 +9,11 @@ import {
 import { ln } from "../locales";
 import en from "../locales/language/en";
 import fr from "../locales/language/fr";
-import { addFieldToTemplate, editFieldToTemplate, removeFieldToTemplate } from "../tickets/fields";
+import {
+	addFieldToTemplate,
+	editFieldToTemplate,
+	removeFieldToTemplate,
+} from "../tickets/fields";
 import { downloadJSONTemplate } from "../tickets/template";
 /**
  * Tickets commands :
@@ -19,188 +24,207 @@ import { downloadJSONTemplate } from "../tickets/template";
  * /close
  */
 
-
 export const fields = {
 	data: new SlashCommandBuilder()
 		.setName(en.fields.title)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setDescription(en.fields.description)
 		.setNameLocalizations({
-			fr: fr.fields.title
+			fr: fr.fields.title,
 		})
 		.setDescriptionLocalizations({
-			fr: fr.fields.description
+			fr: fr.fields.description,
 		})
-		.addSubcommand(sub =>
+		.addSubcommand((sub) =>
 			sub
 				.setName(en.fields.remove.name)
 				.setDescription(en.fields.remove.description)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.message_id.name)
 						.setDescription(en.message_id.description)
 						.setDescriptionLocalizations({
-							fr: fr.message_id.description
+							fr: fr.message_id.description,
 						})
 						.setNameLocalizations({
-							fr: fr.message_id.name
+							fr: fr.message_id.name,
 						})
 						.setRequired(true)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.fields.name.name)
 						.setNameLocalizations({
-							fr: fr.fields.name.name
+							fr: fr.fields.name.name,
 						})
 						.setDescription(en.fields.name.description)
 						.setDescriptionLocalizations({
-							fr: fr.fields.name.description
+							fr: fr.fields.name.description,
 						})
 						.setRequired(true)
 				)
 		)
-		.addSubcommand(sub =>
+		.addSubcommand((sub) =>
 			sub
 				.setName(en.fields.add.name)
 				.setDescription(en.fields.add.description)
 				.setDescriptionLocalizations({
-					fr: fr.fields.add.description
+					fr: fr.fields.add.description,
 				})
 				.setNameLocalizations({
-					fr: fr.fields.add.name
+					fr: fr.fields.add.name,
 				})
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.message_id.name)
 						.setDescription(en.message_id.description)
 						.setDescriptionLocalizations({
-							fr: fr.message_id.description
+							fr: fr.message_id.description,
 						})
 						.setNameLocalizations({
-							fr: fr.message_id.name
+							fr: fr.message_id.name,
 						})
 						.setRequired(true)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.fields.name.name)
 						.setNameLocalizations({
-							fr: fr.fields.name.name
+							fr: fr.fields.name.name,
 						})
 						.setDescription(en.fields.name.description)
 						.setDescriptionLocalizations({
-							fr: fr.fields.name.description
+							fr: fr.fields.name.description,
 						})
 						.setRequired(true)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName("field_name")
 						.setDescription(en.field.name)
 						.setDescriptionLocalizations({
-							fr: fr.field.name
+							fr: fr.field.name,
 						})
 						.setMaxLength(45)
-						.setRequired(false))
-				.addStringOption(option =>
+						.setRequired(false)
+				)
+				.addStringOption((option) =>
 					option
 						.setName("field_description")
 						.setDescription(en.field.description)
 						.setDescriptionLocalizations({
-							fr: fr.field.description
+							fr: fr.field.description,
 						})
 						.setRequired(false)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName("field_type")
 						.setDescription(en.field.type)
 						.setDescriptionLocalizations({
-							fr: fr.field.type
+							fr: fr.field.type,
 						})
 						.setRequired(false)
 						.addChoices(
-							{name: en.field.short, value: "short", name_localizations: {fr: fr.field.short}},
-							{name: en.field.paragraph, value: "paragraph", name_localizations: {fr: fr.field.paragraph}}
-						))
-				.addBooleanOption(option =>
+							{
+								name: en.field.short,
+								value: "short",
+								name_localizations: { fr: fr.field.short },
+							},
+							{
+								name: en.field.paragraph,
+								value: "paragraph",
+								name_localizations: { fr: fr.field.paragraph },
+							}
+						)
+				)
+				.addBooleanOption((option) =>
 					option
 						.setName("field_required")
 						.setDescription(en.field.required)
 						.setDescriptionLocalizations({
-							fr: fr.field.required
+							fr: fr.field.required,
 						})
 						.setRequired(false)
 				)
 		)
-		.addSubcommand(sub =>
+		.addSubcommand((sub) =>
 			sub
 				.setName(en.fields.edit.name)
 				.setDescription(en.fields.edit.description)
 				.setDescriptionLocalizations({
-					fr: fr.fields.edit.description
+					fr: fr.fields.edit.description,
 				})
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.message_id.name)
 						.setDescription(en.message_id.description)
 						.setDescriptionLocalizations({
-							fr: fr.message_id.description
+							fr: fr.message_id.description,
 						})
 						.setNameLocalizations({
-							fr: fr.message_id.name
+							fr: fr.message_id.name,
 						})
 						.setRequired(true)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName(en.fields.name.name)
 						.setNameLocalizations({
-							fr: fr.fields.name.name
+							fr: fr.fields.name.name,
 						})
 						.setDescription(en.fields.name.description)
 						.setDescriptionLocalizations({
-							fr: fr.fields.name.description
+							fr: fr.fields.name.description,
 						})
 						.setRequired(true)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName("field_name")
 						.setDescription(en.field.name)
 						.setDescriptionLocalizations({
-							fr: fr.field.name
+							fr: fr.field.name,
 						})
 						.setMaxLength(45)
-						.setRequired(false))
-				.addStringOption(option =>
+						.setRequired(false)
+				)
+				.addStringOption((option) =>
 					option
 						.setName("field_description")
 						.setDescription(en.field.description)
 						.setDescriptionLocalizations({
-							fr: fr.field.description
+							fr: fr.field.description,
 						})
 						.setRequired(false)
 				)
-				.addStringOption(option =>
+				.addStringOption((option) =>
 					option
 						.setName("field_type")
 						.setDescription(en.field.type)
 						.setDescriptionLocalizations({
-							fr: fr.field.type
+							fr: fr.field.type,
 						})
 						.setRequired(false)
 						.addChoices(
-							{ name: en.field.short, value: "short", name_localizations: { fr: fr.field.short } },
-							{ name: en.field.paragraph, value: "paragraph", name_localizations: { fr: fr.field.paragraph } }
-						))
-				.addBooleanOption(option =>
+							{
+								name: en.field.short,
+								value: "short",
+								name_localizations: { fr: fr.field.short },
+							},
+							{
+								name: en.field.paragraph,
+								value: "paragraph",
+								name_localizations: { fr: fr.field.paragraph },
+							}
+						)
+				)
+				.addBooleanOption((option) =>
 					option
 						.setName("field_required")
 						.setDescription(en.field.required)
 						.setDescriptionLocalizations({
-							fr: fr.field.required
+							fr: fr.field.required,
 						})
 						.setRequired(false)
 				)
@@ -211,91 +235,99 @@ export const fields = {
 		const addSubcommand = options.getSubcommand(false);
 		if (!addSubcommand) return;
 		const field = options.getString("field_id", true);
-		const message_id = options.getString("message_id", true);
+		const messageId = options.getString("message_id", true);
 		//download the previous template
-		const template = await downloadJSONTemplate(message_id, interaction);
+		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) return;
-		const {ticket, message} = template;
+		const { ticket, message } = template;
 		switch (addSubcommand) {
-		case "remove":
-			if (template.ticket.fields.filter(f => f.name === field).length === 0) {
+			case "remove":
+				if (template.ticket.fields.filter((f) => f.name === field).length === 0) {
+					await interaction.reply({
+						content: ln(interaction).error.field.notfound.replace("{{field}}", field),
+						ephemeral: true,
+					});
+					return;
+				}
+				await removeFieldToTemplate(field, ticket, message);
 				await interaction.reply({
-					content: ln(interaction).error.field.notfound.replace("{{field}}", field),
-					ephemeral: true
+					content: ln(interaction).edit.field.removed.replace("{{field}}", field),
+					ephemeral: true,
 				});
-				return;
-			}
-			await removeFieldToTemplate(field, ticket, message);
-			await interaction.reply({
-				content: ln(interaction).edit.field.removed.replace("{{field}}", field),
-				ephemeral: true
-			});
 
-			break;
-		case "add":
-			const fieldName = options.getString("field_name") ?? field;
-			const fieldDescription = options.getString("field_description") ?? "";
-			const fieldType: "short" | "paragraph" = options.getString("field_type") as "short" | "paragraph" ?? "short";
-			const fieldRequired = options.getBoolean("field_required") ?? false;
-			if (template.ticket.fields.filter(f => f.name === field).length !== 0) {
-				await interaction.reply({
-					content: ln(interaction).error.field.exist.replace("{{field}}", field),
-					ephemeral: true
-				});
-				return;
+				break;
+			case "add": {
+				const fieldName = options.getString("field_name") ?? field;
+				const fieldDescription = options.getString("field_description") ?? "";
+				const fieldType: "short" | "paragraph" =
+					(options.getString("field_type") as "short" | "paragraph") ?? "short";
+				const fieldRequired = options.getBoolean("field_required") ?? false;
+				if (template.ticket.fields.filter((f) => f.name === field).length !== 0) {
+					await interaction.reply({
+						content: ln(interaction).error.field.exist.replace("{{field}}", field),
+						ephemeral: true,
+					});
+					return;
+				}
+				const repAdd = await addFieldToTemplate(
+					{
+						id: field,
+						name: fieldName,
+						description: fieldDescription,
+						type: fieldType,
+						required: fieldRequired,
+					},
+					ticket,
+					message
+				);
+				if (repAdd) {
+					await interaction.reply({
+						content: ln(interaction).edit.field.added.replace("{{field}}", field),
+						flags: MessageFlags.Ephemeral,
+					});
+				} else {
+					await interaction.reply({
+						content: ln(interaction).error.field.tooMuch,
+						flags: MessageFlags.Ephemeral,
+					});
+				}
+				break;
 			}
-			const repAdd = await addFieldToTemplate({
-				id: field,
-				name: fieldName,
-				description: fieldDescription,
-				type: fieldType,
-				required: fieldRequired
-			},
-			ticket, message);
-			if (repAdd) {
-				await interaction.reply({
-					content: ln(interaction).edit.field.added.replace("{{field}}", field),
-					ephemeral: true
-				});
-			} else {
-				await interaction.reply({
-					content: ln(interaction).error.field.tooMuch,
-					ephemeral: true
-				});
+			case "edit": {
+				const fieldName = options.getString("field_name") ?? field;
+				const fieldDescriptionEdit = options.getString("field_description") ?? "";
+				const fieldTypeEdit = options.getString("field_type") ?? "short";
+				const fieldRequiredEdit = options.getBoolean("field_required") ?? false;
+				const fieldToEdit = ticket.fields.find((f) => f.id === field);
+				if (!fieldToEdit) {
+					await interaction.reply({
+						content: ln(interaction).error.field.notfound.replace("{{field}}", field),
+						flags: MessageFlags.Ephemeral,
+					});
+					return;
+				}
+				const reply = await editFieldToTemplate(
+					{
+						name: fieldName,
+						id: field,
+						description: fieldDescriptionEdit,
+						type: fieldTypeEdit as "short" | "paragraph",
+						required: fieldRequiredEdit,
+					},
+					ticket,
+					message,
+					fieldToEdit
+				);
+				if (reply) {
+					await interaction.reply({
+						content: ln(interaction).edit.field.edited.replace("{{field}}", field),
+						flags: MessageFlags.Ephemeral,
+					});
+					return;
+				}
+				break;
 			}
-			break;
-		case "edit":
-			const field_name = options.getString("field_name") ?? field;
-			const field_description_edit = options.getString("field_description") ?? "";
-			const field_type_edit = options.getString("field_type") ?? "short";
-			const field_required_edit = options.getBoolean("field_required") ?? false;
-			const fieldToEdit = ticket.fields.find(f => f.id === field);
-			if (!fieldToEdit) {
-				await interaction.reply({
-					content: ln(interaction).error.field.notfound.replace("{{field}}", field),
-					ephemeral: true
-				});
-				return;
-			}
-			const reply = await editFieldToTemplate({
-				name: field_name,
-				id: field,
-				description: field_description_edit,
-				type: field_type_edit as "short" | "paragraph",
-				required: field_required_edit
-			},
-			ticket, message, fieldToEdit);
-			if (reply) {
-				await interaction.reply({
-					content: ln(interaction).edit.field.edited.replace("{{field}}", field),
-					ephemeral: true
-				});
-				return;
-			}
-			break;
 		}
 		return;
-	}
+	},
 };
-
-

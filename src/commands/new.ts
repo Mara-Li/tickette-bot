@@ -1,12 +1,17 @@
-import { ChannelType, CommandInteraction, CommandInteractionOptionResolver, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import {
+	ChannelType,
+	type CommandInteraction,
+	type CommandInteractionOptionResolver,
+	PermissionFlagsBits,
+	SlashCommandBuilder,
+} from "discord.js";
 
-import { TemplateModals, Ticket } from "../interface";
-import { ln } from "../locales/index";
+import type { TemplateModals, Ticket } from "../interface";
+import { ln } from "../locales";
 import en from "../locales/language/en";
 import fr from "../locales/language/fr";
 import { createEmbed } from "../tickets/modals";
 import { createJSONTemplate } from "../tickets/template";
-
 
 export const create = {
 	data: new SlashCommandBuilder()
@@ -14,67 +19,68 @@ export const create = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setDescription(en.new.description)
 		.setNameLocalizations({
-			fr: fr.new.name
+			fr: fr.new.name,
 		})
 		.setDescriptionLocalizations({
-			fr: fr.new.description
+			fr: fr.new.description,
 		})
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(en.new.embed.name)
 				.setDescription(en.new.embed.description)
 				.setDescriptionLocalizations({
-					fr: fr.new.embed.description
+					fr: fr.new.embed.description,
 				})
 				.setNameLocalizations({
-					fr: fr.new.embed.name
+					fr: fr.new.embed.name,
 				})
 				.setRequired(true)
 		)
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(en.new.thread_name.name)
 				.setDescription(en.new.thread_name.description)
 				.setNameLocalizations({
-					fr: fr.new.thread_name.name
+					fr: fr.new.thread_name.name,
 				})
 				.setDescriptionLocalizations({
-					fr: fr.new.thread_name.description
+					fr: fr.new.thread_name.description,
 				})
 				.setRequired(true)
 		)
-		.addRoleOption(option =>
+		.addRoleOption((option) =>
 			option
 				.setName(en.common.role)
 				.setDescription(en.new.role.description)
 				.setNameLocalizations({
-					fr: fr.common.role
+					fr: fr.common.role,
 				})
 				.setDescriptionLocalizations({
-					fr: fr.new.role.description
+					fr: fr.new.role.description,
 				})
 				.setRequired(true)
 		)
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(en.new.embed_content.name)
 				.setDescription(en.new.embed_content.description)
 				.setNameLocalizations({
-					fr: fr.new.embed_content.name
+					fr: fr.new.embed_content.name,
 				})
 				.setDescriptionLocalizations({
-					fr: fr.new.embed_content.description
+					fr: fr.new.embed_content.description,
 				})
-				.setRequired(true))
-		.addChannelOption(option =>
+				.setRequired(true)
+		)
+		.addChannelOption((option) =>
 			option
 				.setName(en.new.channel.name)
 				.setDescription(en.new.channel.description)
 				.setNameLocalizations({
-					fr: fr.new.channel.name
+					fr: fr.new.channel.name,
 				})
 				.setDescriptionLocalizations({
-					fr: fr.new.channel.description
+					fr: fr.new.channel.description,
 				})
 				.setRequired(true)
 				.addChannelTypes(ChannelType.GuildText)
@@ -87,18 +93,19 @@ export const create = {
 		const threadName = options.getString("thread_name", true);
 		const fields = [];
 		for (let i = 1; i < 5; i++) {
-			const field_name = options.getString(`field_${i}_name`);
-			const field_description = options.getString(`field_${i}_description`) ?? "";
-			const field_type = options.getString(`field_${i}_type`) ?? "short";
-			const field_id = options.getString(`field_${i}_id`) ?? `${ln(interaction).common.field}-${i}`;
-			const field_required = options.getBoolean(`field_${i}_required`) ?? false;
-			if (field_name) {
+			const fieldName = options.getString(`field_${i}_name`);
+			const fieldDescription = options.getString(`field_${i}_description`) ?? "";
+			const fieldType = options.getString(`field_${i}_type`) ?? "short";
+			const fieldId =
+				options.getString(`field_${i}_id`) ?? `${ln(interaction).common.field}-${i}`;
+			const fieldRequired = options.getBoolean(`field_${i}_required`) ?? false;
+			if (fieldName) {
 				const templateMod: TemplateModals = {
-					name: field_name,
-					description: field_description,
-					type: field_type as "short" | "paragraph",
-					required: field_required,
-					id: field_id
+					name: fieldName,
+					description: fieldDescription,
+					type: fieldType as "short" | "paragraph",
+					required: fieldRequired,
+					id: fieldId,
 				};
 				fields.push(templateMod);
 			}
@@ -109,7 +116,7 @@ export const create = {
 			name,
 			channel,
 			description: options.getString(en.new.embed_content.name, true),
-			threadName
+			threadName,
 		};
 		await createJSONTemplate(template, interaction);
 		const fetchedReply = await interaction.fetchReply();
@@ -117,55 +124,62 @@ export const create = {
 		await fetchedReply.pin();
 		await createEmbed(interaction, template, fetchedReply.id, interaction.channelId);
 		return;
-
 	},
 };
 
 for (let i = 1; i <= 4; i++) {
 	create.data
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(`field_${i}_id`)
 				.setDescription(en.field.id)
 				.setDescriptionLocalizations({
-					fr: fr.field.id
+					fr: fr.field.id,
 				})
-				.setRequired(false))
-		.addStringOption(option =>
+				.setRequired(false)
+		)
+		.addStringOption((option) =>
 			option
 				.setName(`field_${i}_name`)
 				.setDescription(en.field.name)
 				.setDescriptionLocalizations({
-					fr: fr.field.name
+					fr: fr.field.name,
 				})
 				.setMaxLength(45)
-				.setRequired(false))
-		.addStringOption(option =>
+				.setRequired(false)
+		)
+		.addStringOption((option) =>
 			option
 				.setName(`field_${i}_description`)
 				.setDescription(en.field.description)
 				.setDescriptionLocalizations({
-					fr: fr.field.description
+					fr: fr.field.description,
 				})
-				.setRequired(false))
-		.addStringOption(option =>
+				.setRequired(false)
+		)
+		.addStringOption((option) =>
 			option
 				.setName(`field_${i}_type`)
 				.setDescription(en.field.type)
 				.setDescriptionLocalizations({
-					fr: fr.field.type
+					fr: fr.field.type,
 				})
 				.setRequired(false)
 				.addChoices(
 					{ name: "short", value: "short", name_localizations: { fr: fr.field.short } },
-					{ name: "paragraph", value: "paragraph", name_localizations: { fr: fr.field.paragraph } }
-				))
-		.addBooleanOption(option =>
+					{
+						name: "paragraph",
+						value: "paragraph",
+						name_localizations: { fr: fr.field.paragraph },
+					}
+				)
+		)
+		.addBooleanOption((option) =>
 			option
 				.setName(`field_${i}_required`)
 				.setDescription("en.field.required")
 				.setDescriptionLocalizations({
-					fr: fr.field.required
+					fr: fr.field.required,
 				})
 				.setRequired(false)
 		);

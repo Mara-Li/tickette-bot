@@ -1,4 +1,9 @@
-import { CommandInteraction, CommandInteractionOptionResolver, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import {
+	type CommandInteraction,
+	type CommandInteractionOptionResolver,
+	PermissionFlagsBits,
+	SlashCommandBuilder,
+} from "discord.js";
 
 import { ln } from "../locales";
 import en from "../locales/language/en";
@@ -7,39 +12,39 @@ import { renameThread } from "../tickets/editname";
 import { downloadJSONTemplate } from "../tickets/template";
 
 export const rename = {
-	data : new SlashCommandBuilder()
+	data: new SlashCommandBuilder()
 		.setName(en.rename.title)
 		.setDescription(en.rename.description)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setNameLocalizations({
-			fr: fr.rename.title
+			fr: fr.rename.title,
 		})
 		.setDescriptionLocalizations({
-			fr: fr.rename.description
+			fr: fr.rename.description,
 		})
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(en.message_id.name)
 				.setDescription(en.message_id.description)
 				.setRequired(true)
 		)
-		.addStringOption(option =>
+		.addStringOption((option) =>
 			option
 				.setName(en.new.thread_name.name)
 				.setNameLocalizations({
-					fr: fr.new.thread_name.name
+					fr: fr.new.thread_name.name,
 				})
 				.setDescription(en.new.thread_name.description)
 				.setDescriptionLocalizations({
-					fr: fr.new.thread_name.description
+					fr: fr.new.thread_name.description,
 				})
 				.setRequired(true)
 		),
 	async execute(interaction: CommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
-		const message_id = options.getString("message_id", true);
-		const thread_name = options.getString("thread_name", true);
-		const template = await downloadJSONTemplate(message_id, interaction);
+		const messageId = options.getString("message_id", true);
+		const threadName = options.getString("thread_name", true);
+		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) {
 			await interaction.reply({
 				content: ln(interaction).error.channel,
@@ -47,7 +52,6 @@ export const rename = {
 			return;
 		}
 		const { ticket, message } = template;
-		await renameThread(thread_name, ticket, message);
-	}
-
+		await renameThread(threadName, ticket, message);
+	},
 };

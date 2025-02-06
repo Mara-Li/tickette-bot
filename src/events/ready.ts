@@ -1,10 +1,9 @@
-import { Client, REST, Routes } from "discord.js";
+import process from "node:process";
+import { type Client, REST, Routes } from "discord.js";
 import dotenv from "dotenv";
-import process from "process";
 
-import { commandsList } from "../commands/index";
+import { commandsList } from "../commands";
 import { VERSION } from "../index";
-
 
 if (process.env.ENV === "production") {
 	dotenv.config({ path: ".env.prod" });
@@ -19,18 +18,17 @@ export default (client: Client): void => {
 			return;
 		}
 		console.info(`${client.user.username} is online; v.${VERSION}`);
-		const serializedCommands = commandsList.map(command => command.data.toJSON());
+		const serializedCommands = commandsList.map((command) => command.data.toJSON());
 		for (const guild of client.guilds.cache.values()) {
 			console.log(`Registering commands for ${guild.name}`);
+			// biome-ignore lint/complexity/noForEach: <explanation>
 			guild.client.application.commands.cache.forEach((command) => {
 				console.log(`Deleting ${command.name}`);
 				command.delete();
 			});
-			await rest.put(
-				Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id),
-				{ body: serializedCommands },
-			);
+			await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id), {
+				body: serializedCommands,
+			});
 		}
-
 	});
 };

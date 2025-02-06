@@ -1,7 +1,7 @@
-import { BaseInteraction, Client } from "discord.js";
+import type { BaseInteraction, Client } from "discord.js";
 
-import { commandsList } from "../commands/index";
-import { ln } from "../locales/index";
+import { commandsList } from "../commands";
+import { ln } from "../locales";
 import { createModal, createThread, getTemplateByIds } from "../tickets/modals";
 
 export default (client: Client): void => {
@@ -23,7 +23,11 @@ export default (client: Client): void => {
 				const messageInfo = embed.footer?.text?.split(" : ");
 				//download the template
 				if (!messageInfo || messageInfo?.length < 2) return;
-				const ticket = await getTemplateByIds(messageInfo[1], messageInfo[0], interaction.guild!);
+				const ticket = await getTemplateByIds(
+					messageInfo[1],
+					messageInfo[0],
+					interaction.guild!
+				);
 				const lg = ln(interaction);
 
 				if (!ticket) {
@@ -38,10 +42,10 @@ export default (client: Client): void => {
 				if (!interaction.guild || !interaction.channel) return;
 				// create modal !
 				if (ticket.fields.length === 0) {
-					createThread(embed, interaction);
+					await createThread(embed, interaction);
 					return;
 				}
-				createModal(interaction, ticket);
+				await createModal(interaction, ticket);
 			} catch (error) {
 				console.log(error);
 			}

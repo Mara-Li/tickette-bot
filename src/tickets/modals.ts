@@ -1,12 +1,37 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, CommandInteraction, Embed, EmbedBuilder, Guild, GuildBasedChannel, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextChannel, TextInputBuilder, TextInputStyle } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	type ButtonInteraction,
+	ButtonStyle,
+	ChannelType,
+	type CommandInteraction,
+	type Embed,
+	EmbedBuilder,
+	type Guild,
+	type GuildBasedChannel,
+	MessageFlags,
+	type ModalActionRowComponentBuilder,
+	ModalBuilder,
+	type ModalSubmitInteraction,
+	TextChannel,
+	TextInputBuilder,
+	TextInputStyle,
+} from "discord.js";
 import moment from "moment";
 
-import { DEFAULT_TEMPLATE_VALUE, Ticket } from "../interface";
+import { DEFAULT_TEMPLATE_VALUE, type Ticket } from "../interface";
 import { ln } from "../locales";
 
-export async function createEmbed(interaction: CommandInteraction, ticket: Ticket, messageId: string, channelId: string) {
+export async function createEmbed(
+	interaction: CommandInteraction,
+	ticket: Ticket,
+	messageId: string,
+	channelId: string
+) {
 	const lg = ln(interaction);
-	const channel : GuildBasedChannel | TextChannel | undefined = ticket.channel ? interaction.guild?.channels.cache.get(ticket.channel) : interaction.channel as GuildBasedChannel;
+	const channel: GuildBasedChannel | TextChannel | undefined = ticket.channel
+		? interaction.guild?.channels.cache.get(ticket.channel)
+		: (interaction.channel as GuildBasedChannel);
 	if (!channel || !(channel instanceof TextChannel)) return;
 	const embed = {
 		title: ticket.name,
@@ -28,7 +53,11 @@ export async function createEmbed(interaction: CommandInteraction, ticket: Ticke
 	});
 }
 
-export async function getTemplateByIds(messageId: string, channelId: string, guild: Guild) {
+export async function getTemplateByIds(
+	messageId: string,
+	channelId: string,
+	guild: Guild
+) {
 	//download the template
 	await guild.channels.fetch();
 	const channel = await guild.channels.fetch(channelId);
@@ -42,7 +71,7 @@ export async function getTemplateByIds(messageId: string, channelId: string, gui
 	if (!attachment) return;
 
 	const response = await fetch(attachment.url);
-	return await response.json() as Ticket;
+	return (await response.json()) as Ticket;
 }
 
 export async function createModal(command: ButtonInteraction, ticket: Ticket) {
@@ -53,7 +82,8 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 		.setTitle(ln(command).modal.ticket);
 
 	for (const field of ticket.fields) {
-		const inputStyle = field.type === "short" ? TextInputStyle.Short : TextInputStyle.Paragraph;
+		const inputStyle =
+			field.type === "short" ? TextInputStyle.Short : TextInputStyle.Paragraph;
 		const input = new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
 			new TextInputBuilder()
 				.setPlaceholder(field.description)
@@ -65,24 +95,30 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 		modal.addComponents(input);
 	}
 	await command.showModal(modal);
-
 }
 
-export async function createThread(embed: Embed, interaction: ModalSubmitInteraction | ButtonInteraction) {
+export async function createThread(
+	embed: Embed,
+	interaction: ModalSubmitInteraction | ButtonInteraction
+) {
 	const lg = ln(interaction, interaction.guild as Guild);
 	const footer = embed?.footer?.text?.split(" : ");
 	if (!footer || footer.length < 2) {
 		await interaction.reply({
 			content: lg.error.footer,
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
-	const template = await getTemplateByIds(footer[1], footer[0], interaction.guild as Guild);
+	const template = await getTemplateByIds(
+		footer[1],
+		footer[0],
+		interaction.guild as Guild
+	);
 	if (!template) {
 		await interaction.reply({
 			content: lg.error.attachment,
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
@@ -92,33 +128,29 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 		const fields = interaction.fields.fields;
 		//replace the threadName {{value}}
 
-		newThreadName = threadName?.replace(
-			/{{([^{}]*)}}/g,
-			(match, p1 : string) => {
-				const field = fields.find((field) => field.customId.toLowerCase() === p1.toLowerCase());
-				if (field) {
-					//find the type in template
-					const type = template.fields.find((f) => f.id === field.customId)?.type;
-					if (type === "paragraph") return field.value.slice(0, 11);
-					return field.value;
-				}
-				return match;
+		newThreadName = threadName?.replace(/{{([^{}]*)}}/g, (match, p1: string) => {
+			const field = fields.find(
+				(field) => field.customId.toLowerCase() === p1.toLowerCase()
+			);
+			if (field) {
+				//find the type in template
+				const type = template.fields.find((f) => f.id === field.customId)?.type;
+				if (type === "paragraph") return field.value.slice(0, 11);
+				return field.value;
 			}
-		);
+			return match;
+		});
 	}
 
-	const TEMPLATE_VALUE = DEFAULT_TEMPLATE_VALUE(
+	const templateValue = DEFAULT_TEMPLATE_VALUE(
 		moment().format("DD/MM/YYYY"),
 		moment().format("HH:mm"),
 		interaction
 	);
 
-	newThreadName = newThreadName.replace(
-		/{{([^{}]*)}}/g,
-		(match, p1: string) => {
-			return TEMPLATE_VALUE[p1.toLowerCase() as keyof typeof TEMPLATE_VALUE] || match;
-		}
-	);
+	newThreadName = newThreadName.replace(/{{([^{}]*)}}/g, (match, p1: string) => {
+		return templateValue[p1.toLowerCase() as keyof typeof templateValue] || match;
+	});
 	const channelToCreateThread = interaction.channel as TextChannel;
 	//create the thread
 	const thread = await channelToCreateThread.threads.create({
@@ -129,7 +161,7 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 	});
 	await interaction.reply({
 		content: lg.created,
-		ephemeral: true,
+		flags: MessageFlags.Ephemeral,
 	});
 	//add the user to the thread
 	await thread.members.add(interaction.user.id);
@@ -150,7 +182,12 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 		//embed
 		const embed = new EmbedBuilder()
 			.setTitle(ln(interaction).modal.ticket)
-			.setDescription(ln(interaction).modal.description.replace("{{user}}", interaction.user.displayName))
+			.setDescription(
+				ln(interaction).modal.description.replace(
+					"{{user}}",
+					interaction.user.displayName
+				)
+			)
 			.setAuthor({
 				name: interaction.user.username,
 				iconURL: interaction.user.displayAvatarURL(),
@@ -169,6 +206,4 @@ export async function createThread(embed: Embed, interaction: ModalSubmitInterac
 			embeds: [embed],
 		});
 	}
-
-
 }

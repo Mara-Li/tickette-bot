@@ -14,17 +14,6 @@ export const pingRole = {
 		.setNameLocalizations({
 			fr: fr.ping.title,
 		})
-		.addBooleanOption((option) =>
-			option
-				.setName(en.common.toggle)
-				.setDescription(en.ping.toggle)
-				.setDescriptionLocalizations({
-					fr: fr.ping.toggle,
-				})
-				.setNameLocalizations({
-					fr: fr.common.toggle,
-				})
-		)
 		.addStringOption((option) =>
 			option
 				.setName(en.message_id.name)
@@ -36,6 +25,17 @@ export const pingRole = {
 					fr: fr.message_id.name,
 				})
 				.setRequired(true)
+		)
+		.addBooleanOption((option) =>
+			option
+				.setName(en.common.toggle)
+				.setDescription(en.ping.toggle)
+				.setDescriptionLocalizations({
+					fr: fr.ping.toggle,
+				})
+				.setNameLocalizations({
+					fr: fr.common.toggle,
+				})
 		),
 	execute: async (interaction: Djs.CommandInteraction) => {
 		if (!interaction.guildId) return;

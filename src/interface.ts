@@ -1,4 +1,11 @@
-import { ButtonInteraction, CacheType, GuildMember, Message, ModalSubmitInteraction, TextChannel } from "discord.js";
+import type {
+	ButtonInteraction,
+	CacheType,
+	GuildMember,
+	Message,
+	ModalSubmitInteraction,
+	TextChannel,
+} from "discord.js";
 
 export interface TemplateModals {
 	name: string;
@@ -14,7 +21,6 @@ export interface ParseLink {
 	guild: string;
 }
 
-
 export interface Ticket {
 	fields: TemplateModals[];
 	description?: string;
@@ -22,6 +28,7 @@ export interface Ticket {
 	name?: string;
 	channel?: string;
 	threadName: string;
+	ping?: boolean;
 }
 
 interface TemplateDefaultValue {
@@ -33,13 +40,18 @@ interface TemplateDefaultValue {
 	display: string;
 }
 
-export const DEFAULT_TEMPLATE_VALUE = (date: string, time: string, interaction: ButtonInteraction<CacheType> | ModalSubmitInteraction<CacheType>): TemplateDefaultValue  => {
+export const DEFAULT_TEMPLATE_VALUE = (
+	date: string,
+	time: string,
+	interaction: ButtonInteraction<CacheType> | ModalSubmitInteraction<CacheType>
+): TemplateDefaultValue => {
 	return {
-		"date": date,
-		"time": time,
-		"user_id": interaction.user.id,
-		"nickname": interaction.user.displayName,
-		"username" : interaction.user.username,
-		"display" : (interaction.member as GuildMember)?.displayName || interaction.user.displayName,
+		date: date,
+		time: time,
+		user_id: interaction.user.id,
+		nickname: interaction.user.displayName,
+		username: interaction.user.username,
+		display:
+			(interaction.member as GuildMember)?.displayName || interaction.user.displayName,
 	};
 };

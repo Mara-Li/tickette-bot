@@ -32,6 +32,7 @@ export async function createEmbed(
 	const channel: GuildBasedChannel | TextChannel | undefined = ticket.channel
 		? interaction.guild?.channels.cache.get(ticket.channel)
 		: (interaction.channel as GuildBasedChannel);
+	// noinspection SuspiciousTypeOfGuard
 	if (!channel || !(channel instanceof TextChannel)) return;
 	const embed = {
 		title: ticket.name,
@@ -61,6 +62,7 @@ export async function getTemplateByIds(
 	//download the template
 	await guild.channels.fetch();
 	const channel = await guild.channels.fetch(channelId);
+	// noinspection SuspiciousTypeOfGuard
 	if (!channel || !(channel instanceof TextChannel)) return;
 	//force refresh cache
 	await channel.messages.fetch();
@@ -167,14 +169,21 @@ export async function createThread(
 	await thread.members.add(interaction.user.id);
 	//add role to the thread
 	const roles = template.roles;
-	const msg = await thread.send({
-		content: "_ _",
-	});
-	const allRoleMention = roles.map((role) => `<@&${role}>`).join(" ");
-	await msg.edit({
-		content: allRoleMention,
-	});
-	await msg.delete();
+	if (!template.ping) {
+		const msg = await thread.send({
+			content: "_ _",
+		});
+		const allRoleMention = roles.map((role) => `<@&${role}>`).join(" ");
+		await msg.edit({
+			content: allRoleMention,
+		});
+		await msg.delete();
+	} else {
+		const allRoleMention = roles.map((role) => `<@&${role}>`).join(" ");
+		await thread.send({
+			content: allRoleMention,
+		});
+	}
 
 	if (interaction.isModalSubmit()) {
 		//delete the message

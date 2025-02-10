@@ -245,14 +245,14 @@ export const fields = {
 				if (template.ticket.fields.filter((f) => f.name === field).length === 0) {
 					await interaction.reply({
 						content: ln(interaction).error.field.notfound.replace("{{field}}", field),
-						ephemeral: true,
+						flags: MessageFlags.Ephemeral,
 					});
 					return;
 				}
 				await removeFieldToTemplate(field, ticket, message);
 				await interaction.reply({
 					content: ln(interaction).edit.field.removed.replace("{{field}}", field),
-					ephemeral: true,
+					flags: MessageFlags.Ephemeral,
 				});
 
 				break;
@@ -265,7 +265,7 @@ export const fields = {
 				if (template.ticket.fields.filter((f) => f.name === field).length !== 0) {
 					await interaction.reply({
 						content: ln(interaction).error.field.exist.replace("{{field}}", field),
-						ephemeral: true,
+						flags: MessageFlags.Ephemeral,
 					});
 					return;
 				}

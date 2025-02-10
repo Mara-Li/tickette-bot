@@ -62,6 +62,7 @@ async function fetchMessage(
 		(await interaction.guild?.channels.fetch(channelID)) as TextChannel;
 	//force fetch message cache
 	if (!channel) channel = interaction.channel;
+	// noinspection SuspiciousTypeOfGuard
 	if (!channel || !(channel instanceof TextChannel)) {
 		return {
 			channel: undefined,
@@ -102,7 +103,6 @@ export async function parseLinkFromDiscord(
 			message: (await fetchMessage(link, interaction, interaction.channel?.id)).message,
 		} as ParseLink;
 	}
-	console.log(match);
 	//force fetch cache
 	const { message, channel } = await fetchMessage(match[4], interaction, match[3]);
 	if (!message) {

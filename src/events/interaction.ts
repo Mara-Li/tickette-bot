@@ -2,6 +2,8 @@ import type { BaseInteraction, Client } from "discord.js";
 
 import { commandsList } from "../commands";
 import { ln } from "../locales";
+import en from "../locales/language/en.json";
+import fr from "../locales/language/fr.json";
 import { createModal, createThread, getTemplateByIds } from "../tickets/modals";
 
 export default (client: Client): void => {

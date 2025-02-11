@@ -1,7 +1,6 @@
 import { BaseInteraction, Guild } from "discord.js";
-
-import en from "./language/en";
-import fr from "./language/fr";
+import en from "./language/en.json";
+import fr from "./language/fr.json";
 
 export function ln(interaction: BaseInteraction, guild?: Guild) {
 	let lang = interaction.locale ?? "en";
@@ -14,4 +13,3 @@ export function ln(interaction: BaseInteraction, guild?: Guild) {
 		return en;
 	}
 }
-

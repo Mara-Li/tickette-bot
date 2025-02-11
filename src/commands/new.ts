@@ -8,8 +8,8 @@ import {
 
 import type { TemplateModals, Ticket } from "../interface";
 import { ln } from "../locales";
-import en from "../locales/language/en";
-import fr from "../locales/language/fr";
+import en from "../locales/language/en.json";
+import fr from "../locales/language/fr.json";
 import { createEmbed } from "../tickets/modals";
 import { createJSONTemplate } from "../tickets/template";
 

@@ -1,41 +1,29 @@
 import * as Djs from "discord.js";
-import { ln } from "../locales";
-import en from "../locales/language/en.json";
-import fr from "../locales/language/fr.json";
+import { cmdLn, ln } from "../locales";
+import i18next from "../locales/init";
 import { createFile, downloadJSONTemplate } from "../tickets/template";
 
+const t = i18next.getFixedT("en");
 export const pingRole = {
 	data: new Djs.SlashCommandBuilder()
-		.setName(en.ping.title)
-		.setDescription(en.ping.description)
-		.setDescriptionLocalizations({
-			fr: fr.ping.description,
-		})
-		.setNameLocalizations({
-			fr: fr.ping.title,
-		})
+		.setName(t("ping.title"))
+		.setDescription(t("ping.description"))
+		.setDescriptionLocalizations(cmdLn("ping.description"))
+		.setNameLocalizations(cmdLn("ping.title"))
 		.addStringOption((option) =>
 			option
-				.setName(en.message_id.name)
-				.setDescription(en.message_id.description)
-				.setDescriptionLocalizations({
-					fr: fr.message_id.description,
-				})
-				.setNameLocalizations({
-					fr: fr.message_id.name,
-				})
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
+				.setDescriptionLocalizations(cmdLn("messageId.description"))
+				.setNameLocalizations(cmdLn("messageId.title"))
 				.setRequired(true)
 		)
 		.addBooleanOption((option) =>
 			option
-				.setName(en.common.toggle)
-				.setDescription(en.ping.toggle)
-				.setDescriptionLocalizations({
-					fr: fr.ping.toggle,
-				})
-				.setNameLocalizations({
-					fr: fr.common.toggle,
-				})
+				.setName(t("common.toggle"))
+				.setDescription(t("ping.toggle"))
+				.setDescriptionLocalizations(cmdLn("ping.toggle"))
+				.setNameLocalizations(cmdLn("common.toggle"))
 		),
 	execute: async (interaction: Djs.CommandInteraction) => {
 		if (!interaction.guildId) return;
@@ -44,13 +32,12 @@ export const pingRole = {
 		const toggle = options.getBoolean("toggle", false);
 		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) return;
+		const ul = ln(interaction.locale);
 		const { ticket, message } = template;
 		ticket.ping = toggle || false;
 		await message.edit({ files: [] });
 		await message.edit({ files: createFile(ticket) });
-		const success = toggle
-			? ln(interaction).ping.success.true
-			: ln(interaction).ping.success.false;
+		const success = toggle ? ul("ping.success.true") : ul("ping.success.false");
 		await interaction.reply({
 			content: success,
 			flags: Djs.MessageFlags.Ephemeral,

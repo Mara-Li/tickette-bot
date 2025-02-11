@@ -5,69 +5,57 @@ import {
 	SlashCommandBuilder,
 } from "discord.js";
 
-import { ln } from "../locales";
-import en from "../locales/language/en.json";
-import fr from "../locales/language/fr.json";
+import { cmdLn, ln } from "../locales";
+import i18next from "../locales/init";
+
 import { addRoleToTemplate, removeRoleToTemplate } from "../tickets/editRole";
 import { downloadJSONTemplate } from "../tickets/template";
 
+const t = i18next.getFixedT("en");
+
 export const role = {
 	data: new SlashCommandBuilder()
-		.setName(en.common.role)
-		.setDescription(en.role.description)
+		.setName(t("common.role"))
+		.setDescription(t("role.description"))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
-		.setNameLocalizations({
-			fr: fr.common.role,
-		})
-		.setDescriptionLocalizations({
-			fr: fr.role.description,
-		})
+		.setNameLocalizations(cmdLn("common.role"))
+		.setDescriptionLocalizations(cmdLn("role.description"))
 		.addStringOption((option) =>
 			option
-				.setName(en.message_id.name)
-				.setDescription(en.message_id.description)
-				.setNameLocalizations({
-					fr: fr.message_id.name,
-				})
-				.setDescriptionLocalizations({
-					fr: fr.message_id.description,
-				})
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
+				.setNameLocalizations(cmdLn("messageId.title"))
+				.setDescriptionLocalizations(cmdLn("messageId.description"))
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
 			option
-				.setName(en.role.choice.name)
-				.setDescription(en.role.choice.description)
-				.setNameLocalizations({
-					fr: fr.role.choice.name,
-				})
-				.setDescriptionLocalizations({
-					fr: fr.role.choice.description,
-				})
+				.setName(t("role.choice.name"))
+				.setDescription(t("role.choice.description"))
+				.setNameLocalizations(cmdLn("role.choice.name"))
+				.setDescriptionLocalizations(cmdLn("role.choice.description"))
 				.setRequired(true)
 				.addChoices(
 					{
-						name: en.role.choice.add,
+						name: t("role.choice.add"),
 						value: "add",
-						name_localizations: { fr: fr.role.choice.add },
+						// biome-ignore lint/style/useNamingConvention: <explanation>
+						name_localizations: cmdLn("role.choice.add"),
 					},
 					{
-						name: en.role.choice.remove,
+						name: t("role.choice.remove"),
 						value: "remove",
-						name_localizations: { fr: fr.role.choice.remove },
+						// biome-ignore lint/style/useNamingConvention: <explanation>
+						name_localizations: cmdLn("role.choice.remove"),
 					}
 				)
 		)
 		.addRoleOption((option) =>
 			option
-				.setName(en.common.role)
-				.setDescription(en.role.role.description)
-				.setNameLocalizations({
-					fr: fr.common.role,
-				})
-				.setDescriptionLocalizations({
-					fr: fr.role.role.description,
-				})
+				.setName(t("common.role"))
+				.setDescription(t("role.role.description"))
+				.setNameLocalizations(cmdLn("common.role"))
+				.setDescriptionLocalizations(cmdLn("role.role.description"))
 				.setRequired(true)
 		),
 	async execute(interaction: CommandInteraction) {
@@ -77,34 +65,32 @@ export const role = {
 		//download the previous template
 		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) return;
+		const lang = ln(interaction.locale);
 		const { ticket, message } = template;
 		const role = options.getRole("role", true).id;
 		switch (choice) {
 			case "add":
 				await addRoleToTemplate(role, ticket, message);
 				await interaction.reply({
-					content: ln(interaction).edit.role.add.replace("{{role}}", `<@&${role}>`),
+					content: lang("edit.role.add", { role: `<@&${role}>` }),
 				});
 				break;
 			case "remove":
 				if (ticket.roles.length === 1) {
 					await interaction.reply({
-						content: ln(interaction).error.role.left,
+						content: lang("error.role.left"),
 					});
 					return;
 				}
 				if (!ticket.roles.includes(role)) {
 					await interaction.reply({
-						content: ln(interaction).error.role.notInTemplate.replace(
-							"{{role}}",
-							`<@&${role}>`
-						),
+						content: lang("error.role.notInTemplate", { role: `<@&${role}>` }),
 					});
 					return;
 				}
 				await removeRoleToTemplate(role, ticket, message);
 				await interaction.reply({
-					content: ln(interaction).edit.role.remove.replace("{{role}}", `<@&${role}>`),
+					content: lang("edit.role.remove", { role: `<@&${role}>` }),
 				});
 				break;
 		}

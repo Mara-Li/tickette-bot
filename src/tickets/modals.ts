@@ -28,7 +28,7 @@ export async function createEmbed(
 	messageId: string,
 	channelId: string
 ) {
-	const lg = ln(interaction);
+	const lg = ln(interaction.locale);
 	const channel: GuildBasedChannel | TextChannel | undefined = ticket.channel
 		? interaction.guild?.channels.cache.get(ticket.channel)
 		: (interaction.channel as GuildBasedChannel);
@@ -45,7 +45,7 @@ export async function createEmbed(
 	//add button to create ticket
 	const createTicket = new ButtonBuilder()
 		.setCustomId("createTicket")
-		.setLabel(`📝 ${lg.modal.button}`)
+		.setLabel(`📝 ${lg("modal.button")}`)
 		.setStyle(ButtonStyle.Primary);
 
 	return await channel.send({
@@ -79,9 +79,8 @@ export async function getTemplateByIds(
 export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 	//get the template using the embed message id
 
-	const modal = new ModalBuilder()
-		.setCustomId("ticket")
-		.setTitle(ln(command).modal.ticket);
+	const lang = ln(command.locale);
+	const modal = new ModalBuilder().setCustomId("ticket").setTitle(lang("modal.ticket"));
 
 	for (const field of ticket.fields) {
 		const inputStyle =
@@ -103,11 +102,11 @@ export async function createThread(
 	embed: Embed,
 	interaction: ModalSubmitInteraction | ButtonInteraction
 ) {
-	const lg = ln(interaction, interaction.guild as Guild);
+	const ul = ln(interaction?.guild?.preferredLocale ?? interaction.locale);
 	const footer = embed?.footer?.text?.split(" : ");
 	if (!footer || footer.length < 2) {
 		await interaction.reply({
-			content: lg.error.footer,
+			content: ul("error.footer"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -119,7 +118,7 @@ export async function createThread(
 	);
 	if (!template) {
 		await interaction.reply({
-			content: lg.error.attachment,
+			content: ul("error.attachment"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -157,12 +156,12 @@ export async function createThread(
 	//create the thread
 	const thread = await channelToCreateThread.threads.create({
 		name: newThreadName || "Ticket",
-		reason: lg.reason.replace("{{nickname}}", interaction.user.username),
+		reason: ul("reason", { nickname: interaction.user.username }),
 		type: ChannelType.PrivateThread,
 		invitable: false,
 	});
 	await interaction.reply({
-		content: lg.created,
+		content: ul("created"),
 		flags: MessageFlags.Ephemeral,
 	});
 	//add the user to the thread
@@ -190,13 +189,8 @@ export async function createThread(
 		const fields = interaction.fields.fields;
 		//embed
 		const embed = new EmbedBuilder()
-			.setTitle(ln(interaction).modal.ticket)
-			.setDescription(
-				ln(interaction).modal.description.replace(
-					"{{user}}",
-					interaction.user.displayName
-				)
-			)
+			.setTitle(ul("modal.ticket"))
+			.setDescription(ul("modal.description", { user: interaction.user.displayName }))
 			.setAuthor({
 				name: interaction.user.username,
 				iconURL: interaction.user.displayAvatarURL(),

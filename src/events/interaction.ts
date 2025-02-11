@@ -30,13 +30,13 @@ export default (client: Client): void => {
 					messageInfo[0],
 					interaction.guild!
 				);
-				const lg = ln(interaction);
+				const lg = ln(interaction.locale);
 
 				if (!ticket) {
 					//delete embed
 					await interaction.message.delete();
 					await interaction.reply({
-						content: `${lg.error.attachment}\n${lg.error.administrator}`,
+						content: `${lg("error.attachment")}\n${lg("error.administrator")}`,
 						ephemeral: true,
 					});
 					return;

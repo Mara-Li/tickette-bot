@@ -5,39 +5,31 @@ import {
 	SlashCommandBuilder,
 } from "discord.js";
 
-import { ln } from "../locales";
-import en from "../locales/language/en.json";
-import fr from "../locales/language/fr.json";
+import { cmdLn, ln } from "../locales";
+import i18next from "../locales/init";
 import { renameThread } from "../tickets/editname";
 import { downloadJSONTemplate } from "../tickets/template";
 
+const t = i18next.getFixedT("en");
 export const rename = {
 	data: new SlashCommandBuilder()
-		.setName(en.rename.title)
-		.setDescription(en.rename.description)
+		.setName(t("rename.title"))
+		.setDescription(t("rename.description"))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
-		.setNameLocalizations({
-			fr: fr.rename.title,
-		})
-		.setDescriptionLocalizations({
-			fr: fr.rename.description,
-		})
+		.setNameLocalizations(cmdLn("rename.title"))
+		.setDescriptionLocalizations(cmdLn("rename.description"))
 		.addStringOption((option) =>
 			option
-				.setName(en.message_id.name)
-				.setDescription(en.message_id.description)
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
 			option
-				.setName(en.new.thread_name.name)
-				.setNameLocalizations({
-					fr: fr.new.thread_name.name,
-				})
-				.setDescription(en.new.thread_name.description)
-				.setDescriptionLocalizations({
-					fr: fr.new.thread_name.description,
-				})
+				.setName(t("new.thread_name.name"))
+				.setNameLocalizations(cmdLn("new.thread_name.name"))
+				.setDescription(t("new.thread_name.description"))
+				.setDescriptionLocalizations(cmdLn("new.thread_name.description"))
 				.setRequired(true)
 		),
 	async execute(interaction: CommandInteraction) {
@@ -45,9 +37,10 @@ export const rename = {
 		const messageId = options.getString("message_id", true);
 		const threadName = options.getString("thread_name", true);
 		const template = await downloadJSONTemplate(messageId, interaction);
+		const ul = ln(interaction.locale);
 		if (!template) {
 			await interaction.reply({
-				content: ln(interaction).error.channel,
+				content: ul("error.channel"),
 			});
 			return;
 		}

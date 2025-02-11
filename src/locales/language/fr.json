@@ -9,8 +9,8 @@
   "created": "Ticket créé !",
   "edit": {
     "field": {
-      "added": "Champ {{field}} ajouté avec succès",
-      "edited": "Champ {{field}} édité avec succès",
+      "added": "Champ {{- field}} ajouté avec succès",
+      "edited": "Champ {{- field}} édité avec succès",
       "removed": "Champ {{- field}} supprimé avec succès"
     },
     "role": {
@@ -40,7 +40,7 @@
       "message_id": {
       },
       "success": {
-        "jump": "Embed modifié.\n[Cliquez ici pour voir le message]({{url}})",
+        "jump": "Embed modifié.\n[Cliquez ici pour voir le message]({{- url}})",
         "simple": "Embed modifié."
       },
       "thumbnail": {
@@ -68,7 +68,7 @@
     "attachment": "Erreur lors de l'édition du template : le message n'a pas de fichier joint.",
     "channel": "Erreur lors de l'édition du template : message non trouvé. Vous devez utiliser la commande dans le même channel que le JSON du template.",
     "field": {
-      "exist": "Erreur lors de l'édition du template : le champ `{{-field}}` existe déjà.",
+      "exist": "Erreur lors de l'édition du template : le champ `{{- field}}` existe déjà.",
       "notfound": "Erreur lors de l'édition du template : le champ `{{- field}}` n'a pas été trouvé.",
       "tooMuch": "Erreur lors de l'édition du template : le template a trop de champs. Vous ne pouvez pas avoir plus de 5 champs."
     },
@@ -96,22 +96,12 @@
     },
     "description": "La description du champ",
     "fieldId": "field_id",
-    "id": "L'ID du champ, gardez-le court et simple. Utiliser le champ dans le nom du thread avec {{nom}}.",
+    "id": "L'id du champ (court/simple). Utilisez-le dans le nom de la discussion avec la syntaxe \"{{valeur}}\".",
     "name": "Le nom du champ",
     "paragraph": "Paragraphe",
     "required": "Le champ est-il obligatoire ?",
     "short": "Court",
     "type": "Le type du champ, paragraphe ou court"
-  },
-  "fields": {
-    "add": {
-    },
-    "edit": {
-    },
-    "name": {
-    },
-    "remove": {
-    }
   },
   "messageId": {
     "description": "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
@@ -120,7 +110,7 @@
   "message_id": {
   },
   "modal": {
-    "description": "{{user}} a créé un nouveau ticket !\n Voici les informations fournies par l'utilisateur :",
+    "description": "{{- user}} a créé un nouveau ticket !\n Voici les informations fournies par l'utilisateur :",
     "ticket": "Nouveau ticket"
   },
   "new": {
@@ -139,7 +129,7 @@
       "description": "Le rôle des personnes qui doivent être ajoutées à la template"
     },
     "thread_name": {
-      "description": "Le nom du thread. Les variables peuvent être transformée avec {{valeur}}",
+      "description": "Le titre du fil. Peut utiliser les id des champs avec la syntaxe \"{{valeur}}\"",
       "name": "thread_name"
     }
   },
@@ -152,7 +142,7 @@
     "title": "mention",
     "toggle": "Mentionner ou non le(s) rôle(s)"
   },
-  "reason": "Ticket créé par {{nickname}}",
+  "reason": "Ticket créé par {{- nickname}}",
   "rename": {
     "description": "Modifier la template du nom du ticket",
     "title": "rename"

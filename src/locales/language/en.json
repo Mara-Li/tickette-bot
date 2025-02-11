@@ -9,8 +9,8 @@
   "created": "Ticket created !",
   "edit": {
     "field": {
-      "added": "Field {{field}} added successfully",
-      "edited": "Field {{field}} edited successfully",
+      "added": "Field {{- field}} added successfully",
+      "edited": "Field {{- field}} edited successfully",
       "removed": "Field {{- field}} removed successfully"
     },
     "role": {
@@ -40,7 +40,7 @@
       "message_id": {
       },
       "success": {
-        "jump": "Embed edited.\n[Jump to message]({{url}})",
+        "jump": "Embed edited.\n[Jump to message]({{- url}})",
         "simple": "Embed edited"
       },
       "thumbnail": {
@@ -98,7 +98,7 @@
     },
     "description": "The field description",
     "fieldId": "field_id",
-    "id": "The id of the field, keep it short and simple. Use the field in the thread name with {{value}}",
+    "id": "The field's id (short/simple). Use it in the thread name with the \"{{value}}\" syntax",
     "name": "The field name",
     "paragraph": "Paragraph",
     "required": "Is the field required ?",
@@ -112,7 +112,7 @@
   "message_id": {
   },
   "modal": {
-    "description": "{{user}} created a new ticket !\n Here are the informations provided by the user:",
+    "description": "{{- user}} created a new ticket !\n Here are the informations provided by the user:",
     "ticket": "New ticket"
   },
   "new": {
@@ -131,7 +131,7 @@
       "description": "The role of people who need to be added to the template"
     },
     "thread_name": {
-      "description": "The name of the thread. Variables can be transformed with {{value}}",
+      "description": "The thread name. Can use field ids with the syntax \"{{value}}\"",
       "name": "thread_name"
     }
   },
@@ -144,7 +144,7 @@
     "title": "ping",
     "toggle": "Mention or not "
   },
-  "reason": "Ticket created by {{nickname}}",
+  "reason": "Ticket created by {{- nickname}}",
   "rename": {
     "description": "Edit the template of the ticket name",
     "title": "rename"

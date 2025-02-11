@@ -53,6 +53,8 @@ export const fields = {
 						.setDescription(t("field.id"))
 						.setDescriptionLocalizations(cmdLn("field.id"))
 						.setRequired(true)
+						.setMinLength(1)
+						.setMaxLength(10)
 				)
 		)
 		.addSubcommand((sub) =>

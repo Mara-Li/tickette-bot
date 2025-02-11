@@ -114,6 +114,8 @@ for (let i = 1; i <= 4; i++) {
 				.setDescription(t("field.id"))
 				.setDescriptionLocalizations(cmdLn("field.id"))
 				.setRequired(false)
+				.setMaxLength(10)
+				.setMinLength(1)
 		)
 		.addStringOption((option) =>
 			option

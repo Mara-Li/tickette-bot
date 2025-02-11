@@ -1,50 +1,44 @@
 {
   "common": {
+    "channel": "channel",
+    "editLabel": "modifier",
     "field": "champs",
     "role": "role",
     "toggle": "changer"
   },
   "created": "Ticket créé !",
-  "description": "Configuration des tickets",
   "edit": {
     "field": {
       "added": "Champ {{field}} ajouté avec succès",
-      "deleted": "Le template est supprimé car il n'y a plus de champs",
       "edited": "Champ {{field}} édité avec succès",
       "removed": "Champ {{- field}} supprimé avec succès"
     },
     "role": {
-      "add": "Rôle {{role}} ajouté avec succès",
-      "remove": "Rôle {{role}} supprimé avec succès"
     }
   },
   "embed": {
+    "content": {
+      "description": "Le contenu de l'embed",
+      "title": "description"
+    },
     "description": "Modifier ou renvoyer l'embed pour la création de ticket",
     "edit": {
       "channel": {
-        "description": "Le channel où l'embed peut être renvoyé (supprimera l'ancien)",
-        "name": "channel"
+        "description": "Le channel où l'embed peut être renvoyé (supprimera l'ancien)"
       },
       "color": {
         "description": "La couleur de l'embed. Accepte des valeurs hexadecimal, rgb ou un nom de couleur",
         "name": "couleur"
       },
       "content": {
-        "description": "La contenu de l'embed",
-        "name": "description"
       },
       "description": "Modifier l'embed pour la création de ticket",
       "error": {
         "invalidColor": "La couleur n'est pas valide. Merci d'utiliser une valeur hexadécimal, un [nom de couleur depuis cette liste](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors) ou une valeur rgb.",
-        "noEmbed": "Le message n'a pas d'embed.",
-        "notFound": "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
-        "textChannel": "Cette commande ne peut être utilisée que dans un channel."
+        "noEmbed": "Le message n'a pas d'embed."
       },
       "message_id": {
-        "description": "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
-        "name": "message_id"
       },
-      "name": "modifier",
       "success": {
         "jump": "Embed modifié.\n[Cliquez ici pour voir le message]({{url}})",
         "simple": "Embed modifié."
@@ -54,8 +48,6 @@
         "name": "thumbnail"
       },
       "title": {
-        "description": "Le titre de l'embed",
-        "name": "titre"
       }
     },
     "name": "embed",
@@ -63,15 +55,16 @@
       "channel": "Le channel où l'embed doit être re-créé",
       "description": "Recréer l'embed dans un channel depuis la template",
       "error": {
-        "notFound": "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
-        "notSend": "Le message n'a pas été envoyé pour une raison inconnue.",
-        "textChannel": "Cette commande ne peut être utilisée que dans un channel."
+        "notSend": "Le message n'a pas été envoyé pour une raison inconnue."
       },
       "name": "recréé"
+    },
+    "title": {
+      "description": "Le titre de l'embed",
+      "title": "titre"
     }
   },
   "error": {
-    "administrator": "Merci de contacter un administrateur pour éditer le template.",
     "attachment": "Erreur lors de l'édition du template : le message n'a pas de fichier joint.",
     "channel": "Erreur lors de l'édition du template : message non trouvé. Vous devez utiliser la commande dans le même channel que le JSON du template.",
     "field": {
@@ -80,13 +73,29 @@
       "tooMuch": "Erreur lors de l'édition du template : le template a trop de champs. Vous ne pouvez pas avoir plus de 5 champs."
     },
     "footer": "Erreur lors de l'édition du template : le footer de l'embed n'a pas le bon format.",
+    "notFound": "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
     "role": {
-      "left": "Impossible de supprimer le rôle {{role}} car c'est le seul restant.",
-      "notInTemplate": "Le rôle {{role}} n'est pas dans le template."
-    }
+    },
+    "textChannel": "Cette commande ne peut être utilisée que dans un channel."
   },
   "field": {
+    "command": {
+      "add": {
+        "description": "Ajouter un champ au modèle",
+        "name": "ajouter"
+      },
+      "description": "Modifier les champs du modèle",
+      "edit": {
+        "description": "Modifier un champ du modèle"
+      },
+      "remove": {
+        "description": "Supprimer un champ du modèle",
+        "name": "supprimer"
+      },
+      "title": "champs"
+    },
     "description": "La description du champ",
+    "fieldId": "field_id",
     "id": "L'ID du champ, gardez-le court et simple. Utiliser le champ dans le nom du thread avec {{nom}}.",
     "name": "Le nom du champ",
     "paragraph": "Paragraphe",
@@ -96,52 +105,39 @@
   },
   "fields": {
     "add": {
-      "description": "Ajouter un champ à la template",
-      "name": "ajouter"
     },
-    "description": "Modifier les champs de la template",
     "edit": {
-      "description": "Modifier un champ de la template",
-      "name": "modifier"
     },
     "name": {
-      "description": "L'id du champ, gardez-le court et simple. Utiliser le champ dans le nom du thread avec {{valeur}}",
-      "name": "field_id"
     },
     "remove": {
-      "description": "Supprimer un champ de la template",
-      "name": "supprimer"
-    },
-    "title": "champs"
+    }
+  },
+  "messageId": {
+    "description": "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
+    "title": "message_id"
   },
   "message_id": {
-    "description": "L'ID du message où le JSON de la template est envoyée",
-    "name": "message_id"
   },
   "modal": {
-    "button": "Créer un nouveau ticket",
     "description": "{{user}} a créé un nouveau ticket !\n Voici les informations fournies par l'utilisateur :",
     "ticket": "Nouveau ticket"
   },
   "new": {
     "channel": {
-      "description": "Le channel où le ticket sera créé",
-      "name": "channel"
+      "description": "Le channel où le ticket sera créé"
     },
     "description": "Créer une nouvelle template",
     "embed": {
-      "description": "Le titre de l'embed",
-      "name": "titre"
     },
     "embed_content": {
       "description": "Le message dans l'embed",
-      "name": "description"
+      "name": "embed.content.title"
     },
     "name": "nouveau",
     "role": {
       "description": "Le rôle des personnes qui doivent être ajoutées à la template"
     },
-    "success": "Template créé avec succès",
     "thread_name": {
       "description": "Le nom du thread. Les variables peuvent être transformée avec {{valeur}}",
       "name": "thread_name"
@@ -159,7 +155,7 @@
   "reason": "Ticket créé par {{nickname}}",
   "rename": {
     "description": "Modifier la template du nom du ticket",
-    "title": "renommer"
+    "title": "rename"
   },
   "role": {
     "choice": {
@@ -172,6 +168,5 @@
     "role": {
       "description": "Le rôle à ajouter ou supprimer"
     }
-  },
-  "title": "config"
+  }
 }

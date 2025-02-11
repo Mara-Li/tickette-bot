@@ -20,8 +20,8 @@ export const rename = {
 		.setDescriptionLocalizations(cmdLn("rename.description"))
 		.addStringOption((option) =>
 			option
-				.setName(t("message_id.name"))
-				.setDescription(t("message_id.description"))
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -37,10 +37,10 @@ export const rename = {
 		const messageId = options.getString("message_id", true);
 		const threadName = options.getString("thread_name", true);
 		const template = await downloadJSONTemplate(messageId, interaction);
-		const lang = ln(interaction.locale);
+		const ul = ln(interaction.locale);
 		if (!template) {
 			await interaction.reply({
-				content: lang("error.channel"),
+				content: ul("error.channel"),
 			});
 			return;
 		}

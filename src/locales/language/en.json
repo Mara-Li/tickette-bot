@@ -1,5 +1,7 @@
 {
   "common": {
+    "channel": "channel",
+    "editLabel": "edit",
     "field": "field",
     "role": "role",
     "toggle": "toggle"
@@ -8,42 +10,35 @@
   "edit": {
     "field": {
       "added": "Field {{field}} added successfully",
-      "deleted": "The template is deleted because there is no more fields",
       "edited": "Field {{field}} edited successfully",
       "removed": "Field {{- field}} removed successfully"
     },
     "role": {
-      "add": "Role {{role}} added successfully",
-      "remove": "Role {{role}} removed successfully"
     }
   },
   "embed": {
+    "content": {
+      "description": "Embed's content",
+      "title": "description"
+    },
     "description": "Edit or resend the embed for the ticket creation",
     "edit": {
       "channel": {
-        "description": "The channel where the embed can be resend",
-        "name": "channel"
+        "description": "The channel where the embed can be resend"
       },
       "color": {
         "description": "Allow to changing the color. Hexadecimal value, rgb value, or via a color name",
         "name": "color"
       },
       "content": {
-        "description": "The content of the embed",
-        "name": "content"
       },
       "description": "Edit the embed for the ticket creation",
       "error": {
         "invalidColor": "The color is not valid. You must use a hexadecimal value, a rgb value (in the format `(1, 2, 3)` or `[1,2,3]`) or [a color name from this list](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors)",
-        "noEmbed": "The message has no embed",
-        "notFound": "The message was not found: you need to use the command in the embed's channel.",
-        "textChannel": "This command can only be used in a text channel"
+        "noEmbed": "The message has no embed"
       },
       "message_id": {
-        "description": "The message ID of the embed. You need to use the command in the channel of the embed.",
-        "name": "message_id"
       },
-      "name": "edit",
       "success": {
         "jump": "Embed edited.\n[Jump to message]({{url}})",
         "simple": "Embed edited"
@@ -53,8 +48,6 @@
         "name": "thumbnail"
       },
       "title": {
-        "description": "The title of the embed",
-        "name": "title"
       }
     },
     "name": "embed",
@@ -62,15 +55,16 @@
       "channel": "the channel where to recreate the embed",
       "description": "Recreate the embed from the template",
       "error": {
-        "notFound": "The message was not found: you need to use the command in the template's channel.",
-        "notSend": "The message was not send for an unknown reason.",
-        "textChannel": "This command can only be used in a text channel"
+        "notSend": "The message was not send for an unknown reason."
       },
       "name": "recreate"
+    },
+    "title": {
+      "description": "Embed's title",
+      "title": "title"
     }
   },
   "error": {
-    "administrator": "Please, contact an administrator to edit the template.",
     "attachment": "Error while editing the template: the message has no attachment.",
     "channel": "Error while editing the template: message not found.You need to use the command in the same channel the template JSON was saved.",
     "field": {
@@ -79,13 +73,31 @@
       "tooMuch": "Error while editing the template: the template has too much fields. You can't have more than 5 fields."
     },
     "footer": "Error while editing the template: the embed footer is not in the good format.",
+    "notFound": "The message was not found: you need to use the command in the template's channel.",
     "role": {
-      "left": "Can't remove the role {{role}} because it's the only one left.",
-      "notInTemplate": "The role {{role}} is not in the template."
-    }
+    },
+    "textChannel": "This command can only be used in a text channel"
   },
   "field": {
+    "command": {
+      "add": {
+        "description": "Add a field to the template",
+        "name": "add"
+      },
+      "description": "Edit the fields of the template",
+      "edit": {
+        "description": "Edit a field of the template"
+      },
+      "name": {
+      },
+      "remove": {
+        "description": "Delete a field from the template",
+        "name": "delete"
+      },
+      "title": "fields"
+    },
     "description": "The field description",
+    "fieldId": "field_id",
     "id": "The id of the field, keep it short and simple. Use the field in the thread name with {{value}}",
     "name": "The field name",
     "paragraph": "Paragraph",
@@ -93,54 +105,31 @@
     "short": "Short",
     "type": "The field type, paragraph or short"
   },
-  "fields": {
-    "add": {
-      "description": "Add a field to the template",
-      "name": "add"
-    },
-    "description": "Edit the fields of the template",
-    "edit": {
-      "description": "Edit a field of the template",
-      "name": "edit"
-    },
-    "name": {
-      "description": "The id of the field, keep it short and simple. Use the field in the thread name with {{value}}",
-      "name": "field_id"
-    },
-    "remove": {
-      "description": "Remove a field from the template",
-      "name": "remove"
-    },
-    "title": "fields"
+  "messageId": {
+    "description": "The message ID of the embed. You must use the command in the same channel as the embed.",
+    "title": "message_id"
   },
   "message_id": {
-    "description": "The message ID of the template",
-    "name": "message_id"
   },
   "modal": {
-    "button": "Create a new ticket",
     "description": "{{user}} created a new ticket !\n Here are the informations provided by the user:",
     "ticket": "New ticket"
   },
   "new": {
     "channel": {
-      "description": "The channel where the ticket will be created",
-      "name": "channel"
+      "description": "The channel where the ticket will be created"
     },
     "description": "Create a new template",
     "embed": {
-      "description": "The title of the embed",
-      "name": "title"
     },
     "embed_content": {
       "description": "The message in the embed",
-      "name": "description"
+      "name": "embed.content.title"
     },
     "name": "new",
     "role": {
       "description": "The role of people who need to be added to the template"
     },
-    "success": "Template created successfully",
     "thread_name": {
       "description": "The name of the thread. Variables can be transformed with {{value}}",
       "name": "thread_name"

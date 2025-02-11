@@ -22,10 +22,10 @@ export const role = {
 		.setDescriptionLocalizations(cmdLn("role.description"))
 		.addStringOption((option) =>
 			option
-				.setName(t("message_id.name"))
-				.setDescription(t("message_id.description"))
-				.setNameLocalizations(cmdLn("message_id.name"))
-				.setDescriptionLocalizations(cmdLn("message_id.description"))
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
+				.setNameLocalizations(cmdLn("messageId.title"))
+				.setDescriptionLocalizations(cmdLn("messageId.description"))
 				.setRequired(true)
 		)
 		.addStringOption((option) =>

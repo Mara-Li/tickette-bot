@@ -12,10 +12,10 @@ export const pingRole = {
 		.setNameLocalizations(cmdLn("ping.title"))
 		.addStringOption((option) =>
 			option
-				.setName(t("message_id.name"))
-				.setDescription(t("message_id.description"))
-				.setDescriptionLocalizations(cmdLn("message_id.description"))
-				.setNameLocalizations(cmdLn("message_id.name"))
+				.setName(t("messageId.title"))
+				.setDescription(t("messageId.description"))
+				.setDescriptionLocalizations(cmdLn("messageId.description"))
+				.setNameLocalizations(cmdLn("messageId.title"))
 				.setRequired(true)
 		)
 		.addBooleanOption((option) =>
@@ -32,12 +32,12 @@ export const pingRole = {
 		const toggle = options.getBoolean("toggle", false);
 		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) return;
-		const lang = ln(interaction.locale);
+		const ul = ln(interaction.locale);
 		const { ticket, message } = template;
 		ticket.ping = toggle || false;
 		await message.edit({ files: [] });
 		await message.edit({ files: createFile(ticket) });
-		const success = toggle ? lang("ping.success.true") : lang("ping.success.false");
+		const success = toggle ? ul("ping.success.true") : ul("ping.success.false");
 		await interaction.reply({
 			content: success,
 			flags: Djs.MessageFlags.Ephemeral,

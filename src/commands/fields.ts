@@ -27,52 +27,54 @@ const t = i18next.getFixedT("en");
 
 export const fields = {
 	data: new SlashCommandBuilder()
-		.setName(t("fields.title"))
+		.setName(t("field.command.title"))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
-		.setDescription(t("fields.description"))
-		.setNameLocalizations(cmdLn("fields.title"))
-		.setDescriptionLocalizations(cmdLn("fields.description"))
+		.setDescription(t("field.command.description"))
+		.setNameLocalizations(cmdLn("field.command.title", true))
+		.setDescriptionLocalizations(cmdLn("field.command.description"))
 		.addSubcommand((sub) =>
 			sub
-				.setName(t("fields.remove.name"))
-				.setDescription(t("fields.remove.description"))
+				.setName(t("field.command.remove.name"))
+				.setDescription(t("field.command.remove.description"))
+				.setDescriptionLocalizations(cmdLn("field.command.remove.description"))
+				.setNameLocalizations(cmdLn("field.command.remove.name"))
 				.addStringOption((option) =>
 					option
-						.setName(t("message_id.name"))
-						.setDescription(t("message_id.description"))
-						.setDescriptionLocalizations(cmdLn("message_id.description"))
-						.setNameLocalizations(cmdLn("message_id.name"))
+						.setName(t("messageId.title"))
+						.setDescription(t("messageId.description"))
+						.setDescriptionLocalizations(cmdLn("messageId.description"))
+						.setNameLocalizations(cmdLn("messageId.title"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("fields.name.name"))
-						.setNameLocalizations(cmdLn("fields.name.name"))
-						.setDescription(t("fields.name.description"))
-						.setDescriptionLocalizations(cmdLn("fields.name.description"))
+						.setName(t("field.fieldId"))
+						.setNameLocalizations(cmdLn("field.fieldId"))
+						.setDescription(t("field.id"))
+						.setDescriptionLocalizations(cmdLn("field.id"))
 						.setRequired(true)
 				)
 		)
 		.addSubcommand((sub) =>
 			sub
-				.setName(t("fields.add.name"))
-				.setDescription(t("fields.add.description"))
-				.setDescriptionLocalizations(cmdLn("fields.add.description"))
-				.setNameLocalizations(cmdLn("fields.add.name"))
+				.setName(t("field.command.add.name"))
+				.setDescription(t("field.command.add.description"))
+				.setDescriptionLocalizations(cmdLn("field.command.add.description"))
+				.setNameLocalizations(cmdLn("field.command.add.name"))
 				.addStringOption((option) =>
 					option
-						.setName(t("message_id.name"))
-						.setDescription(t("message_id.description"))
-						.setDescriptionLocalizations(cmdLn("message_id.description"))
-						.setNameLocalizations(cmdLn("message_id.name"))
+						.setName(t("messageId.title"))
+						.setDescription(t("messageId.description"))
+						.setDescriptionLocalizations(cmdLn("messageId.description"))
+						.setNameLocalizations(cmdLn("messageId.title"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("fields.name.name"))
-						.setNameLocalizations(cmdLn("fields.name.name"))
-						.setDescription(t("fields.name.description"))
-						.setDescriptionLocalizations(cmdLn("fields.name.description"))
+						.setName(t("field.fieldId"))
+						.setNameLocalizations(cmdLn("field.fieldId"))
+						.setDescription(t("field.id"))
+						.setDescriptionLocalizations(cmdLn("field.id"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
@@ -121,23 +123,23 @@ export const fields = {
 		)
 		.addSubcommand((sub) =>
 			sub
-				.setName(t("fields.edit.name"))
-				.setDescription(t("fields.edit.description"))
-				.setDescriptionLocalizations(cmdLn("fields.edit.description"))
+				.setName(t("common.editLabel"))
+				.setDescription(t("field.command.edit.description"))
+				.setDescriptionLocalizations(cmdLn("field.command.edit.description"))
 				.addStringOption((option) =>
 					option
-						.setName(t("message_id.name"))
-						.setDescription(t("message_id.description"))
-						.setDescriptionLocalizations(cmdLn("message_id.description"))
-						.setNameLocalizations(cmdLn("message_id.name"))
+						.setName(t("messageId.title"))
+						.setDescription(t("messageId.description"))
+						.setDescriptionLocalizations(cmdLn("messageId.description"))
+						.setNameLocalizations(cmdLn("messageId.title"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("fields.name.name"))
-						.setNameLocalizations(cmdLn("fields.name.name"))
-						.setDescription(t("fields.name.description"))
-						.setDescriptionLocalizations(cmdLn("fields.name.description"))
+						.setName(t("field.fieldId"))
+						.setNameLocalizations(cmdLn("field.fieldId"))
+						.setDescription(t("field.id"))
+						.setDescriptionLocalizations(cmdLn("field.id"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
@@ -193,19 +195,19 @@ export const fields = {
 		const template = await downloadJSONTemplate(messageId, interaction);
 		if (!template) return;
 		const { ticket, message } = template;
-		const lang = ln(interaction.locale);
+		const ul = ln(interaction.locale);
 		switch (addSubcommand) {
 			case "remove":
 				if (template.ticket.fields.filter((f) => f.name === field).length === 0) {
 					await interaction.reply({
-						content: lang("error.field.notfound", { field }),
+						content: ul("error.field.notfound", { field }),
 						flags: MessageFlags.Ephemeral,
 					});
 					return;
 				}
 				await removeFieldToTemplate(field, ticket, message);
 				await interaction.reply({
-					content: lang("edit.field.removed", { field }),
+					content: ul("edit.field.removed", { field }),
 					flags: MessageFlags.Ephemeral,
 				});
 
@@ -218,7 +220,7 @@ export const fields = {
 				const fieldRequired = options.getBoolean("field_required") ?? false;
 				if (template.ticket.fields.filter((f) => f.name === field).length !== 0) {
 					await interaction.reply({
-						content: lang("error.field.exist", { field }),
+						content: ul("error.field.exist", { field }),
 						flags: MessageFlags.Ephemeral,
 					});
 					return;
@@ -236,12 +238,12 @@ export const fields = {
 				);
 				if (repAdd) {
 					await interaction.reply({
-						content: lang("edit.field.added", { field }),
+						content: ul("edit.field.added", { field }),
 						flags: MessageFlags.Ephemeral,
 					});
 				} else {
 					await interaction.reply({
-						content: lang(".error.field.tooMuch"),
+						content: ul("error.field.tooMuch"),
 						flags: MessageFlags.Ephemeral,
 					});
 				}
@@ -255,7 +257,7 @@ export const fields = {
 				const fieldToEdit = ticket.fields.find((f) => f.id === field);
 				if (!fieldToEdit) {
 					await interaction.reply({
-						content: lang("error.field.notfound", { field }),
+						content: ul("error.field.notfound", { field }),
 						flags: MessageFlags.Ephemeral,
 					});
 					return;
@@ -274,7 +276,7 @@ export const fields = {
 				);
 				if (reply) {
 					await interaction.reply({
-						content: lang("edit.field.edited", { field }),
+						content: ul("edit.field.edited", { field }),
 						flags: MessageFlags.Ephemeral,
 					});
 					return;

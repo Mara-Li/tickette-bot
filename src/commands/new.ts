@@ -23,10 +23,10 @@ export const create = {
 		.setDescriptionLocalizations(cmdLn("new.description"))
 		.addStringOption((option) =>
 			option
-				.setName(t("new.embed.name"))
-				.setDescription(t("new.embed.description"))
-				.setDescriptionLocalizations(cmdLn("new.embed.description"))
-				.setNameLocalizations(cmdLn("new.embed.name"))
+				.setName(t("embed.title.title"))
+				.setDescription(t("embed.title.description"))
+				.setDescriptionLocalizations(cmdLn("embed.title.description"))
+				.setNameLocalizations(cmdLn("embed.title.title"))
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -47,35 +47,35 @@ export const create = {
 		)
 		.addStringOption((option) =>
 			option
-				.setName(t("new.embed_content.name"))
+				.setName(t("embed.content.title"))
 				.setDescription(t("new.embed_content.description"))
-				.setNameLocalizations(cmdLn("new.embed_content.name"))
+				.setNameLocalizations(cmdLn("embed.content.title"))
 				.setDescriptionLocalizations(cmdLn("new.embed_content.description"))
 				.setRequired(true)
 		)
 		.addChannelOption((option) =>
 			option
-				.setName(t("new.channel.name"))
+				.setName(t("common.channel"))
 				.setDescription(t("new.channel.description"))
-				.setNameLocalizations(cmdLn("new.channel.name"))
+				.setNameLocalizations(cmdLn("common.channel"))
 				.setDescriptionLocalizations(cmdLn("new.channel.description"))
 				.setRequired(true)
 				.addChannelTypes(ChannelType.GuildText)
 		),
 	async execute(interaction: CommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
-		const name = options.getString(t("new.embed.name"), true);
+		const name = options.getString(t("embed.title.title"), true);
 		const role = [options.getRole("role", true).id];
 		const channel = options.getChannel("channel", true).id;
 		const threadName = options.getString("thread_name", true);
 		const fields = [];
-		const lang = ln(interaction.locale);
+		const ul = ln(interaction.locale);
 		for (let i = 1; i < 5; i++) {
 			const fieldName = options.getString(`field_${i}_name`);
 			const fieldDescription = options.getString(`field_${i}_description`) ?? "";
 			const fieldType = options.getString(`field_${i}_type`) ?? "short";
 			const fieldId =
-				options.getString(`field_${i}_id`) ?? `${lang("common.field")}-${i}`;
+				options.getString(`field_${i}_id`) ?? `${ul("common.field")}-${i}`;
 			const fieldRequired = options.getBoolean(`field_${i}_required`) ?? false;
 			if (fieldName) {
 				const templateMod: TemplateModals = {

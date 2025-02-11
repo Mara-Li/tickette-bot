@@ -28,52 +28,52 @@ export const embedCommands = {
 		.setNameLocalizations(cmdLn("embed.name"))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setDescription(t("embed.description"))
-		.setDescriptionLocalizations(cmdLn("embed.description "))
+		.setDescriptionLocalizations(cmdLn("embed.description"))
 		.addSubcommand((subcommand) =>
 			subcommand
-				.setName(t("embed.edit.name"))
+				.setName(t("common.editLabel"))
 				.setDescription(t("embed.edit.description"))
-				.setDescriptionLocalizations(cmdLn("embed.edit.description "))
-				.setNameLocalizations(cmdLn("embed.edit.name "))
+				.setDescriptionLocalizations(cmdLn("embed.edit.description"))
+				.setNameLocalizations(cmdLn("common.editLabel"))
 				.addStringOption((option) =>
 					option
-						.setName(t("embed.edit.message_id.name"))
-						.setDescription(t("embed.edit.message_id.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.message_id.description "))
-						.setNameLocalizations(cmdLn("embed.edit.message_id.name "))
+						.setName(t("messageId.title"))
+						.setDescription(t("messageId.description"))
+						.setDescriptionLocalizations(cmdLn("messageId.description"))
+						.setNameLocalizations(cmdLn("messageId.title"))
 						.setRequired(true)
 				)
 				.addChannelOption((option) =>
 					option
-						.setName(t("embed.edit.channel.name"))
+						.setName(t("common.channel"))
 						.setDescription(t("embed.edit.channel.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.channel.description "))
-						.setNameLocalizations(cmdLn("embed.edit.channel.name "))
+						.setDescriptionLocalizations(cmdLn("embed.edit.channel.description"))
+						.setNameLocalizations(cmdLn("common.channel"))
 						.setRequired(false)
 						.addChannelTypes(ChannelType.GuildText)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("embed.edit.content.name"))
-						.setDescription(t("embed.edit.content.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.content.description "))
-						.setNameLocalizations(cmdLn("embed.edit.content.name "))
+						.setName(t("embed.title.title"))
+						.setDescription(t("embed.title.description"))
+						.setDescriptionLocalizations(cmdLn("embed.title.description"))
+						.setNameLocalizations(cmdLn("embed.title.title"))
 						.setRequired(false)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("embed.edit.title.name"))
-						.setDescription(t("embed.edit.title.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.title.description "))
-						.setNameLocalizations(cmdLn("embed.edit.title.name "))
+						.setName(t("embed.content.title"))
+						.setDescription(t("embed.content.description"))
+						.setDescriptionLocalizations(cmdLn("embed.content.description"))
+						.setNameLocalizations(cmdLn("embed.content.title"))
 						.setRequired(false)
 				)
 				.addStringOption((option) =>
 					option
 						.setName(t("embed.edit.color.name"))
 						.setDescription(t("embed.edit.color.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.color.description "))
-						.setNameLocalizations(cmdLn("embed.edit.color.name "))
+						.setDescriptionLocalizations(cmdLn("embed.edit.color.description"))
+						.setNameLocalizations(cmdLn("embed.edit.color.name"))
 						.setRequired(false)
 				)
 				.addAttachmentOption((option) =>
@@ -87,37 +87,39 @@ export const embedCommands = {
 			subcommand
 				.setName(t("embed.resend.name"))
 				.setDescription(t("embed.resend.description"))
+				.setDescriptionLocalizations(cmdLn("embed.resend.description"))
+				.setNameLocalizations(cmdLn("embed.resend.name"))
 				.addChannelOption((option) =>
 					option
-						.setName(t("embed.edit.channel.name"))
+						.setName(t("common.channel"))
 						.setDescription(t("embed.resend.channel"))
-						.setDescriptionLocalizations(cmdLn("embed.resend.channel "))
-						.setNameLocalizations(cmdLn("embed.edit.channel.name "))
+						.setDescriptionLocalizations(cmdLn("embed.resend.channel"))
+						.setNameLocalizations(cmdLn("common.channel"))
 						.setRequired(true)
 						.addChannelTypes(ChannelType.GuildText)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("message_id.name"))
-						.setDescription(t("message_id.description"))
-						.setDescriptionLocalizations(cmdLn("message_id.description "))
-						.setNameLocalizations(cmdLn("message_id.name "))
+						.setName(t("messageId.title"))
+						.setDescription(t("messageId.description"))
+						.setDescriptionLocalizations(cmdLn("messageId.description"))
+						.setNameLocalizations(cmdLn("messageId.title"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("embed.edit.title.name"))
-						.setDescription(t("embed.edit.title.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.title.description "))
-						.setNameLocalizations(cmdLn("embed.edit.title.name "))
+						.setName(t("embed.title.title"))
+						.setDescription(t("embed.title.description"))
+						.setDescriptionLocalizations(cmdLn("embed.title.description"))
+						.setNameLocalizations(cmdLn("embed.title.title"))
 						.setRequired(true)
 				)
 				.addStringOption((option) =>
 					option
-						.setName(t("new.embed_content.name"))
-						.setDescription(t("embed.edit.content.description"))
-						.setDescriptionLocalizations(cmdLn("embed.edit.content.description "))
-						.setNameLocalizations(cmdLn("embed.edit.content.name "))
+						.setName(t("embed.content.title"))
+						.setDescription(t("embed.content.description"))
+						.setDescriptionLocalizations(cmdLn("embed.content.description"))
+						.setNameLocalizations(cmdLn("embed.content.title"))
 						.setRequired(true)
 				)
 		),
@@ -139,17 +141,17 @@ async function editEmbed(
 	const { message, channel } = await parseLinkFromDiscord(messageId, interaction);
 
 	//get the embed
-	const lang = ln(interaction.locale);
+	const ul = ln(interaction.locale);
 	if (!channel || !channel.isTextBased()) {
 		await interaction.reply({
-			content: lang("embed.edit.error.textChannel"),
+			content: ul("error.textChannel"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
 	if (!message) {
 		await interaction.reply({
-			content: lang("embed.edit.error.notFound"),
+			content: ul("error.notFound"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -157,7 +159,7 @@ async function editEmbed(
 	const embeds = message.embeds?.[0];
 	if (!embeds) {
 		await interaction.reply({
-			content: lang("embed.edit.error.noEmbed"),
+			content: ul("embed.edit.error.noEmbed"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -185,7 +187,7 @@ async function editEmbed(
 	}
 	if (!validColor && newColor) {
 		await interaction.reply({
-			content: lang("embed.edit.error.invalidColor"),
+			content: ul("embed.edit.error.invalidColor"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -202,14 +204,14 @@ async function editEmbed(
 		const newChannel = options.getChannel("channel", false) as TextChannel;
 		const newMessage = await newChannel.send({ embeds: [newEmbed] });
 		await interaction.reply({
-			content: lang("embed.edit.success.jump.replace")("{{url}}", newMessage.url),
+			content: ul("embed.edit.success.jump", {url: newMessage.url}),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
 	await message.edit({ embeds: [newEmbed] });
 	await interaction.reply({
-		content: lang("embed.edit.success.simple"),
+		content: ul("embed.edit.success.simple"),
 		flags: MessageFlags.Ephemeral,
 	});
 	return;
@@ -223,17 +225,17 @@ async function resend(
 	const link = await parseLinkFromDiscord(id, interaction);
 	const templateID = link.message?.id;
 	const channel = link.channel;
-	const lang = ln(interaction.locale);
+	const ul = ln(interaction.locale);
 	if (!channel || !channel.isTextBased()) {
 		await interaction.reply({
-			content: lang("embed.resend.error.textChannel"),
+			content: ul("error.textChannel"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
 	if (!templateID) {
 		await interaction.reply({
-			content: lang("embed.resend.error.notFound"),
+			content: ul("error.notFound"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -243,21 +245,21 @@ async function resend(
 	const template = await downloadJSONTemplate(templateID, interaction);
 	if (!template) return;
 	const { ticket, message } = template;
-	const desc = options.getString(t("new.embed_content.name"), true);
-	const title = options.getString(t("new.embed.name"), true);
+	const desc = options.getString(t("embed.content.title"), true);
+	const title = options.getString(t("embed.title.title"), true);
 	ticket.description = desc;
 	ticket.name = title;
 	ticket.channel = newChannel.id;
 	const msg = await createEmbed(interaction, ticket, message.id, channel.id);
 	if (!msg) {
 		await interaction.reply({
-			content: lang("embed.resend.error.notSend"),
+			content: ul("embed.resend.error.notSend"),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
 	}
 	await interaction.reply({
-		content: lang("embed.edit.success.jump.replace")("{{url}}", msg.url),
+		content: ul("embed.edit.success.jump", {url: msg.url}),
 		flags: MessageFlags.Ephemeral,
 	});
 	return;

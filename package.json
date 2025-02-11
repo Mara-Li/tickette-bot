@@ -1,6 +1,6 @@
 {
 	"name": "tickette",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "",
 	"main": "dist/index.js",
 	"repository": "",
@@ -14,7 +14,8 @@
 		"delete": "pm2 delete tickette",
 		"dev": "ts-node-dev --respawn -- src/index.ts",
 		"dev:prod": "cross-env ENV=production ts-node-dev --respawn -- src/index.ts",
-		"lint:fix": "biome format --write src/"
+		"lint:fix": "biome format --write src/",
+		"release": "commit-and-tag-version"
 	},
 	"keywords": [],
 	"author": "",
@@ -25,6 +26,7 @@
 		"@types/parse-color": "^1.0.3",
 		"ansi-colors": "^4.1.3",
 		"color-parse": "^2.0.2",
+		"commit-and-tag-version": "^12.5.0",
 		"dedent": "^1.5.3",
 		"discord.js": "^14.17.3",
 		"dotenv": "^16.4.7",
@@ -39,5 +41,7 @@
 	"devDependencies": {
 		"cross-env": "^7.0.3"
 	},
-	"trustedDependencies": ["@biomejs/biome"]
+	"trustedDependencies": [
+		"@biomejs/biome"
+	]
 }

@@ -105,9 +105,10 @@ export async function parseLinkFromDiscord(
 	}
 	//force fetch cache
 	const { message, channel } = await fetchMessage(match[4], interaction, match[3]);
+	const lang = ln(interaction.locale);
 	if (!message) {
 		await interaction.reply({
-			content: ln(interaction).error.channel,
+			content: lang("error.channel"),
 		});
 		return {
 			guild: match[2],
@@ -126,9 +127,10 @@ export async function downloadJSONTemplate(
 ) {
 	//search the message
 	const { message } = await parseLinkFromDiscord(messageID, interaction);
+	const lg = ln(interaction.locale);
 	if (!message) {
 		await interaction.reply({
-			content: ln(interaction).error.channel,
+			content: lg("error.channel"),
 		});
 		return;
 	}
@@ -136,7 +138,7 @@ export async function downloadJSONTemplate(
 	const attachment = message.attachments.first();
 	if (!attachment) {
 		await interaction.reply({
-			content: ln(interaction).error.attachment,
+			content: lg("error.attachment"),
 		});
 		return;
 	}

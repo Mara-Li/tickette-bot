@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Lisandra-dev/ticket-thread/compare/v1.2.0...v1.3.0) (2025-10-10)
+
+
+### Features
+
+* add private thread creation command with modal for role selection ([3773418](https://github.com/Lisandra-dev/ticket-thread/commit/37734189816900febe54c87a76eba6ed418d08b1))
+
+
+### Bug Fixes
+
+* add ticket creation button text in modals and improve type handling in interactions ([5e985e9](https://github.com/Lisandra-dev/ticket-thread/commit/5e985e981dc18f01acf8e4887f85c68c6f547a71))
+* improve modal field type descriptions and enhance user/role/channel selection handling ([f71e242](https://github.com/Lisandra-dev/ticket-thread/commit/f71e2428d1c3cc2f30fe99b604bfb5fae259f893))
+* update command interaction types and improve embed field handling ([4bf601e](https://github.com/Lisandra-dev/ticket-thread/commit/4bf601ed25f3f200a54a4a4eec75b4243eedc708))
+* update field type handling to use TemplateType for better type safety ([aaa040d](https://github.com/Lisandra-dev/ticket-thread/commit/aaa040d77e8774ff243312130496942e448d2d48))
+
 ## 1.2.0 (2025-02-11)
 
 

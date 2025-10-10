@@ -93,7 +93,7 @@ export const create = {
 			roles: role,
 			name,
 			channel,
-			description: options.getString(t("new.embed_content.name"), true),
+			description: options.getString(t("embed.content.title"), true),
 			threadName,
 			ping: false,
 		};

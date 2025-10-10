@@ -102,6 +102,7 @@
     "title": "message_id"
   },
   "modal": {
+    "button": "Create ticket",
     "description": "{{- user}} created a new ticket !\n Here are the informations provided by the user:",
     "ticket": "New ticket"
   },

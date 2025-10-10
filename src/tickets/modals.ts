@@ -1,25 +1,4 @@
-import {
-	ActionRowBuilder,
-	ButtonBuilder,
-	type ButtonInteraction,
-	ButtonStyle,
-	ChannelType,
-	type CommandInteraction,
-	type Embed,
-	EmbedBuilder,
-	type Guild,
-	type GuildBasedChannel,
-	type GuildMember,
-	LabelBuilder,
-	MessageFlags,
-	ModalBuilder,
-	type ModalSubmitInteraction,
-	type PrivateThreadChannel,
-	type PublicThreadChannel,
-	TextChannel,
-	type TextInputModalData,
-	TextInputStyle,
-} from "discord.js";
+import * as Djs from "discord.js";
 import moment from "moment";
 
 import { DEFAULT_TEMPLATE_VALUE, type Ticket } from "../interface";
@@ -29,10 +8,10 @@ const EMBED_COLOR = 0x2f3136 as const;
 
 // Helpers
 function isTextChannel(
-	channel: GuildBasedChannel | null | undefined
-): channel is TextChannel {
+	channel: Djs.GuildBasedChannel | null | undefined
+): channel is Djs.TextChannel {
 	// noinspection SuspiciousTypeOfGuard
-	return !!channel && channel instanceof TextChannel;
+	return !!channel && channel instanceof Djs.TextChannel;
 }
 
 function parseFooterIds(text?: string): { channelId: string; messageId: string } | null {
@@ -49,7 +28,7 @@ function mentionRolesString(roleIds: string[]): string {
 }
 
 async function sendRoleMentions(
-	thread: PrivateThreadChannel | PublicThreadChannel<false>,
+	thread: Djs.PrivateThreadChannel | Djs.PublicThreadChannel<false>,
 	roleIds: string[],
 	persist: boolean
 ) {
@@ -65,7 +44,7 @@ async function sendRoleMentions(
 
 function computeThreadName(
 	baseName: string,
-	interaction: ModalSubmitInteraction | ButtonInteraction,
+	interaction: Djs.ModalSubmitInteraction | Djs.ButtonInteraction,
 	template: Ticket
 ): string {
 	let name = baseName || "Ticket";
@@ -76,9 +55,44 @@ function computeThreadName(
 		name = name.replace(/{{([^{}]*)}}/g, (match, p1: string) => {
 			const field = fields.find((f) => f.customId.toLowerCase() === p1.toLowerCase());
 			if (field) {
-				const type = template.fields.find((f) => f.id === field.customId)?.type;
-				if (type === "paragraph") return (field as TextInputModalData).value.slice(0, 11);
-				return (field as TextInputModalData).value;
+				const templateField = template.fields.find((f) => f.id === field.customId);
+				if (!templateField) return match;
+				const type = templateField.type;
+				switch (type) {
+					case "paragraph":
+						return interaction.fields.getTextInputValue(field.customId);
+					case "short":
+						return interaction.fields.getTextInputValue(field.customId);
+					case "user": {
+						const users = interaction.fields.getSelectedUsers(field.customId)?.first();
+						return users?.username || match;
+					}
+					case "role": {
+						const roles = interaction.fields.getSelectedRoles(field.customId)?.first();
+						return roles?.name || match;
+					}
+					case "channel": {
+						const channels = interaction.fields
+							.getSelectedChannels(field.customId)
+							?.first();
+						return channels?.name || match;
+					}
+					case "mention": {
+						const mentions = interaction.fields.getSelectedMentionables(field.customId);
+						if (mentions) {
+							const { users, roles, members } = mentions;
+							const all = [
+								...users.map((x) => x.username),
+								...roles.map((x) => x?.name),
+								...members.map((x) => (x as Djs.GuildMember)?.user.username),
+							].filter((x): x is string => x !== undefined && x !== null);
+							return all[0] || match;
+						}
+						return match;
+					}
+					default:
+						return match;
+				}
 			}
 			return match;
 		});
@@ -99,12 +113,12 @@ function computeThreadName(
 
 function buildResponseEmbed(
 	ul: ReturnType<typeof ln>,
-	interaction: ModalSubmitInteraction | ButtonInteraction,
+	interaction: Djs.ModalSubmitInteraction | Djs.ButtonInteraction,
 	template: Ticket
-): EmbedBuilder | null {
+): Djs.EmbedBuilder | null {
 	if (!interaction.isModalSubmit()) return null;
 
-	const response = new EmbedBuilder()
+	const response = new Djs.EmbedBuilder()
 		.setTitle(ul("modal.ticket"))
 		.setDescription(ul("modal.description", { user: interaction.user.displayName }))
 		.setAuthor({
@@ -123,7 +137,7 @@ function buildResponseEmbed(
 			case "short": {
 				response.addFields({
 					name,
-					value: (field as TextInputModalData).value,
+					value: (field as Djs.TextInputModalData).value,
 					inline: true,
 				});
 				break;
@@ -169,7 +183,7 @@ function buildResponseEmbed(
 					const all = [
 						...users.map((x) => x.id),
 						...roles.map((x) => x?.id),
-						...members.map((x) => (x as GuildMember)?.id),
+						...members.map((x) => (x as Djs.GuildMember)?.id),
 					].filter((x): x is string => x !== undefined && x !== null);
 					if (all.length)
 						response.addFields({
@@ -188,15 +202,15 @@ function buildResponseEmbed(
 }
 
 export async function createEmbed(
-	interaction: CommandInteraction,
+	interaction: Djs.CommandInteraction,
 	ticket: Ticket,
 	messageId: string,
 	channelId: string
 ) {
 	const lg = ln(interaction.locale);
-	const channel: GuildBasedChannel | TextChannel | undefined = ticket.channel
+	const channel: Djs.GuildBasedChannel | Djs.TextChannel | undefined = ticket.channel
 		? interaction.guild?.channels.cache.get(ticket.channel)
-		: (interaction.channel as GuildBasedChannel);
+		: (interaction.channel as Djs.GuildBasedChannel);
 	if (!isTextChannel(channel)) return;
 
 	const embed = {
@@ -205,21 +219,23 @@ export async function createEmbed(
 		color: EMBED_COLOR,
 		footer: { text: `${channelId} : ${messageId}` },
 	};
-	const createTicket = new ButtonBuilder()
+	const createTicket = new Djs.ButtonBuilder()
 		.setCustomId("createTicket")
 		.setLabel(`📝 ${lg("modal.button")}`)
-		.setStyle(ButtonStyle.Primary);
+		.setStyle(Djs.ButtonStyle.Primary);
 
 	return await channel.send({
 		embeds: [embed],
-		components: [new ActionRowBuilder<ButtonBuilder>().addComponents(createTicket)],
+		components: [
+			new Djs.ActionRowBuilder<Djs.ButtonBuilder>().addComponents(createTicket),
+		],
 	});
 }
 
 export async function getTemplateByIds(
 	messageId: string,
 	channelId: string,
-	guild: Guild
+	guild: Djs.Guild
 ) {
 	await guild.channels.fetch();
 	const channel = await guild.channels.fetch(channelId);
@@ -234,13 +250,15 @@ export async function getTemplateByIds(
 	return (await response.json()) as Ticket;
 }
 
-export async function createModal(command: ButtonInteraction, ticket: Ticket) {
+export async function createModal(command: Djs.ButtonInteraction, ticket: Ticket) {
 	const lang = ln(command.locale);
-	const modal = new ModalBuilder().setCustomId("ticket").setTitle(lang("modal.ticket"));
-	const labels: LabelBuilder[] = [];
+	const modal = new Djs.ModalBuilder()
+		.setCustomId("ticket")
+		.setTitle(lang("modal.ticket"));
+	const labels: Djs.LabelBuilder[] = [];
 	for (const field of ticket.fields) {
 		const type = field.type;
-		const label: LabelBuilder = new LabelBuilder()
+		const label: Djs.LabelBuilder = new Djs.LabelBuilder()
 			.setLabel(field.name)
 			.setDescription(field.description);
 		switch (type) {
@@ -251,35 +269,37 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 						.setCustomId(field.id)
 						.setRequired(field.required)
 						.setStyle(
-							field.type === "short" ? TextInputStyle.Short : TextInputStyle.Paragraph
+							field.type === "short"
+								? Djs.TextInputStyle.Short
+								: Djs.TextInputStyle.Paragraph
 						)
 				);
 				labels.push(inputStyle);
 				break;
 			}
 			case "user": {
-				const userSelect: LabelBuilder = label.setUserSelectMenuComponent((menu) =>
+				const userSelect: Djs.LabelBuilder = label.setUserSelectMenuComponent((menu) =>
 					menu.setCustomId(field.id).setRequired(field.required)
 				);
 				labels.push(userSelect);
 				break;
 			}
 			case "role": {
-				const roleSelect: LabelBuilder = label.setRoleSelectMenuComponent((menu) =>
+				const roleSelect: Djs.LabelBuilder = label.setRoleSelectMenuComponent((menu) =>
 					menu.setCustomId(field.id).setRequired(field.required)
 				);
 				labels.push(roleSelect);
 				break;
 			}
 			case "channel": {
-				const channelSelect: LabelBuilder = label.setChannelSelectMenuComponent((menu) =>
-					menu.setCustomId(field.id).setRequired(field.required)
+				const channelSelect: Djs.LabelBuilder = label.setChannelSelectMenuComponent(
+					(menu) => menu.setCustomId(field.id).setRequired(field.required)
 				);
 				labels.push(channelSelect);
 				break;
 			}
 			case "mention": {
-				const mentionSelect: LabelBuilder = label.setMentionableSelectMenuComponent(
+				const mentionSelect: Djs.LabelBuilder = label.setMentionableSelectMenuComponent(
 					(menu) => menu.setCustomId(field.id).setRequired(field.required)
 				);
 				labels.push(mentionSelect);
@@ -294,15 +314,15 @@ export async function createModal(command: ButtonInteraction, ticket: Ticket) {
 }
 
 export async function createThread(
-	sourceEmbed: Embed,
-	interaction: ModalSubmitInteraction | ButtonInteraction
+	sourceEmbed: Djs.Embed,
+	interaction: Djs.ModalSubmitInteraction | Djs.ButtonInteraction
 ) {
 	const ul = ln(interaction?.guild?.preferredLocale ?? interaction.locale);
 	const ids = parseFooterIds(sourceEmbed?.footer?.text);
 	if (!ids) {
 		await interaction.reply({
 			content: ul("error.footer"),
-			flags: MessageFlags.Ephemeral,
+			flags: Djs.MessageFlags.Ephemeral,
 		});
 		return;
 	}
@@ -310,12 +330,12 @@ export async function createThread(
 	const template = await getTemplateByIds(
 		ids.messageId,
 		ids.channelId,
-		interaction.guild as Guild
+		interaction.guild as Djs.Guild
 	);
 	if (!template) {
 		await interaction.reply({
 			content: ul("error.attachment"),
-			flags: MessageFlags.Ephemeral,
+			flags: Djs.MessageFlags.Ephemeral,
 		});
 		return;
 	}
@@ -325,15 +345,15 @@ export async function createThread(
 		interaction,
 		template
 	);
-	const channelToCreateThread = interaction.channel as TextChannel;
+	const channelToCreateThread = interaction.channel as Djs.TextChannel;
 	const thread = (await channelToCreateThread.threads.create({
 		name: newThreadName || "Ticket",
 		reason: ul("reason", { nickname: interaction.user.username }),
-		type: ChannelType.PrivateThread,
+		type: Djs.ChannelType.PrivateThread,
 		invitable: false,
-	})) as PrivateThreadChannel;
+	})) as Djs.PrivateThreadChannel;
 
-	await interaction.reply({ content: ul("created"), flags: MessageFlags.Ephemeral });
+	await interaction.reply({ content: ul("created"), flags: Djs.MessageFlags.Ephemeral });
 	await thread.members.add(interaction.user.id);
 
 	await sendRoleMentions(thread, template.roles, !!template.ping);

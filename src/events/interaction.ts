@@ -1,9 +1,12 @@
-import type { BaseInteraction, Client } from "discord.js";
+import {
+	type BaseInteraction,
+	type ChatInputCommandInteraction,
+	type Client,
+	MessageFlags,
+} from "discord.js";
 
 import { commandsList } from "../commands";
 import { ln } from "../locales";
-import en from "../locales/language/en.json";
-import fr from "../locales/language/fr.json";
 import { createModal, createThread, getTemplateByIds } from "../tickets/modals";
 
 export default (client: Client): void => {
@@ -14,7 +17,7 @@ export default (client: Client): void => {
 			);
 			if (!command) return;
 			try {
-				await command.execute(interaction);
+				await command.execute(interaction as ChatInputCommandInteraction);
 			} catch (error) {
 				console.log(error);
 			}
@@ -37,7 +40,7 @@ export default (client: Client): void => {
 					await interaction.message.delete();
 					await interaction.reply({
 						content: `${lg("error.attachment")}\n${lg("error.administrator")}`,
-						ephemeral: true,
+						flags: MessageFlags.Ephemeral,
 					});
 					return;
 				}

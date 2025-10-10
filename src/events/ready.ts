@@ -1,5 +1,5 @@
 import process from "node:process";
-import { type Client, REST, Routes } from "discord.js";
+import type { Client } from "discord.js";
 import dotenv from "dotenv";
 
 import { commandsList } from "../commands";
@@ -10,24 +10,27 @@ if (process.env.ENV === "production") {
 } else {
 	dotenv.config({ path: ".env" });
 }
-const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? "0");
 
 export default (client: Client): void => {
-	client.on("ready", async () => {
-		if (!client.user || !client.application || !process.env.CLIENT_ID) {
+	client.on("clientReady", async () => {
+		if (!client.user || !client.application) {
 			return;
 		}
 		console.info(`${client.user.username} is online; v.${VERSION}`);
 		const serializedCommands = commandsList.map((command) => command.data.toJSON());
-		for (const guild of client.guilds.cache.values()) {
+
+		// Enregistrer les commandes pour tous les serveurs en parallèle
+		const registrationPromises = client.guilds.cache.map(async (guild) => {
 			console.log(`Registering commands for ${guild.name}`);
-			guild.client.application.commands.cache.forEach((command) => {
-				console.log(`Deleting ${command.name}`);
-				command.delete();
-			});
-			await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id), {
-				body: serializedCommands,
-			});
-		}
+			try {
+				await guild.commands.set(serializedCommands);
+				console.log(`Commands registered for ${guild.name}`);
+			} catch (error) {
+				console.error(`Failed to register commands for ${guild.name}:`, error);
+			}
+		});
+
+		await Promise.all(registrationPromises);
+		console.log("All commands registered successfully!");
 	});
 };

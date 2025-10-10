@@ -257,8 +257,8 @@ export const fields = {
 			case "add": {
 				const fieldName = options.getString("field_name") ?? field;
 				const fieldDescription = options.getString("field_description") ?? "";
-				const fieldType: "short" | "paragraph" =
-					(options.getString("field_type") as "short" | "paragraph") ?? "short";
+				const fieldType: TemplateType =
+					(options.getString("field_type") as TemplateType) ?? "short";
 				const fieldRequired = options.getBoolean("field_required") ?? false;
 				if (template.ticket.fields.filter((f) => f.name === field).length !== 0) {
 					await interaction.reply({

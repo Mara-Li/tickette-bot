@@ -7,7 +7,7 @@ import {
 	SlashCommandBuilder,
 } from "discord.js";
 
-import type { TemplateModals, Ticket } from "../interface";
+import type { TemplateModals, TemplateType, Ticket } from "../interface";
 import { cmdLn, ln } from "../locales";
 import i18next from "../locales/init";
 import { createEmbed } from "../tickets/modals";
@@ -81,7 +81,7 @@ export const create = {
 				const templateMod: TemplateModals = {
 					name: fieldName,
 					description: fieldDescription,
-					type: fieldType as "short" | "paragraph",
+					type: fieldType as TemplateType,
 					required: fieldRequired,
 					id: fieldId,
 				};

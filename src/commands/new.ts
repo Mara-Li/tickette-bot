@@ -1,6 +1,7 @@
+/** biome-ignore-all lint/style/useNamingConvention: djs doesn't respects the convention */
 import {
 	ChannelType,
-	type CommandInteraction,
+	type ChatInputCommandInteraction,
 	type CommandInteractionOptionResolver,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
@@ -62,7 +63,7 @@ export const create = {
 				.setRequired(true)
 				.addChannelTypes(ChannelType.GuildText)
 		),
-	async execute(interaction: CommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const name = options.getString(t("embed.title.title"), true);
 		const role = [options.getRole("role", true).id];
@@ -74,8 +75,7 @@ export const create = {
 			const fieldName = options.getString(`field_${i}_name`);
 			const fieldDescription = options.getString(`field_${i}_description`) ?? "";
 			const fieldType = options.getString(`field_${i}_type`) ?? "short";
-			const fieldId =
-				options.getString(`field_${i}_id`) ?? `${ul("common.field")}-${i}`;
+			const fieldId = options.getString(`field_${i}_id`) ?? `${ul("common.field")}-${i}`;
 			const fieldRequired = options.getBoolean(`field_${i}_required`) ?? false;
 			if (fieldName) {
 				const templateMod: TemplateModals = {
@@ -139,13 +139,31 @@ for (let i = 1; i <= 4; i++) {
 				.setDescriptionLocalizations(cmdLn("field.type"))
 				.setRequired(false)
 				.addChoices(
-					// biome-ignore lint/style/useNamingConvention: <explanation>
 					{ name: "short", value: "short", name_localizations: cmdLn("field.short") },
 					{
 						name: "paragraph",
 						value: "paragraph",
-						// biome-ignore lint/style/useNamingConvention: <explanation>
 						name_localizations: cmdLn("field.paragraph"),
+					},
+					{
+						name: t("field.user"),
+						value: "user",
+						name_localizations: cmdLn("field.user"),
+					},
+					{
+						name: t("field.role"),
+						value: "role",
+						name_localizations: cmdLn("field.role"),
+					},
+					{
+						name: t("field.channel"),
+						value: "channel",
+						name_localizations: cmdLn("field.channel"),
+					},
+					{
+						name: t("field.mention"),
+						value: "mention",
+						name_localizations: cmdLn("field.mention"),
 					}
 				)
 		)

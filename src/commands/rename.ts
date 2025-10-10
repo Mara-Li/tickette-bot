@@ -1,5 +1,5 @@
 import {
-	type CommandInteraction,
+	type ChatInputCommandInteraction,
 	type CommandInteractionOptionResolver,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
@@ -32,7 +32,7 @@ export const rename = {
 				.setDescriptionLocalizations(cmdLn("new.thread_name.description"))
 				.setRequired(true)
 		),
-	async execute(interaction: CommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const messageId = options.getString("message_id", true);
 		const threadName = options.getString("thread_name", true);

@@ -21,11 +21,8 @@ import { ln } from "../locales";
 
 export function createFile(template: Ticket) {
 	const cloneTemplate = JSON.parse(JSON.stringify(template));
-	// biome-ignore lint/performance/noDelete: <explanation>
 	delete cloneTemplate.channel;
-	// biome-ignore lint/performance/noDelete: <explanation>
 	delete cloneTemplate.name;
-	// biome-ignore lint/performance/noDelete: <explanation>
 	delete cloneTemplate.description;
 	return [
 		{

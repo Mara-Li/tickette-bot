@@ -25,7 +25,7 @@ export const pingRole = {
 				.setDescriptionLocalizations(cmdLn("ping.toggle"))
 				.setNameLocalizations(cmdLn("common.toggle"))
 		),
-	execute: async (interaction: Djs.CommandInteraction) => {
+	execute: async (interaction: Djs.ChatInputCommandInteraction) => {
 		if (!interaction.guildId) return;
 		const options = interaction.options as Djs.CommandInteractionOptionResolver;
 		const messageId = options.getString("message_id", true);

@@ -1,11 +1,12 @@
+/** biome-ignore-all lint/style/useNamingConvention: djs doesn't respect convention */
 import {
-	type CommandInteraction,
+	type ChatInputCommandInteraction,
 	type CommandInteractionOptionResolver,
 	MessageFlags,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
 } from "discord.js";
-
+import type { TemplateType } from "../interface";
 import { cmdLn, ln } from "../locales";
 import i18next from "../locales/init";
 import {
@@ -14,6 +15,7 @@ import {
 	removeFieldToTemplate,
 } from "../tickets/fields";
 import { downloadJSONTemplate } from "../tickets/template";
+
 /**
  * Tickets commands :
  * /config new <template name for thread name> <@role> (optional field) // The template is saved as an json in the channel used for ticket creation ; template is pinned
@@ -104,14 +106,32 @@ export const fields = {
 							{
 								name: t("field.short"),
 								value: "short",
-								// biome-ignore lint/style/useNamingConvention: <explanation>
 								name_localizations: cmdLn("field.short"),
 							},
 							{
 								name: t("field.paragraph"),
 								value: "paragraph",
-								// biome-ignore lint/style/useNamingConvention: <explanation>
 								name_localizations: cmdLn("field.paragraph"),
+							},
+							{
+								name: t("field.user"),
+								value: "user",
+								name_localizations: cmdLn("field.user"),
+							},
+							{
+								name: t("field.role"),
+								value: "role",
+								name_localizations: cmdLn("field.role"),
+							},
+							{
+								name: t("field.channel"),
+								value: "channel",
+								name_localizations: cmdLn("field.channel"),
+							},
+							{
+								name: t("field.mention"),
+								value: "mention",
+								name_localizations: cmdLn("field.mention"),
 							}
 						)
 				)
@@ -175,6 +195,26 @@ export const fields = {
 								name: t("field.paragraph"),
 								value: "paragraph",
 								name_localizations: cmdLn("field.paragraph"),
+							},
+							{
+								name: t("field.user"),
+								value: "user",
+								name_localizations: cmdLn("field.user"),
+							},
+							{
+								name: t("field.role"),
+								value: "role",
+								name_localizations: cmdLn("field.role"),
+							},
+							{
+								name: t("field.channel"),
+								value: "channel",
+								name_localizations: cmdLn("field.channel"),
+							},
+							{
+								name: t("field.mention"),
+								value: "mention",
+								name_localizations: cmdLn("field.mention"),
 							}
 						)
 				)
@@ -186,7 +226,7 @@ export const fields = {
 						.setRequired(false)
 				)
 		),
-	async execute(interaction: CommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		if (!interaction.guildId) return;
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const addSubcommand = options.getSubcommand(false);
@@ -269,7 +309,7 @@ export const fields = {
 						name: fieldName,
 						id: field,
 						description: fieldDescriptionEdit,
-						type: fieldTypeEdit as "short" | "paragraph",
+						type: fieldTypeEdit as TemplateType,
 						required: fieldRequiredEdit,
 					},
 					ticket,

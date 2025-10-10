@@ -12,8 +12,6 @@
       "added": "Champ {{- field}} ajouté avec succès",
       "edited": "Champ {{- field}} édité avec succès",
       "removed": "Champ {{- field}} supprimé avec succès"
-    },
-    "role": {
     }
   },
   "embed": {
@@ -30,14 +28,10 @@
         "description": "La couleur de l'embed. Accepte des valeurs hexadecimal, rgb ou un nom de couleur",
         "name": "couleur"
       },
-      "content": {
-      },
       "description": "Modifier l'embed pour la création de ticket",
       "error": {
         "invalidColor": "La couleur n'est pas valide. Merci d'utiliser une valeur hexadécimal, un [nom de couleur depuis cette liste](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors) ou une valeur rgb.",
         "noEmbed": "Le message n'a pas d'embed."
-      },
-      "message_id": {
       },
       "success": {
         "jump": "Embed modifié.\n[Cliquez ici pour voir le message]({{- url}})",
@@ -46,8 +40,6 @@
       "thumbnail": {
         "description": "L'image à ajouter à l'embed",
         "name": "thumbnail"
-      },
-      "title": {
       }
     },
     "name": "embed",
@@ -74,11 +66,10 @@
     },
     "footer": "Erreur lors de l'édition du template : le footer de l'embed n'a pas le bon format.",
     "notFound": "Le message n'a pas été trouvé : vous devez utiliser la commande dans le même channel que l'embed.",
-    "role": {
-    },
     "textChannel": "Cette commande ne peut être utilisée que dans un channel."
   },
   "field": {
+    "channel": "Sélection de salon",
     "command": {
       "add": {
         "description": "Ajouter un champ au modèle",
@@ -97,17 +88,18 @@
     "description": "La description du champ",
     "fieldId": "field_id",
     "id": "L'id du champ (court/simple). Utilisez-le dans le nom de la discussion avec la syntaxe \"{{valeur}}\".",
+    "mention": "Sélection de mentionnable",
     "name": "Le nom du champ",
     "paragraph": "Paragraphe",
     "required": "Le champ est-il obligatoire ?",
+    "role": "Sélection de rôle",
     "short": "Court",
-    "type": "Le type du champ, paragraphe ou court"
+    "type": "Le type du champ, paragraphe ou court",
+    "user": "Sélection d'utilisateur"
   },
   "messageId": {
     "description": "L'ID du message de l'embed. Vous devez utiliser la commande dans le même channel que l'embed.",
     "title": "message_id"
-  },
-  "message_id": {
   },
   "modal": {
     "description": "{{- user}} a créé un nouveau ticket !\n Voici les informations fournies par l'utilisateur :",
@@ -118,8 +110,6 @@
       "description": "Le channel où le ticket sera créé"
     },
     "description": "Créer une nouvelle template",
-    "embed": {
-    },
     "embed_content": {
       "description": "Le message dans l'embed",
       "name": "embed.content.title"

@@ -12,8 +12,6 @@
       "added": "Field {{- field}} added successfully",
       "edited": "Field {{- field}} edited successfully",
       "removed": "Field {{- field}} removed successfully"
-    },
-    "role": {
     }
   },
   "embed": {
@@ -30,14 +28,10 @@
         "description": "Allow to changing the color. Hexadecimal value, rgb value, or via a color name",
         "name": "color"
       },
-      "content": {
-      },
       "description": "Edit the embed for the ticket creation",
       "error": {
         "invalidColor": "The color is not valid. You must use a hexadecimal value, a rgb value (in the format `(1, 2, 3)` or `[1,2,3]`) or [a color name from this list](https://old.discordjs.dev/#/docs/discord.js/main/typedef/Colors)",
         "noEmbed": "The message has no embed"
-      },
-      "message_id": {
       },
       "success": {
         "jump": "Embed edited.\n[Jump to message]({{- url}})",
@@ -46,8 +40,6 @@
       "thumbnail": {
         "description": "The image to add to the embed",
         "name": "thumbnail"
-      },
-      "title": {
       }
     },
     "name": "embed",
@@ -74,11 +66,10 @@
     },
     "footer": "Error while editing the template: the embed footer is not in the good format.",
     "notFound": "The message was not found: you need to use the command in the template's channel.",
-    "role": {
-    },
     "textChannel": "This command can only be used in a text channel"
   },
   "field": {
+    "channel": "Channel select",
     "command": {
       "add": {
         "description": "Add a field to the template",
@@ -87,8 +78,6 @@
       "description": "Edit the fields of the template",
       "edit": {
         "description": "Edit a field of the template"
-      },
-      "name": {
       },
       "remove": {
         "description": "Delete a field from the template",
@@ -99,17 +88,18 @@
     "description": "The field description",
     "fieldId": "field_id",
     "id": "The field's id (short/simple). Use it in the thread name with the \"{{value}}\" syntax",
+    "mention": "Mentionable select",
     "name": "The field name",
     "paragraph": "Paragraph",
     "required": "Is the field required ?",
+    "role": "Role select",
     "short": "Short",
-    "type": "The field type, paragraph or short"
+    "type": "The field type, paragraph or short",
+    "user": "User select"
   },
   "messageId": {
     "description": "The message ID of the embed. You must use the command in the same channel as the embed.",
     "title": "message_id"
-  },
-  "message_id": {
   },
   "modal": {
     "description": "{{- user}} created a new ticket !\n Here are the informations provided by the user:",
@@ -120,8 +110,6 @@
       "description": "The channel where the ticket will be created"
     },
     "description": "Create a new template",
-    "embed": {
-    },
     "embed_content": {
       "description": "The message in the embed",
       "name": "embed.content.title"

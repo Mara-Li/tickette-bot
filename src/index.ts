@@ -19,8 +19,6 @@ export const client = new Client({
 });
 
 export const VERSION = pkg.version ?? "0.0.0";
-export const CHANNEL_ID = process.env.CHANNEL_ID ?? "0";
-export const prod = process.env.NODE_ENV === "production";
 
 try {
 	ready(client);

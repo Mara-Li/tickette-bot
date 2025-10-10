@@ -1,5 +1,6 @@
+/** biome-ignore-all lint/style/useNamingConvention: djs */
 import {
-	type CommandInteraction,
+	type ChatInputCommandInteraction,
 	type CommandInteractionOptionResolver,
 	PermissionFlagsBits,
 	SlashCommandBuilder,
@@ -39,13 +40,11 @@ export const role = {
 					{
 						name: t("role.choice.add"),
 						value: "add",
-						// biome-ignore lint/style/useNamingConvention: <explanation>
 						name_localizations: cmdLn("role.choice.add"),
 					},
 					{
 						name: t("role.choice.remove"),
 						value: "remove",
-						// biome-ignore lint/style/useNamingConvention: <explanation>
 						name_localizations: cmdLn("role.choice.remove"),
 					}
 				)
@@ -58,7 +57,7 @@ export const role = {
 				.setDescriptionLocalizations(cmdLn("role.role.description"))
 				.setRequired(true)
 		),
-	async execute(interaction: CommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const messageId = options.getString("message_id", true);
 		const choice = options.getString("choice", true) as "add" | "remove";

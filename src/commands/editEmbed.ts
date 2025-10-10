@@ -1,5 +1,6 @@
 import {
 	ChannelType,
+	type ChatInputCommandInteraction,
 	type ColorResolvable,
 	Colors,
 	type CommandInteraction,
@@ -124,7 +125,7 @@ export const embedCommands = {
 				)
 		),
 
-	async execute(interaction: CommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		if (!interaction.guildId) return;
 		const options = interaction.options as CommandInteractionOptionResolver;
 		const subcommand = options.getSubcommand();
@@ -170,7 +171,7 @@ async function editEmbed(
 	if (newColor) {
 		const colorName = Colors[toTitle(newColor) as keyof typeof Colors];
 		// eslint-disable-next-line no-useless-escape
-		const colorMatch = newColor.match(/[\[\(](\d) ?, ?(\d), ?(\d)[\]\)]/);
+		const colorMatch = newColor.match(/[[(](\d) ?, ?(\d), ?(\d)[\])]/);
 		if (newColor.startsWith("#")) {
 			validColor = true;
 		} else if (colorName) {
@@ -178,9 +179,9 @@ async function editEmbed(
 			validColor = true;
 		} else if (colorMatch) {
 			color = [
-				Number.parseInt(colorMatch[1]),
-				Number.parseInt(colorMatch[2]),
-				Number.parseInt(colorMatch[3]),
+				Number.parseInt(colorMatch[1], 10),
+				Number.parseInt(colorMatch[2], 10),
+				Number.parseInt(colorMatch[3], 10),
 			];
 			validColor = true;
 		} else if (!Number.isNaN(Number.parseInt(newColor, 16))) validColor = true;
@@ -204,7 +205,7 @@ async function editEmbed(
 		const newChannel = options.getChannel("channel", false) as TextChannel;
 		const newMessage = await newChannel.send({ embeds: [newEmbed] });
 		await interaction.reply({
-			content: ul("embed.edit.success.jump", {url: newMessage.url}),
+			content: ul("embed.edit.success.jump", { url: newMessage.url }),
 			flags: MessageFlags.Ephemeral,
 		});
 		return;
@@ -259,7 +260,7 @@ async function resend(
 		return;
 	}
 	await interaction.reply({
-		content: ul("embed.edit.success.jump", {url: msg.url}),
+		content: ul("embed.edit.success.jump", { url: msg.url }),
 		flags: MessageFlags.Ephemeral,
 	});
 	return;

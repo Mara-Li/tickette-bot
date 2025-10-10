@@ -21,7 +21,6 @@ export default (client: Client): void => {
 		const serializedCommands = commandsList.map((command) => command.data.toJSON());
 		for (const guild of client.guilds.cache.values()) {
 			console.log(`Registering commands for ${guild.name}`);
-			// biome-ignore lint/complexity/noForEach: <explanation>
 			guild.client.application.commands.cache.forEach((command) => {
 				console.log(`Deleting ${command.name}`);
 				command.delete();

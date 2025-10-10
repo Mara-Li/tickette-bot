@@ -94,7 +94,7 @@
     "required": "Le champ est-il obligatoire ?",
     "role": "Sélection de rôle",
     "short": "Court",
-    "type": "Le type du champ, paragraphe ou court",
+    "type": "Le type du champ dans le modal (texte ou un type de sélection)",
     "user": "Sélection d'utilisateur"
   },
   "messageId": {

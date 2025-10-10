@@ -184,11 +184,13 @@ function buildResponseEmbed(
 						...users.map((x) => x.id),
 						...roles.map((x) => x?.id),
 						...members.map((x) => (x as Djs.GuildMember)?.id),
-					].filter((x): x is string => x !== undefined && x !== null);
-					if (all.length)
+					].filter((x): x is string => x != null);
+					//remove duplicates
+					const uniqueAll = Array.from(new Set(all));
+					if (uniqueAll.length)
 						response.addFields({
 							name,
-							value: all.map((m) => `<@${m}>`).join(", "),
+							value: uniqueAll.map((m) => `<@${m}>`).join(", "),
 							inline: true,
 						});
 				}
@@ -279,28 +281,30 @@ export async function createModal(command: Djs.ButtonInteraction, ticket: Ticket
 			}
 			case "user": {
 				const userSelect: Djs.LabelBuilder = label.setUserSelectMenuComponent((menu) =>
-					menu.setCustomId(field.id).setRequired(field.required)
+					menu.setCustomId(field.id).setRequired(field.required).setMaxValues(25)
 				);
 				labels.push(userSelect);
 				break;
 			}
 			case "role": {
 				const roleSelect: Djs.LabelBuilder = label.setRoleSelectMenuComponent((menu) =>
-					menu.setCustomId(field.id).setRequired(field.required)
+					menu.setCustomId(field.id).setRequired(field.required).setMaxValues(25)
 				);
 				labels.push(roleSelect);
 				break;
 			}
 			case "channel": {
 				const channelSelect: Djs.LabelBuilder = label.setChannelSelectMenuComponent(
-					(menu) => menu.setCustomId(field.id).setRequired(field.required)
+					(menu) =>
+						menu.setCustomId(field.id).setRequired(field.required).setMaxValues(25)
 				);
 				labels.push(channelSelect);
 				break;
 			}
 			case "mention": {
 				const mentionSelect: Djs.LabelBuilder = label.setMentionableSelectMenuComponent(
-					(menu) => menu.setCustomId(field.id).setRequired(field.required)
+					(menu) =>
+						menu.setCustomId(field.id).setRequired(field.required).setMaxValues(25)
 				);
 				labels.push(mentionSelect);
 				break;

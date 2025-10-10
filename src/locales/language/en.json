@@ -94,7 +94,7 @@
     "required": "Is the field required ?",
     "role": "Role select",
     "short": "Short",
-    "type": "The field type, paragraph or short",
+    "type": "The field type in the modal (text or selection type)",
     "user": "User select"
   },
   "messageId": {

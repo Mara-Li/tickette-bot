@@ -14,7 +14,7 @@ if (process.env.ENV === "production") {
 }
 
 export const client = new Client({
-	intents: [GatewayIntentBits.Guilds],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
 	partials: [Partials.Channel, Partials.GuildMember, Partials.User],
 });
 

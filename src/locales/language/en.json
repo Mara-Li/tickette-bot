@@ -133,6 +133,26 @@
     "title": "ping",
     "toggle": "Mention or not "
   },
+  "private_thread": {
+    "audit": "Private thread created by {{- user}}.",
+    "creating": "Created thread successfully!",
+    "description": "Start a new private thread",
+    "invalid": "Invalid channel used",
+    "message": {
+      "description": "Type the first message in your thread",
+      "name": "message"
+    },
+    "modal": {
+      "label": "Users/role to add",
+      "title": "New private thread"
+    },
+    "name": "private_thread",
+    "no_response": "No response",
+    "thread_name": {
+      "description": "Type a name for your thread",
+      "name": "name"
+    }
+  },
   "reason": "Ticket created by {{- nickname}}",
   "rename": {
     "description": "Edit the template of the ticket name",

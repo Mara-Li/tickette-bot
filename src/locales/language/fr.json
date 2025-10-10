@@ -133,6 +133,26 @@
     "title": "mention",
     "toggle": "Mentionner ou non le(s) rôle(s)"
   },
+  "private_thread": {
+    "audit": "Fil créé par {{- user}}.",
+    "creating": "Le fil a bien été créé !",
+    "description": "Démarrer un nouveau fil privé",
+    "invalid": "Channel invalid utilisé",
+    "message": {
+      "description": "Saisis le premier message de ton fil",
+      "name": "message"
+    },
+    "modal": {
+      "label": "Utilisateurs / rôle à ajouter",
+      "title": "Nouveau fil privé"
+    },
+    "name": "private_thread",
+    "no_response": "Aucune réponse",
+    "thread_name": {
+      "description": "Saisis un nom pour ton fil",
+      "name": "name"
+    }
+  },
   "reason": "Ticket créé par {{- nickname}}",
   "rename": {
     "description": "Modifier la template du nom du ticket",

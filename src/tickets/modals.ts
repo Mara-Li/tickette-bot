@@ -179,9 +179,8 @@ function buildResponseEmbed(
 			case "mention": {
 				const mentions = interaction.fields.getSelectedMentionables(field.customId);
 				if (mentions) {
-					const { users, roles, members } = mentions;
+					const { roles, members } = mentions;
 					const all = [
-						...users.map((x) => x.id),
 						...roles.map((x) => x?.id),
 						...members.map((x) => (x as Djs.GuildMember)?.id),
 					].filter((x): x is string => x != null);

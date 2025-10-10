@@ -1,16 +1,13 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
 	"files": {
-		"ignore": ["node_modules", "dist"]
+		"includes": ["**", "!**/node_modules", "!**/dist"]
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"rules": {
 			"recommended": true,
 			"style": {
-				"noVar": "error",
 				"useFilenamingConvention": "error",
 				"useImportType": "error",
 				"noParameterAssign": "off",
@@ -26,9 +23,8 @@
 			},
 			"complexity": {
 				"noExtraBooleanCast": "error",
-				"noMultipleSpacesInRegularExpressionLiterals": "error",
 				"noUselessCatch": "error",
-				"noWith": "error"
+				"noAdjacentSpacesInRegex": "error"
 			},
 			"correctness": {
 				"noConstAssign": "error",
@@ -38,7 +34,6 @@
 				"noGlobalObjectCalls": "error",
 				"noInnerDeclarations": "error",
 				"noInvalidConstructorSuper": "error",
-				"noNewSymbol": "error",
 				"noNonoctalDecimalEscape": "error",
 				"noPrecisionLoss": "error",
 				"noSelfAssign": "error",
@@ -54,7 +49,9 @@
 				"noUnusedVariables": "off",
 				"useIsNan": "error",
 				"useValidForDirection": "error",
-				"useYield": "error"
+				"useYield": "error",
+				"noInvalidBuiltinInstantiation": "error",
+				"useValidTypeof": "error"
 			},
 			"suspicious": {
 				"noAssignInExpressions": "off",
@@ -79,16 +76,17 @@
 				"noShadowRestrictedNames": "error",
 				"noUnsafeNegation": "error",
 				"useGetterReturn": "error",
-				"useValidTypeof": "error"
+				"noVar": "error",
+				"noWith": "error"
 			}
 		}
 	},
 	"overrides": [
-		{ "ignore": ["**/*.js"], "include": ["**/*.ts", "**/*.tsx"] },
-		{ "include": ["**/*.js"] },
-		{ "include": ["*.json"] },
+		{ "includes": ["**/*.ts", "**/*.tsx", "!**/*.js"] },
+		{ "includes": ["**/*.js"] },
+		{ "includes": ["**/*.json"] },
 		{
-			"include": ["packages/src/bot/commands/tools/graph.ts"],
+			"includes": ["**/packages/src/bot/commands/tools/graph.ts"],
 			"linter": {
 				"rules": {
 					"style": {
@@ -98,7 +96,7 @@
 			}
 		},
 		{
-			"include": ["tests/constant.ts"],
+			"includes": ["**/tests/constant.ts"],
 			"linter": {
 				"rules": {
 					"style": {
@@ -111,7 +109,7 @@
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": true,
-		"ignore": [],
+		"includes": ["**"],
 		"indentStyle": "tab",
 		"indentWidth": 2,
 		"lineEnding": "lf",

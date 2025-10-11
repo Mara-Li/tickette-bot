@@ -34,24 +34,24 @@ A **template** is a blueprint for creating tickets. Each template contains:
 
 Each field has the following properties:
 
-| Property | Required | Description | Example |
-|----------|----------|-------------|---------|
-| `id` | ✅ Yes | Unique identifier used as a variable in thread names (e.g., `{{id}}`) | `type`, `issue`, `username` |
-| `name` | ✅ Yes | The question or label shown to the user (max 45 characters) | "What is your problem?" |
-| `description` | ❌ No | Placeholder text or additional context | "Describe your issue briefly" |
-| `required` | ❌ No | Whether the field must be filled (default: `false`) | `true` or `false` |
-| `type` | ❌ No | Input type (default: `short`) | See types below |
+| Property      | Required | Description                                                           | Example                       |
+|---------------|----------|-----------------------------------------------------------------------|-------------------------------|
+| `id`          | ✅ Yes    | Unique identifier used as a variable in thread names (e.g., `{{id}}`) | `type`, `issue`, `username`   |
+| `name`        | ✅ Yes    | The question or label shown to the user (max 45 characters)           | "What is your problem?"       |
+| `description` | ❌ No     | Placeholder text or additional context                                | "Describe your issue briefly" |
+| `required`    | ❌ No     | Whether the field must be filled (default: `false`)                   | `true` or `false`             |
+| `type`        | ❌ No     | Input type (default: `short`)                                         | See types below               |
 
 ### Field Types
 
-| Type | Description | Max Length |
-|------|-------------|------------|
-| `short` | Single-line text input | 100 characters |
-| `paragraph` | Multi-line text input | 4000 characters |
-| `user` | User selector | N/A |
-| `role` | Role selector | N/A |
-| `mentionable` | User or role selector | N/A |
-| `channel` | Channel selector | N/A |
+| Type          | Description            | Max Length      |
+|---------------|------------------------|-----------------|
+| `short`       | Single-line text input | 100 characters  |
+| `paragraph`   | Multi-line text input  | 4000 characters |
+| `user`        | User selector          | N/A             |
+| `role`        | Role selector          | N/A             |
+| `mentionable` | User or role selector  | N/A             |
+| `channel`     | Channel selector       | N/A             |
 
 ### Example
 
@@ -70,14 +70,14 @@ When a user fills in "Technical Support" and their nickname is "John", the threa
 
 You can use these pre-defined variables in your thread name template without creating fields:
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `{{nickname}}` | User's global Discord display name | "JohnDoe123" |
-| `{{username}}` | User's Discord username (without @) | "johndoe" |
-| `{{display}}` | Server nickname (if set) or global name | "Johnny" or "JohnDoe123" |
-| `{{user_id}}` | User's Discord ID (snowflake) | "123456789012345678" |
-| `{{date}}` | Current date | "2025-10-10" |
-| `{{time}}` | Current time (24h format) | "14:30" |
+| Variable       | Description                             | Example                  |
+|----------------|-----------------------------------------|--------------------------|
+| `{{nickname}}` | User's global Discord display name      | "JohnDoe123"             |
+| `{{username}}` | User's Discord username (without @)     | "johndoe"                |
+| `{{display}}`  | Server nickname (if set) or global name | "Johnny" or "JohnDoe123" |
+| `{{user_id}}`  | User's Discord ID (snowflake)           | "123456789012345678"     |
+| `{{date}}`     | Current date                            | "2025-10-10"             |
+| `{{time}}`     | Current time (24h format)               | "14:30"                  |
 
 ---
 
@@ -98,13 +98,13 @@ Creates a new ticket template with an embedded message and button.
 
 ### Required Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `title` | Text | The title shown on the embed |
-| `thread_name` | Text | Template for thread names (use variables like `{{nickname}}`) |
-| `role` | Role | Role to add to ticket threads (more can be added later) |
-| `description` | Text | The message content in the embed |
-| `channel` | Channel | Where the ticket button will be posted and threads created |
+| Parameter     | Type    | Description                                                   |
+|---------------|---------|---------------------------------------------------------------|
+| `title`       | Text    | The title shown on the embed                                  |
+| `thread_name` | Text    | Template for thread names (use variables like `{{nickname}}`) |
+| `role`        | Role    | Role to add to ticket threads (more can be added later)       |
+| `description` | Text    | The message content in the embed                              |
+| `channel`     | Channel | Where the ticket button will be posted and threads created    |
 
 ### Optional Parameters
 
@@ -139,10 +139,10 @@ Updates the thread name template for an existing ticket configuration.
 
 ### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `thread_name` | ✅ Yes | New thread name template |
+| Parameter     | Required | Description                             |
+|---------------|----------|-----------------------------------------|
+| `message_id`  | ✅ Yes    | ID or link of the template JSON message |
+| `thread_name` | ✅ Yes    | New thread name template                |
 
 ### Example Usage
 
@@ -160,11 +160,11 @@ Add or remove roles from a template.
 
 ### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `action` | ✅ Yes | Choose `add` or `remove` |
-| `role` | ✅ Yes | The role to add or remove |
+| Parameter    | Required | Description                             |
+|--------------|----------|-----------------------------------------|
+| `message_id` | ✅ Yes    | ID or link of the template JSON message |
+| `action`     | ✅ Yes    | Choose `add` or `remove`                |
+| `role`       | ✅ Yes    | The role to add or remove               |
 
 ### Example Usage
 
@@ -188,14 +188,14 @@ Adds a new field to the template modal.
 
 #### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `field_id` | ✅ Yes | Unique identifier for the field |
-| `field_name` | ❌ No | Question/label text |
-| `field_description` | ❌ No | Placeholder or description |
-| `field_type` | ❌ No | Input type (default: `short`) |
-| `field_required` | ❌ No | Whether required (default: `false`) |
+| Parameter           | Required | Description                             |
+|---------------------|----------|-----------------------------------------|
+| `message_id`        | ✅ Yes    | ID or link of the template JSON message |
+| `field_id`          | ✅ Yes    | Unique identifier for the field         |
+| `field_name`        | ❌ No     | Question/label text                     |
+| `field_description` | ❌ No     | Placeholder or description              |
+| `field_type`        | ❌ No     | Input type (default: `short`)           |
+| `field_required`    | ❌ No     | Whether required (default: `false`)     |
 
 #### Example Usage
 
@@ -217,14 +217,14 @@ Modifies an existing field. You can update any property individually.
 
 #### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `field_id` | ✅ Yes | ID of the field to edit |
-| `field_name` | ❌ No | New question/label text |
-| `field_description` | ❌ No | New placeholder or description |
-| `field_type` | ❌ No | New input type |
-| `field_required` | ❌ No | New required status |
+| Parameter           | Required | Description                             |
+|---------------------|----------|-----------------------------------------|
+| `message_id`        | ✅ Yes    | ID or link of the template JSON message |
+| `field_id`          | ✅ Yes    | ID of the field to edit                 |
+| `field_name`        | ❌ No     | New question/label text                 |
+| `field_description` | ❌ No     | New placeholder or description          |
+| `field_type`        | ❌ No     | New input type                          |
+| `field_required`    | ❌ No     | New required status                     |
 
 #### Example Usage
 
@@ -243,10 +243,10 @@ Deletes a field from the template.
 
 #### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `field_id` | ✅ Yes | ID of the field to remove |
+| Parameter    | Required | Description                             |
+|--------------|----------|-----------------------------------------|
+| `message_id` | ✅ Yes    | ID or link of the template JSON message |
+| `field_id`   | ✅ Yes    | ID of the field to remove               |
 
 #### Example Usage
 
@@ -269,14 +269,14 @@ Modifies the appearance of the ticket button embed.
 
 #### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `message_id` | ✅ Yes | ID or link of the **embed message** (not the JSON template) |
-| `title` | ❌ No | New embed title |
-| `description` | ❌ No | New embed content |
-| `color` | ❌ No | Hex code (`#FF5733`), RGB (`(255, 87, 51)`), or color name (`Red`) |
-| `thumbnail` | ❌ No | Image attachment for the embed thumbnail |
-| `channel` | ❌ No | Move the embed to a different channel |
+| Parameter     | Required | Description                                                        |
+|---------------|----------|--------------------------------------------------------------------|
+| `message_id`  | ✅ Yes    | ID or link of the **embed message** (not the JSON template)        |
+| `title`       | ❌ No     | New embed title                                                    |
+| `description` | ❌ No     | New embed content                                                  |
+| `color`       | ❌ No     | Hex code (`#FF5733`), RGB (`(255, 87, 51)`), or color name (`Red`) |
+| `thumbnail`   | ❌ No     | Image attachment for the embed thumbnail                           |
+| `channel`     | ❌ No     | Move the embed to a different channel                              |
 
 > [!note]
 > When moving to another channel, the original embed is deleted and recreated in the new location.
@@ -298,12 +298,12 @@ Recreates the ticket button embed if it was accidentally deleted.
 
 #### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `channel` | ✅ Yes | Channel where to create the embed |
-| `message_id` | ✅ Yes | ID or link of the template JSON message |
-| `title` | ✅ Yes | Embed title |
-| `description` | ✅ Yes | Embed content |
+| Parameter     | Required | Description                             |
+|---------------|----------|-----------------------------------------|
+| `channel`     | ✅ Yes    | Channel where to create the embed       |
+| `message_id`  | ✅ Yes    | ID or link of the template JSON message |
+| `title`       | ✅ Yes    | Embed title                             |
+| `description` | ✅ Yes    | Embed content                           |
 
 #### Example Usage
 
@@ -314,6 +314,45 @@ Recreates the ticket button embed if it was accidentally deleted.
   title: "Support Tickets"
   description: "Click below to open a ticket"
 ```
+
+---
+
+## `/private_thread` - Create a Private Thread
+
+Creates a new private thread in any text channel and invites selected users or roles to it.
+
+> [!note]
+> This command is independent of the ticket system and can be used to quickly create private discussions.
+
+### Parameters
+
+| Parameter | Required | Description                                    |
+|-----------|----------|------------------------------------------------|
+| `name`    | ✅ Yes    | The name of the private thread                 |
+| `message` | ❌ No     | The first message to post in the thread        |
+
+### How It Works
+
+1. Run the command with the thread name (and optional message)
+2. A modal will appear where you can select users and/or roles to invite
+3. The bot creates the private thread and adds all selected users
+4. If you select roles, all members with those roles will be added to the thread
+
+> [!important]
+> - The bot needs permission to create threads in the channel
+> - Private threads are only visible to invited members
+> - You can select up to 25 users/roles in the modal
+> - The user who runs the command is automatically added to the thread
+
+### Example Usage
+
+```
+/private_thread
+  name: "Team Discussion - Project Alpha"
+  message: "Let's discuss the new project requirements here."
+```
+
+After running this command, a modal will open where you can select which users or roles should be added to the private thread.
 
 ---
 
